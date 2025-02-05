@@ -20,10 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd ugselweb2  # Aller dans le répertoire où se trouve composer.json
           composer install --no-interaction
 
       - name: Run PHP CS Linter
         run: |
+          cd ugselweb2  # Exécuter dans le bon répertoire
           vendor/bin/php-cs-fixer fix --dry-run --diff
 
   tests:
@@ -41,8 +43,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd ugselweb2  # Toujours aller dans le bon répertoire
           composer install --no-interaction
 
       - name: Run tests
         run: |
+          cd ugselweb2  # Exécuter les tests dans ce répertoire
           ./vendor/bin/phpunit --configuration phpunit.xml.dist
