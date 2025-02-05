@@ -21,7 +21,7 @@
 	if (!(isset($REQUETES))) $REQUETES = "Non";
 	
 	$Couleurs = Array(
-		Array("Océan"    ,"darkblue","White","White","aliceblue","#C0DBEC","#DDDDDD","#EEEEEE","#C0DBD0","#a0e0e0","#e0a0ff","indigo","Green","Red","#000080","darkblue","#FFFF99"),
+		Array("Ocï¿½an"    ,"darkblue","White","White","aliceblue","#C0DBEC","#DDDDDD","#EEEEEE","#C0DBD0","#a0e0e0","#e0a0ff","indigo","Green","Red","#000080","darkblue","#FFFF99"),
 		Array("Campagne" ,"darkolivegreen","White","White","lightyellow","#CCCC66","#DEDFA5","#FFF8DC","#CCCC00","#CCCC99","#CCCC33","Olive","Green","Red","darkolivegreen","darkolivegreen","#CCCC66"),
 		Array("Terre"    ,"#CC6600","White","White","PapayaWhip","#FFCC66","#FFCC99","#FFF8DC","#CCCC00","#FFCC33","Gold","#8B4500","Green","Red","#CC6600","#CC6600","#FFCC66"),
 		Array("Cendre"   ,"Black","White","white","Gainsboro","DarkGrey","White","Silver","#708090","DarkGrey","#696969","Black","Green","Red","Black","Black","White")
@@ -77,7 +77,7 @@ function bf_mysql_select_db($MaBdd = "", $link_identifier = 0, $MonUtilisateur =
 	global $BDD;
 	if ($MaBdd == "") {$MaBdd = $BDD; $ext = 0 ; $mysql_connect = bf_mysql_connect();} else { $ext = 1; $mysql_connect = bf_mysql_connect($MonUtilisateur, $MonMdp);}
 	if ($link_identifier <> 0) $retour = @mysql_select_db($MaBdd, $link_identifier); else $retour = @mysql_select_db($MaBdd, $mysql_connect);
-	if (!($retour) && ($ext == 0)) bf_stop("Echec de la connexion. <BR><BR>".urlencode("Le site est actuellement fermé."));
+	if (!($retour) && ($ext == 0)) bf_stop("Echec de la connexion. <BR><BR>".urlencode("Le site est actuellement fermï¿½."));
 	return $retour;
 	bf_mysql_close($mysql_connect);
 }	
@@ -99,15 +99,15 @@ function bf_mysql_query ($query, $link_identifier = 0, $ALocker = "", $MaBdd = "
 		if ((!(!$req)) && (mysql_num_rows($req) > 0)) {
 			$data = mysql_fetch_assoc($req);
 			mysql_free_result($req);
-			if (($data['Maintenance']) == 1) echo bf_stop("Echec de la connexion. <BR><BR>".urlencode("Le site est actuellement fermé."));
+			if (($data['Maintenance']) == 1) echo bf_stop("Echec de la connexion. <BR><BR>".urlencode("Le site est actuellement fermï¿½."));
 		} else {
-			bf_stop("Echec de la connexion. <BR><BR>".urlencode("Le site est actuellement fermé."));
+			bf_stop("Echec de la connexion. <BR><BR>".urlencode("Le site est actuellement fermï¿½."));
 		}
 	}
 	
 	if (($ALocker != "")) {
 		if (!(is_array($ALocker))) $ALocker = array("$ALocker");
-		$arrayLock = array("`Sports`", "`Catégories`", "`Epreuves`", "`Groupes`", "`Secteurs`", "`Etablissements`", "`Licenciés`", "`Compétitions`", "`Epreuves Compétitions`", "`Tours Epreuves Compétitions`", "`Participations`", "`Equipes`", "`Paramètres`","`Paramweb`"); 
+		$arrayLock = array("`Sports`", "`Catï¿½gories`", "`Epreuves`", "`Groupes`", "`Secteurs`", "`Etablissements`", "`Licenciï¿½s`", "`Compï¿½titions`", "`Epreuves Compï¿½titions`", "`Tours Epreuves Compï¿½titions`", "`Participations`", "`Equipes`", "`Paramï¿½tres`","`Paramweb`"); 
 		$rr = mysql_query("LOCK TABLES ".implode(" WRITE, ", $ALocker)." WRITE, " .implode(" READ, ", array_diff($arrayLock,$ALocker)). " READ");
 	}
 	
@@ -156,13 +156,13 @@ function ConstruitZone($zone) {
 }
  
 function CalculCat($ChpRetour, $DateNaiss, $Sexe, $Sport) {
-	$req = bf_mysql_query("SELECT CatLibelCourt FROM Catégories WHERE (STR_TO_DATE('$DateNaiss','%Y-%m-%d') BETWEEN CatDateDéb AND CatDateFin) AND CatSexCode =".$Sexe." And CatSpoCode = ".$Sport." order by Ordre"); 
+	$req = bf_mysql_query("SELECT CatLibelCourt FROM Catï¿½gories WHERE (STR_TO_DATE('$DateNaiss','%Y-%m-%d') BETWEEN CatDateDï¿½b AND CatDateFin) AND CatSexCode =".$Sexe." And CatSpoCode = ".$Sport." order by Ordre"); 
 	$res = mysql_fetch_array($req);
 	if ($res) Return($res[0]); Else Return("?");
 }
 
 function TrouveSport($Compet, $ChpRetour) {
-	$req = bf_mysql_query("SELECT * FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode = $Compet"); 
+	$req = bf_mysql_query("SELECT * FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode = $Compet"); 
 	if (!(!$req)) {
 		$res = mysql_fetch_array($req);
 		if (!(!$res)) Return($res["$ChpRetour"]); Else Return("?");
@@ -185,7 +185,7 @@ function TrouveMax($Sql) {
 	if ($res) Return($res[0]); Else Return("0");
 }
 
-function listederoulante($ListeNom, $ListePrompt, $ListeSql, $ListeChampsAff, $ListeChampsFormat, $ListeClé, $ListeInit, $Largeur="100%") {
+function listederoulante($ListeNom, $ListePrompt, $ListeSql, $ListeChampsAff, $ListeChampsFormat, $ListeClï¿½, $ListeInit, $Largeur="100%") {
 	If ($Largeur == "") $Largeur="100%"; else $Largeur = $Largeur."px";
 	if (!(is_array($ListeSql))) {
 		echo "<select size=1 name='$ListeNom' CLASS ='listederoulante' style='width: $Largeur;'>";
@@ -193,8 +193,8 @@ function listederoulante($ListeNom, $ListePrompt, $ListeSql, $ListeChampsAff, $L
 		$req = bf_mysql_query($ListeSql);
 		while ($res = mysql_fetch_array($req)) {
 			echo $res;
-			echo "<option value='$res[$ListeClé]'";
-			if (isset($ListeInit)) {if($res["$ListeClé"] == "$ListeInit") echo " selected";} 
+			echo "<option value='$res[$ListeClï¿½]'";
+			if (isset($ListeInit)) {if($res["$ListeClï¿½"] == "$ListeInit") echo " selected";} 
 			$option = "";
 			for ($i = 0; $i < count($ListeChampsAff); $i++) {
 				if ($ListeChampsAff[$i] == "-") $option = $option."- ";
@@ -209,7 +209,7 @@ function listederoulante($ListeNom, $ListePrompt, $ListeSql, $ListeChampsAff, $L
 		$MonTab = array_values($ListeSql);
 		for( $i = 0; $i < count($ListeSql); $i++ ) {
 			echo "<option value='";
-			if ( (!(isset($ListeClé))) || $ListeClé == "") echo array_search($MonTab[$i],$ListeSql); else echo $ListeClé[$i];
+			if ( (!(isset($ListeClï¿½))) || $ListeClï¿½ == "") echo array_search($MonTab[$i],$ListeSql); else echo $ListeClï¿½[$i];
 			echo "'";
 			if (isset($ListeInit)) if($MonTab[$i] == $ListeInit) echo " selected"; 
 			echo "> $MonTab[$i] </option>\n";
@@ -242,13 +242,13 @@ function debut_html($AffDeconnexion = false) {
 	echo "<DIV id = 'entete'>";
 	echo "<TABLE class = 'tabledeb'>";
 	echo "<TR CLASS = 'trdeb'>";
-    echo "<TD Width = '80%'>&nbsp; UGSEL Web &nbsp;&nbsp;&nbsp;$UGSELNOM&nbsp;&nbsp;$UGSELNOMDEP&nbsp;&nbsp;&nbsp;&nbsp;";
+    echo "<TD Width = '80%'>&nbsp; UGSEL Webï¿½&nbsp;&nbsp;&nbsp;$UGSELNOM&nbsp;&nbsp;$UGSELNOMDEP&nbsp;&nbsp;&nbsp;&nbsp;";
 	
 	if ($Adm) {
 		$req = bf_mysql_query("SELECT COUNT(Session) AS Nbre FROM Connexions");
 		if (!(!($req))) {
 			$res = mysql_fetch_array($req);
-			echo $res['Nbre']." connecté";
+			echo $res['Nbre']." connectï¿½";
 			if ($res['Nbre'] > 1) echo "s";
 		}
 	}
@@ -256,7 +256,7 @@ function debut_html($AffDeconnexion = false) {
 	if (($action != "logon") && ($action != "logout") && (!($Adm)) && ($CONSULTATION == "Non"))  {
 		if ($res = mysql_fetch_array(bf_mysql_query("SELECT * FROM Etablissements WHERE EtabNum = ".$Etab))) 
 			echo sprintf('%06s',$res["EtabNum"])." - ".$res["EtabNomCourt"]." - ".$res["EtabNom"]." - ".$res["EtabVille"];
-			else echo "Aucun établissement trouvé !";
+			else echo "Aucun ï¿½tablissement trouvï¿½ !";
 	}
 	echo "</TD>";
 	
@@ -287,7 +287,7 @@ function debut_html($AffDeconnexion = false) {
 	
 	echo "<TD Width = '10%' align = 'center'>";
 	if (($AffDeconnexion)) { 
-		echo "<a href='$PHP_SELF?action=logout' CLASS = 'adecon'>Déconnexion</a>";
+		echo "<a href='$PHP_SELF?action=logout' CLASS = 'adecon'>Dï¿½connexion</a>";
 	} else {
 		if ($CONSULTATION == "Non") {
 			$MonUg = split('/', $_SERVER['SCRIPT_NAME']);
@@ -306,11 +306,11 @@ function fin_html($AffDeconnexion = false) {
 	echo "<TABLE class = 'tablefin'>";
 	echo "<TR CLASS = 'trfin'>";
 	echo "<TD Width = '90%' >&nbsp; ";
-	if ($Adm) echo "Page générée par le serveur le ".date("d/m/y à H:i:s ")." en ".getTime()."s" ; else echo "UGSEL Web &nbsp;&nbsp;&nbsp;$UGSELNOM&nbsp;&nbsp;$UGSELNOMDEP&nbsp;&nbsp;&nbsp;";
+	if ($Adm) echo "Page gï¿½nï¿½rï¿½e par le serveur le ".date("d/m/y ï¿½ H:i:s ")." en ".getTime()."s" ; else echo "UGSEL Web &nbsp;&nbsp;&nbsp;$UGSELNOM&nbsp;&nbsp;$UGSELNOMDEP&nbsp;&nbsp;&nbsp;";
 	echo "</TD>";
 	echo "<TD Width = '10%' Align ='Center' >";
 	if (($AffDeconnexion)) {
-		echo "<a href='$PHP_SELF?action=logout' CLASS = 'adecon'>Déconnexion</a>";
+		echo "<a href='$PHP_SELF?action=logout' CLASS = 'adecon'>Dï¿½connexion</a>";
 	} else {
 		if ($CONSULTATION == "Non") {
 			$MonUg = split('/', $_SERVER['SCRIPT_NAME']);
@@ -440,7 +440,7 @@ function logon() {
 	if ($CONSULTATION == "Non") { 
 		$connect = @mysql_connect($HOSTNAME, $UTILISATEUR, $MDP);
 		@mysql_select_db($BDD, $connect);
-		$messageAccueil = "<B>UGSEL Web</B><BR><BR><BR>Bienvenue dans l'espace d'inscription aux compétitions<BR><BR>";
+		$messageAccueil = "<B>UGSEL Web</B><BR><BR><BR>Bienvenue dans l'espace d'inscription aux compï¿½titions<BR><BR>";
 		$req = @mysql_query("SELECT `Accueil` FROM `Paramweb`",$connect); 
 		if ((!(!$req)) && (mysql_num_rows($req) > 0)) {
 			$data = mysql_fetch_assoc($req);
@@ -471,7 +471,7 @@ function logon() {
 	} else {
 		echo "          <p align='center' <B>$UGSELNOM&nbsp;&nbsp;$UGSELNOMDEP</B></P>
 						<BR>
-						<p align='center' <B>Bienvenue dans l'espace d'inscription aux compétitions</B></P>
+						<p align='center' <B>Bienvenue dans l'espace d'inscription aux compï¿½titions</B></P>
 						<BR><BR>
 						<p align='center'<BLINK>$message</BLINK></p>
 						<BR>
@@ -516,20 +516,20 @@ function logon_submit() {
 			$req = bf_mysql_query("SELECT `Maintenance` FROM `Paramweb`");
 			if ((!($req)) || ((mysql_num_rows($req)) == 0)) bf_mysql_query("INSERT INTO `Paramweb` (`Maintenance`,`Accueil`,`ImpressionLic`,`InscriptionLic`) VALUES ('1','Identification UGSEL','0','0')");
 			bf_mysql_query("CREATE TABLE IF NOT EXISTS Connexions (Ip VARCHAR(15) NOT NULL, Session VARCHAR(50), Temps bigint (16) NOT NULL default '0', Id VARCHAR(15) NOT NULL, Depart TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',`Param` TEXT, PRIMARY KEY (`Session`))"); 
-			bf_mysql_query("ALTER TABLE `Compétitions` CHANGE `CompetCode` `CompetCode` INT(11)");
-			bf_mysql_query("ALTER TABLE `Compétitions` ADD `CompetEqu` VARCHAR(30)");
-			bf_mysql_query("ALTER TABLE `Compétitions` ADD `CompetEtat` VARCHAR(30)");
-			bf_mysql_query("ALTER TABLE `Compétitions` ADD `CompetStatut` VARCHAR(30)");
-			bf_mysql_query("ALTER TABLE `Compétitions` ADD `CompetObs` VARCHAR(50)");
-			bf_mysql_query("ALTER TABLE `Compétitions` ADD `CompetChpSup` VARCHAR(255)");
-			bf_mysql_query("ALTER TABLE `Compétitions` ADD `CompetDemLic` TEXT");
-			bf_mysql_query("UPDATE `Compétitions` SET `CompetEqu`  = '0' WHERE isnull(CompetEqu)", 0, "`Compétitions`");
-			bf_mysql_query("UPDATE `Compétitions` SET `CompetEtat` = '0' WHERE isnull(CompetEtat)");
-			bf_mysql_query("UPDATE `Compétitions` SET `CompetStatut` = 'Inscriptions fermées' WHERE isnull(CompetStatut)");
-			bf_mysql_query("ALTER TABLE `paramètres` ADD PRIMARY KEY (`ParVersion`, `ParSousVersion`)");
-			bf_mysql_query("ALTER TABLE `Licenciés` ADD `LicDateDem` DATE NULL");
-			bf_mysql_query("ALTER TABLE `Licenciés` ADD `LicDateValid` DATE NULL");
-			bf_mysql_query("ALTER TABLE `Licenciés` ADD INDEX `LicEtabCode` ( `LicEtabCode` )");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` CHANGE `CompetCode` `CompetCode` INT(11)");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` ADD `CompetEqu` VARCHAR(30)");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` ADD `CompetEtat` VARCHAR(30)");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` ADD `CompetStatut` VARCHAR(30)");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` ADD `CompetObs` VARCHAR(50)");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` ADD `CompetChpSup` VARCHAR(255)");
+			bf_mysql_query("ALTER TABLE `Compï¿½titions` ADD `CompetDemLic` TEXT");
+			bf_mysql_query("UPDATE `Compï¿½titions` SET `CompetEqu`  = '0' WHERE isnull(CompetEqu)", 0, "`Compï¿½titions`");
+			bf_mysql_query("UPDATE `Compï¿½titions` SET `CompetEtat` = '0' WHERE isnull(CompetEtat)");
+			bf_mysql_query("UPDATE `Compï¿½titions` SET `CompetStatut` = 'Inscriptions fermï¿½es' WHERE isnull(CompetStatut)");
+			bf_mysql_query("ALTER TABLE `paramï¿½tres` ADD PRIMARY KEY (`ParVersion`, `ParSousVersion`)");
+			bf_mysql_query("ALTER TABLE `Licenciï¿½s` ADD `LicDateDem` DATE NULL");
+			bf_mysql_query("ALTER TABLE `Licenciï¿½s` ADD `LicDateValid` DATE NULL");
+			bf_mysql_query("ALTER TABLE `Licenciï¿½s` ADD INDEX `LicEtabCode` ( `LicEtabCode` )");
 			bf_mysql_query("UNLOCK TABLES");
 			$reqtables = bf_mysql_query("SHOW TABLES FROM `$BDD`");
 			if (!(!$reqtables)) {
@@ -680,10 +680,10 @@ Function RetRelayeurs($Relayeurs, $TypeInfo = 2, $SaisieOblige = False) {
 	if (!($Adm)) $mawhere = " AND (EtabNum = ".$Etab.RetAS($Etab).")"; else $mawhere = "";
 	switch ($TypeInfo) {
 		Case 0 : {
-			$req = bf_mysql_query("SELECT Licenciés.LicInscrit, Licenciés.LicNumLicence, Licenciés.LicNom, Licenciés.LicPrénom, CatLibelCourt FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode AND CatSpoCode = 1 AND LicNumLicence = ".$Relayeurs.$mawhere);
+			$req = bf_mysql_query("SELECT Licenciï¿½s.LicInscrit, Licenciï¿½s.LicNumLicence, Licenciï¿½s.LicNom, Licenciï¿½s.LicPrï¿½nom, CatLibelCourt FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode AND CatSpoCode = 1 AND LicNumLicence = ".$Relayeurs.$mawhere);
 			if ($req) {
 				$res = mysql_fetch_array($req);
-				if ($res) $RetRelayeurs = "(".$res['CatLibelCourt'].") ".$res['LicNom']." ".$res['LicPrénom']; else $RetRelayeurs = "Erreur";
+				if ($res) $RetRelayeurs = "(".$res['CatLibelCourt'].") ".$res['LicNom']." ".$res['LicPrï¿½nom']; else $RetRelayeurs = "Erreur";
 			} else { 
 				if ($Relayeurs != "") $RetRelayeurs = "Erreur";
 			}
@@ -714,13 +714,13 @@ Function RetRelayeurs($Relayeurs, $TypeInfo = 2, $SaisieOblige = False) {
 				if (is_numeric($arrayrel[0])) {
 					If ($TypeInfo == 1) array_push($arrayres, $arrayrel[0]);
 					If (($TypeInfo == 2)||($TypeInfo == 3)||($TypeInfo == 4)) {
-						$req = bf_mysql_query("SELECT Licenciés.LicInscrit, Licenciés.LicNumLicence, Licenciés.LicNom, Licenciés.LicPrénom, CatLibelCourt FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1 AND LicNumLicence = ".$arrayrel[0].$mawhere);
+						$req = bf_mysql_query("SELECT Licenciï¿½s.LicInscrit, Licenciï¿½s.LicNumLicence, Licenciï¿½s.LicNom, Licenciï¿½s.LicPrï¿½nom, CatLibelCourt FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1 AND LicNumLicence = ".$arrayrel[0].$mawhere);
 						$res = mysql_fetch_array($req);
-						if ($res) array_push($arrayres, $arrayrel[0]." (".$res['CatLibelCourt'].") ".$res['LicNom']." ".$res['LicPrénom']); 
+						if ($res) array_push($arrayres, $arrayrel[0]." (".$res['CatLibelCourt'].") ".$res['LicNom']." ".$res['LicPrï¿½nom']); 
 						if (isset($_POST['EprLibelCourt']) && ($_POST['EprLibelCourt'] != "")) {
-							$rescat = mysql_fetch_array(bf_mysql_query("SELECT EprCatCode, EprLibelCourt, SpoGestionPerf, SpoCode FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode INNER JOIN `Epreuves Compétitions` ON Compétitions.CompetCode = `Epreuves Compétitions`.EprCompetCompetCode INNER JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode INNER JOIN Catégories ON Epreuves.EprCatCode = Catégories.CatCode WHERE `Epreuves Compétitions`.EprCompetCode = ".$_POST["EprLibelCourt"]));
+							$rescat = mysql_fetch_array(bf_mysql_query("SELECT EprCatCode, EprLibelCourt, SpoGestionPerf, SpoCode FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode INNER JOIN `Epreuves Compï¿½titions` ON Compï¿½titions.CompetCode = `Epreuves Compï¿½titions`.EprCompetCompetCode INNER JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode INNER JOIN Catï¿½gories ON Epreuves.EprCatCode = Catï¿½gories.CatCode WHERE `Epreuves Compï¿½titions`.EprCompetCode = ".$_POST["EprLibelCourt"]));
 							if ($rescat['SpoGestionPerf'] == -5) {
-								$reslic =  mysql_fetch_array(bf_mysql_query("SELECT CatCode FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = ".$rescat['SpoCode']." AND LicNumLicence = ".$arrayrel[0].$mawhere));
+								$reslic =  mysql_fetch_array(bf_mysql_query("SELECT CatCode FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = ".$rescat['SpoCode']." AND LicNumLicence = ".$arrayrel[0].$mawhere));
 								if ($rescat['EprCatCode'] != $reslic['CatCode']) $RetRelayeurs = "Erreur";
 							}
 						}
@@ -758,35 +758,35 @@ Function export($listetable = "", $auto = "", $externe = "") {
 	if ($ListeImportCompetInterne != "") {$ListeExportCompet = $ListeImportCompetInterne; $optionexport = "expcompet";}
 	
 	if (($optionexporttype == "expsql") || ($optionexporttype == "expser") || ($optionexporttype == "expsqlser")) {
-		if ($optionexport == "exptout"     ) {$typeexp = "Tout"; $listetable = Array("Paramètres", "Sports", "Etablissements", "Secteurs", "Licenciés", "Catégories", "Compétitions", "Epreuves", "Epreuves Compétitions", "Groupes", "Participations", "Equipes", "Tours Epreuves Compétitions");} 
+		if ($optionexport == "exptout"     ) {$typeexp = "Tout"; $listetable = Array("Paramï¿½tres", "Sports", "Etablissements", "Secteurs", "Licenciï¿½s", "Catï¿½gories", "Compï¿½titions", "Epreuves", "Epreuves Compï¿½titions", "Groupes", "Participations", "Equipes", "Tours Epreuves Compï¿½titions");} 
 		if ($optionexport == "expetab"     ) {
 			$typeexp = "Etablissements";
 			if (isset($EtabExport)) $mastrwhere = " WHERE Etablissements.EtabCode = $EtabExport "; else $mastrwhere ="";
 			$listetable = array(
-				array("Paramètres","SELECT * FROM Paramètres"),
+				array("Paramï¿½tres","SELECT * FROM Paramï¿½tres"),
 				array("Secteurs","SELECT DISTINCTROW Secteurs.* FROM Secteurs INNER JOIN Etablissements ON Etablissements.EtabSecCode = Secteurs.SecCode $mastrwhere ORDER BY Secteurs.Ordre"),
 				array("Etablissements","SELECT * FROM Etablissements $mastrwhere ORDER BY EtabNum"),
-				array("Licenciés","SELECT Licenciés.* FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode $mastrwhere ORDER BY LicNumLicence")
+				array("Licenciï¿½s","SELECT Licenciï¿½s.* FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode $mastrwhere ORDER BY LicNumLicence")
 		);}
 		if ($optionexport == "explic") {
-			$typeexp = "Licenciés";
+			$typeexp = "Licenciï¿½s";
 			$listetable = array(
-				array("Paramètres","SELECT * FROM Paramètres"),
-				array("Secteurs","SELECT DISTINCTROW Secteurs.* FROM (Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode Order By Secteurs.Ordre"),
-				array("Etablissements","SELECT DISTINCTROW Etablissements.* FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode ORDER BY EtabNum"),
-				array("Licenciés","SELECT * FROM Licenciés ORDER BY LicNumLicence")
+				array("Paramï¿½tres","SELECT * FROM Paramï¿½tres"),
+				array("Secteurs","SELECT DISTINCTROW Secteurs.* FROM (Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode Order By Secteurs.Ordre"),
+				array("Etablissements","SELECT DISTINCTROW Etablissements.* FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode ORDER BY EtabNum"),
+				array("Licenciï¿½s","SELECT * FROM Licenciï¿½s ORDER BY LicNumLicence")
 		);} 
 		if ($optionexport == "expsport"    ) {
 			$typeexp = "Sports";
 			$listetable = array(
-				array("Paramètres","SELECT * FROM Paramètres"),
+				array("Paramï¿½tres","SELECT * FROM Paramï¿½tres"),
 				array("Sports","SELECT * FROM Sports WHERE SpoCode = $ListeExportSport"),
-				array("Catégories","SELECT * FROM Catégories WHERE Catégories.CatSpoCode = $ListeExportSport ORDER BY Ordre"),
-				array("Epreuves","SELECT Epreuves.* FROM Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode WHERE EprSpoCode = $ListeExportSport ORDER BY Epreuves.Ordre"),
+				array("Catï¿½gories","SELECT * FROM Catï¿½gories WHERE Catï¿½gories.CatSpoCode = $ListeExportSport ORDER BY Ordre"),
+				array("Epreuves","SELECT Epreuves.* FROM Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE EprSpoCode = $ListeExportSport ORDER BY Epreuves.Ordre"),
 				array("Groupes","SELECT * FROM Groupes WHERE GrSpoCode = $ListeExportSport ORDER BY Ordre"),
 		);} 
 		if ($optionexport == "expcompet"   ) {
-			$typeexp = "Compétition";
+			$typeexp = "Compï¿½tition";
 			
 			$reqRel = bf_mysql_query("SELECT EquRelayeurs FROM Equipes WHERE EquCompetCode = $ListeExportCompet");
 			if ($reqRel) {
@@ -795,65 +795,65 @@ Function export($listetable = "", $auto = "", $externe = "") {
 			}
 						
 			$listetable = array(
-				array("Paramètres","SELECT * FROM Paramètres"),
-				array("Sports","SELECT Sports.* FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE Compétitions.CompetCode = $ListeExportCompet"),
-				array("Etablissements","(SELECT DISTINCTROW Etablissements.* FROM Catégories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compétitions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet) 
-							UNION (SELECT DISTINCTROW Etablissements.* FROM Catégories INNER JOIN ((Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compétitions` INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) ON Licenciés.LicNumLicence = Participations.ParLicCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Participations.ParCompetCode = $ListeExportCompet ORDER BY EtabNum)
-							UNION (SELECT DISTINCTROW Etablissements.* FROM Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE LicNumLicence IN ($strRel)) "),
-				array("Secteurs","(SELECT DISTINCTROW Secteurs.* FROM (Catégories INNER JOIN ((Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compétitions` INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) ON Licenciés.LicNumLicence = Participations.ParLicCode) ON Catégories.CatCode = Epreuves.EprCatCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE Participations.ParCompetCode = $ListeExportCompet)
-							UNION (SELECT DISTINCTROW Secteurs.* FROM (Catégories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compétitions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catégories.CatCode = Epreuves.EprCatCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE Equipes.EquCompetCode = $ListeExportCompet ORDER BY Ordre)
-							UNION (SELECT DISTINCTROW Secteurs.* FROM Secteurs INNER JOIN Etablissements ON Secteurs.SecCode = Etablissements.EtabSecCode INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE LicNumLicence IN ($strRel)) "),
-				array("Licenciés","(SELECT DISTINCTROW Licenciés.* FROM (Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode) INNER JOIN (`Epreuves Compétitions` INNER JOIN (Licenciés INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode) ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE Participations.ParCompetCode = $ListeExportCompet ORDER BY Licenciés.LicNumLicence)
-							UNION (SELECT DISTINCTROW Licenciés.* FROM Licenciés WHERE LicNumLicence IN ($strRel) )"),
-				array("Catégories","SELECT Catégories.* FROM (Sports INNER JOIN Catégories ON Sports.SpoCode = Catégories.CatSpoCode) INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode = $ListeExportCompet ORDER BY Catégories.Ordre"),
-				array("Compétitions","SELECT * FROM Compétitions WHERE CompetCode = $ListeExportCompet"),
-				array("Epreuves","SELECT Epreuves.* FROM Epreuves INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE `Epreuves Compétitions`.EprCompetCompetCode = $ListeExportCompet ORDER BY Epreuves.Ordre"),
-				array("Epreuves Compétitions","SELECT * FROM `Epreuves Compétitions` WHERE EprCompetCompetCode = $ListeExportCompet"),
-				array("Participations","SELECT Participations.* FROM (Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode) INNER JOIN (`Epreuves Compétitions` INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE Participations.ParCompetCode = $ListeExportCompet ORDER BY Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
-				array("Equipes","SELECT Equipes.* FROM Catégories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) RIGHT JOIN Equipes ON `Epreuves Compétitions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet ORDER BY Catégories.Ordre, Epreuves.Ordre, Equipes.EquNum, Equipes.EquTour"),
-				array("Groupes","SELECT Groupes.* FROM (Sports INNER JOIN Groupes ON Sports.SpoCode = Groupes.GrSpoCode) INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE Compétitions.CompetCode = $ListeExportCompet ORDER BY Groupes.Ordre"),
-				array("Tours Epreuves Compétitions","SELECT `Tours Epreuves Compétitions`.* FROM `Epreuves Compétitions` INNER JOIN `Tours Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = `Tours Epreuves Compétitions`.TouEprCompetEprCompetCode WHERE EprCompetCompetCode = $ListeExportCompet")
+				array("Paramï¿½tres","SELECT * FROM Paramï¿½tres"),
+				array("Sports","SELECT Sports.* FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE Compï¿½titions.CompetCode = $ListeExportCompet"),
+				array("Etablissements","(SELECT DISTINCTROW Etablissements.* FROM Catï¿½gories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compï¿½titions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet) 
+							UNION (SELECT DISTINCTROW Etablissements.* FROM Catï¿½gories INNER JOIN ((Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compï¿½titions` INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Participations.ParCompetCode = $ListeExportCompet ORDER BY EtabNum)
+							UNION (SELECT DISTINCTROW Etablissements.* FROM Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE LicNumLicence IN ($strRel)) "),
+				array("Secteurs","(SELECT DISTINCTROW Secteurs.* FROM (Catï¿½gories INNER JOIN ((Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compï¿½titions` INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE Participations.ParCompetCode = $ListeExportCompet)
+							UNION (SELECT DISTINCTROW Secteurs.* FROM (Catï¿½gories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compï¿½titions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE Equipes.EquCompetCode = $ListeExportCompet ORDER BY Ordre)
+							UNION (SELECT DISTINCTROW Secteurs.* FROM Secteurs INNER JOIN Etablissements ON Secteurs.SecCode = Etablissements.EtabSecCode INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE LicNumLicence IN ($strRel)) "),
+				array("Licenciï¿½s","(SELECT DISTINCTROW Licenciï¿½s.* FROM (Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode) INNER JOIN (`Epreuves Compï¿½titions` INNER JOIN (Licenciï¿½s INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode) ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE Participations.ParCompetCode = $ListeExportCompet ORDER BY Licenciï¿½s.LicNumLicence)
+							UNION (SELECT DISTINCTROW Licenciï¿½s.* FROM Licenciï¿½s WHERE LicNumLicence IN ($strRel) )"),
+				array("Catï¿½gories","SELECT Catï¿½gories.* FROM (Sports INNER JOIN Catï¿½gories ON Sports.SpoCode = Catï¿½gories.CatSpoCode) INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode = $ListeExportCompet ORDER BY Catï¿½gories.Ordre"),
+				array("Compï¿½titions","SELECT * FROM Compï¿½titions WHERE CompetCode = $ListeExportCompet"),
+				array("Epreuves","SELECT Epreuves.* FROM Epreuves INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE `Epreuves Compï¿½titions`.EprCompetCompetCode = $ListeExportCompet ORDER BY Epreuves.Ordre"),
+				array("Epreuves Compï¿½titions","SELECT * FROM `Epreuves Compï¿½titions` WHERE EprCompetCompetCode = $ListeExportCompet"),
+				array("Participations","SELECT Participations.* FROM (Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode) INNER JOIN (`Epreuves Compï¿½titions` INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE Participations.ParCompetCode = $ListeExportCompet ORDER BY Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
+				array("Equipes","SELECT Equipes.* FROM Catï¿½gories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) RIGHT JOIN Equipes ON `Epreuves Compï¿½titions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet ORDER BY Catï¿½gories.Ordre, Epreuves.Ordre, Equipes.EquNum, Equipes.EquTour"),
+				array("Groupes","SELECT Groupes.* FROM (Sports INNER JOIN Groupes ON Sports.SpoCode = Groupes.GrSpoCode) INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE Compï¿½titions.CompetCode = $ListeExportCompet ORDER BY Groupes.Ordre"),
+				array("Tours Epreuves Compï¿½titions","SELECT `Tours Epreuves Compï¿½titions`.* FROM `Epreuves Compï¿½titions` INNER JOIN `Tours Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = `Tours Epreuves Compï¿½titions`.TouEprCompetEprCompetCode WHERE EprCompetCompetCode = $ListeExportCompet")
 			);
 			
-			$req = bf_mysql_query("SELECT Sports.*, Compétitions.* FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE Compétitions.CompetCode = $ListeExportCompet");
+			$req = bf_mysql_query("SELECT Sports.*, Compï¿½titions.* FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE Compï¿½titions.CompetCode = $ListeExportCompet");
 			if (!(!$req)) {
 				$res = mysql_fetch_array($req);
 				if (!(!$res)) {
 					$MonSport = $res["SpoLibelCourt"];
-					$MaDescription = $res["CompetLibellé"]." ".eregi_replace("([0-9].*)-([0-9].*)-([0-9].*)" ,"\\3/\\2/\\1",$res["CompetDateDéb"])." ".$res["CompetLieu"];
+					$MaDescription = $res["CompetLibellï¿½"]." ".eregi_replace("([0-9].*)-([0-9].*)-([0-9].*)" ,"\\3/\\2/\\1",$res["CompetDateDï¿½b"])." ".$res["CompetLieu"];
 					$MonObs = $res["CompetObs"];
 				}
 			}
 		} 			
 		
 	} else {
-		if ($optionexport == "exptout"     ) {$typeexp = "Tout"; $listetable = Array("Paramètres", "Sports", "Etablissements", "Secteurs", "Licenciés", "Catégories", "Compétitions", "Epreuves", "Epreuves Compétitions", "Groupes", "Participations", "Equipes", "Tours Epreuves Compétitions");} 
+		if ($optionexport == "exptout"     ) {$typeexp = "Tout"; $listetable = Array("Paramï¿½tres", "Sports", "Etablissements", "Secteurs", "Licenciï¿½s", "Catï¿½gories", "Compï¿½titions", "Epreuves", "Epreuves Compï¿½titions", "Groupes", "Participations", "Equipes", "Tours Epreuves Compï¿½titions");} 
 		if ($optionexport == "expetab"     ) {
 			$typeexp = "Etablissements";
 			if (isset($EtabExport)) $mastrwhere = " WHERE Etablissements.EtabCode = $EtabExport "; else $mastrwhere ="";
 			if (isset($EtabExport)) $mastrwhere1 = " AND LicEtabCode = $EtabExport "; else $mastrwhere1 ="";
 			$listetable = array(
-				array("Etablissements","SELECT EtabNum As Numéro, EtabNom As Nom, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTél As Tél, EtabFax As Fax, EtabMemo3 AS Mdp FROM Etablissements $mastrwhere ORDER BY EtabNum"),
-				array("Licenciés","SELECT IF(Licenciés.LicInscrit=1, 'X','') As Inscrit, Licenciés.LicNumLicence As Numéro, Licenciés.LicNom As Nom, Licenciés.LicPrénom As Prénom, Licenciés.LicNaissance As Naiss, IF(Licenciés.LicSexCode=1,'G','F') As Sexe , CatLibelCourt As Cat, EtabNum, EtabNomCourt As EtabCode, EtabNom , EtabVille FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE ((Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) $mastrwhere1 ORDER BY Licenciés.LicNumLicence"),
+				array("Etablissements","SELECT EtabNum As Numï¿½ro, EtabNom As Nom, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTï¿½l As Tï¿½l, EtabFax As Fax, EtabMemo3 AS Mdp FROM Etablissements $mastrwhere ORDER BY EtabNum"),
+				array("Licenciï¿½s","SELECT IF(Licenciï¿½s.LicInscrit=1, 'X','') As Inscrit, Licenciï¿½s.LicNumLicence As Numï¿½ro, Licenciï¿½s.LicNom As Nom, Licenciï¿½s.LicPrï¿½nom As Prï¿½nom, Licenciï¿½s.LicNaissance As Naiss, IF(Licenciï¿½s.LicSexCode=1,'G','F') As Sexe , CatLibelCourt As Cat, EtabNum, EtabNomCourt As EtabCode, EtabNom , EtabVille FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE ((Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) $mastrwhere1 ORDER BY Licenciï¿½s.LicNumLicence"),
 				array("",ConstruitStat(-2, 1, $queryStr, $NomsColonnes, $ChampsAli, $ChampsFor, $ChampsAff, $ChampsType, $Choix, $mastrwhere1))
 		); if ($stat == 1) {array_shift($listetable); array_shift($listetable); }}
 		if ($optionexport == "explic") {
-			$typeexp = "Licenciés";
+			$typeexp = "Licenciï¿½s";
 			if (!($Adm)) { $mastrwhere = " AND (Etablissements.EtabNum = $Etab ".RetAS($Etab).")"; $mastrchpetab = ", EtabNomCourt As Etab"; } else { $mastrwhere = ""; $mastrchpetab = ", EtabNum, EtabNomCourt As EtabCode, EtabNom , EtabVille";}
 			$listetable = array(
-				array("Licenciés","SELECT IF(Licenciés.LicInscrit=1, 'X','') As Inscrit, Licenciés.LicNumLicence As Numéro, Licenciés.LicNom As Nom, Licenciés.LicPrénom As Prénom, Licenciés.LicNaissance As Naiss, IF(Licenciés.LicSexCode=1,'G','F') As Sexe , CatLibelCourt As Cat $mastrchpetab FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode WHERE (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1 $mastrwhere ORDER BY Licenciés.LicNumLicence"),
+				array("Licenciï¿½s","SELECT IF(Licenciï¿½s.LicInscrit=1, 'X','') As Inscrit, Licenciï¿½s.LicNumLicence As Numï¿½ro, Licenciï¿½s.LicNom As Nom, Licenciï¿½s.LicPrï¿½nom As Prï¿½nom, Licenciï¿½s.LicNaissance As Naiss, IF(Licenciï¿½s.LicSexCode=1,'G','F') As Sexe , CatLibelCourt As Cat $mastrchpetab FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode WHERE (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1 $mastrwhere ORDER BY Licenciï¿½s.LicNumLicence"),
 				array("",ConstruitStat(-2, 1, $queryStr, $NomsColonnes, $ChampsAli, $ChampsFor, $ChampsAff, $ChampsType, $Choix))
 		);if ($stat == 1) {array_shift($listetable); } if (!($Adm)) {array_pop($listetable);} }
 		if ($optionexport == "expsport") {
 			$typeexp = "Sports";
 			$listetable = array(
-				array("Sports","SELECT SpoLibelCourt As Sport, SpoLibellé As Libéllé FROM Sports WHERE SpoCode = $ListeExportSport"),
-				array("Catégories","SELECT SpoLibelCourt As Sport, CatLibelCourt As Catégorie, CatLibellé As Libellé, CatDateDéb As Début, CatDateFin As Fin, IF(CatSexCode = 1,'G','F') As Sexe FROM `Catégories` INNER JOIN `Sports` ON Catégories.CatSpoCode = Sports.SpoCode WHERE Catégories.CatSpoCode = $ListeExportSport ORDER BY Catégories.Ordre"),
-				array("Epreuves","SELECT SpoLibelCourt As Sport, CatLibelCourt As Catégorie, EprLibelCourt As Epreuve, EprLibellé As Libellé, IF(CatSexCode = 1,'G','F') As Sexe FROM (Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode) INNER JOIN Catégories ON Epreuves.EprCatCode = Catégories.CatCode WHERE EprSpoCode = $ListeExportSport ORDER BY Epreuves.Ordre"),
+				array("Sports","SELECT SpoLibelCourt As Sport, SpoLibellï¿½ As Libï¿½llï¿½ FROM Sports WHERE SpoCode = $ListeExportSport"),
+				array("Catï¿½gories","SELECT SpoLibelCourt As Sport, CatLibelCourt As Catï¿½gorie, CatLibellï¿½ As Libellï¿½, CatDateDï¿½b As Dï¿½but, CatDateFin As Fin, IF(CatSexCode = 1,'G','F') As Sexe FROM `Catï¿½gories` INNER JOIN `Sports` ON Catï¿½gories.CatSpoCode = Sports.SpoCode WHERE Catï¿½gories.CatSpoCode = $ListeExportSport ORDER BY Catï¿½gories.Ordre"),
+				array("Epreuves","SELECT SpoLibelCourt As Sport, CatLibelCourt As Catï¿½gorie, EprLibelCourt As Epreuve, EprLibellï¿½ As Libellï¿½, IF(CatSexCode = 1,'G','F') As Sexe FROM (Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode) INNER JOIN Catï¿½gories ON Epreuves.EprCatCode = Catï¿½gories.CatCode WHERE EprSpoCode = $ListeExportSport ORDER BY Epreuves.Ordre"),
 		);} 
 		if ($optionexport == "expcompet") {
-			$typeexp = "Compétition";
-			$req = bf_mysql_query("SELECT Compétitions.* FROM Compétitions WHERE CompetCode = $ListeExportCompet");
+			$typeexp = "Compï¿½tition";
+			$req = bf_mysql_query("SELECT Compï¿½titions.* FROM Compï¿½titions WHERE CompetCode = $ListeExportCompet");
 			if (!(!$req)) {
 				$res = mysql_fetch_array($req);
 				if (!(!$res)) $MonSportCode = $res["CompetSpoCode"];
@@ -863,22 +863,22 @@ Function export($listetable = "", $auto = "", $externe = "") {
 			if (!($Adm)) $mastrwhere = " AND (Etablissements.EtabNum = $Etab ".RetAS($Etab).")"; else $mastrwhere =""; 
 			if ($ADMINREGLOGIN == "bzh") {				
 				$listetable = array(
-					array("Compétitions","SELECT CompetLibellé As Compétition, CompetDateDéb As Date, CompetLieu As Lieu, SpoLibelCourt As Sport, CompetObs As Obs FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode = $ListeExportCompet"),
-					array("Etablissements","(SELECT DISTINCTROW EtabNum As Numéro, EtabNomCourt As Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTél As Tél, EtabFax As Fax FROM Catégories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compétitions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet $mastrwhere) UNION (SELECT DISTINCTROW EtabNum As Numéro, EtabNomCourt AS Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTél As Tél, EtabFax As Fax FROM Catégories INNER JOIN ((Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compétitions` INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) ON Licenciés.LicNumLicence = Participations.ParLicCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Participations.ParCompetCode = $ListeExportCompet $mastrwhere) ORDER BY Numéro"),
-					array("Participations","SELECT ParLicCode As Numéro, Licenciés.LicNom As Nom, Licenciés.LicPrénom As Prénom, Licenciés.LicNaissance As Naiss, IF(CatSexCode = 1,'G','F') As Sexe, CatLibelCourt As Cat, EtabNomCourt As Etab, EtabNom As `Etab Nom`, EtabVille AS `Etab Ville`, EprLibelCourt As Epr, EquNum As Equ, ParObs1 As Obs1, ParObs2 As Obs2, ParObs3 As Obs3, ParObs4 As Obs4, ParObs5 As Obs5 FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode WHERE ((Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) AND ParCompetCode = $ListeExportCompet $mastrwhere ORDER BY LicNom, LicPrénom, Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
+					array("Compï¿½titions","SELECT CompetLibellï¿½ As Compï¿½tition, CompetDateDï¿½b As Date, CompetLieu As Lieu, SpoLibelCourt As Sport, CompetObs As Obs FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode = $ListeExportCompet"),
+					array("Etablissements","(SELECT DISTINCTROW EtabNum As Numï¿½ro, EtabNomCourt As Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTï¿½l As Tï¿½l, EtabFax As Fax FROM Catï¿½gories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compï¿½titions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet $mastrwhere) UNION (SELECT DISTINCTROW EtabNum As Numï¿½ro, EtabNomCourt AS Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTï¿½l As Tï¿½l, EtabFax As Fax FROM Catï¿½gories INNER JOIN ((Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compï¿½titions` INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Participations.ParCompetCode = $ListeExportCompet $mastrwhere) ORDER BY Numï¿½ro"),
+					array("Participations","SELECT ParLicCode As Numï¿½ro, Licenciï¿½s.LicNom As Nom, Licenciï¿½s.LicPrï¿½nom As Prï¿½nom, Licenciï¿½s.LicNaissance As Naiss, IF(CatSexCode = 1,'G','F') As Sexe, CatLibelCourt As Cat, EtabNomCourt As Etab, EtabNom As `Etab Nom`, EtabVille AS `Etab Ville`, EprLibelCourt As Epr, EquNum As Equ, ParObs1 As Obs1, ParObs2 As Obs2, ParObs3 As Obs3, ParObs4 As Obs4, ParObs5 As Obs5 FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode WHERE ((Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) AND ParCompetCode = $ListeExportCompet $mastrwhere ORDER BY LicNom, LicPrï¿½nom, Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
 					array("",""),
 					array("",""),
-					array("Participations","SELECT EtabNomCourt As Etab, EtabNom As `Etab Nom`, EtabVille AS `Etab Ville`, ParLicCode As Numéro, Licenciés.LicNom As Nom, Licenciés.LicPrénom As Prénom, Licenciés.LicNaissance As Naiss, IF(CatSexCode = 1,'G','F') As Sexe, CatLibelCourt As Cat, EprLibelCourt As Epr, EquNum As Equ, ParObs1 As Obs1, ParObs2 As Obs2, ParObs3 As Obs3, ParObs4 As Obs4, ParObs5 As Obs5 FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode WHERE ((Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) AND ParCompetCode = $ListeExportCompet $mastrwhere ORDER BY EtabNomCourt, LicEtabCode, EquNum, LicNom, LicPrénom, Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
-					array("Equipes","SELECT EquNum As Numéro, EquComplément As Complément, EtabNomCourt As Etab, EtabNom As EtabNom, EtabVille As EtabVille, CatLibelCourt As Cat, EprLibelCourt As Epreuve, IF (EquPromo = 1, 'X','') As Promo, EquChall As Chall, EquRelayeurs As Relayeurs, EquObs1 As Obs1, EquObs2 As Obs2, EquObs3 As Obs3, EquObs4 As Obs4, EquObs5 As Obs5 FROM Etablissements, Catégories INNER JOIN Equipes ON Catégories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode WHERE Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $ListeExportCompet $mastrwhere $mastrwhere ORDER BY EtabNomCourt, EquNum, EquComplément, Epreuves.Ordre"),
+					array("Participations","SELECT EtabNomCourt As Etab, EtabNom As `Etab Nom`, EtabVille AS `Etab Ville`, ParLicCode As Numï¿½ro, Licenciï¿½s.LicNom As Nom, Licenciï¿½s.LicPrï¿½nom As Prï¿½nom, Licenciï¿½s.LicNaissance As Naiss, IF(CatSexCode = 1,'G','F') As Sexe, CatLibelCourt As Cat, EprLibelCourt As Epr, EquNum As Equ, ParObs1 As Obs1, ParObs2 As Obs2, ParObs3 As Obs3, ParObs4 As Obs4, ParObs5 As Obs5 FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode WHERE ((Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) AND ParCompetCode = $ListeExportCompet $mastrwhere ORDER BY EtabNomCourt, LicEtabCode, EquNum, LicNom, LicPrï¿½nom, Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
+					array("Equipes","SELECT EquNum As Numï¿½ro, EquComplï¿½ment As Complï¿½ment, EtabNomCourt As Etab, EtabNom As EtabNom, EtabVille As EtabVille, CatLibelCourt As Cat, EprLibelCourt As Epreuve, IF (EquPromo = 1, 'X','') As Promo, EquChall As Chall, EquRelayeurs As Relayeurs, EquObs1 As Obs1, EquObs2 As Obs2, EquObs3 As Obs3, EquObs4 As Obs4, EquObs5 As Obs5 FROM Etablissements, Catï¿½gories INNER JOIN Equipes ON Catï¿½gories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode WHERE Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $ListeExportCompet $mastrwhere $mastrwhere ORDER BY EtabNomCourt, EquNum, EquComplï¿½ment, Epreuves.Ordre"),
 					array("",ConstruitStat($compets, $MonSportCode, $queryStr, $NomsColonnes, $ChampsAli, $ChampsFor, $ChampsAff, $ChampsType, $Choix, $mastrwhere))
 				);
 				if ($stat >= 1) {array_shift($listetable); array_shift($listetable); array_shift($listetable); array_shift($listetable); array_shift($listetable);}
 			} else {
 				$listetable = array(
-					array("Compétitions","SELECT CompetLibellé As Compétition, CompetDateDéb As Date, CompetLieu As Lieu, SpoLibelCourt As Sport, CompetObs As Obs FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode = $ListeExportCompet"),
-					array("Etablissements","(SELECT DISTINCTROW EtabNum As Numéro, EtabNomCourt As Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTél As Tél, EtabFax As Fax FROM Catégories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compétitions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet $mastrwhere) UNION (SELECT DISTINCTROW EtabNum As Numéro, EtabNomCourt AS Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTél As Tél, EtabFax As Fax FROM Catégories INNER JOIN ((Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compétitions` INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) ON Licenciés.LicNumLicence = Participations.ParLicCode) ON Catégories.CatCode = Epreuves.EprCatCode WHERE Participations.ParCompetCode = $ListeExportCompet $mastrwhere) ORDER BY Numéro"),
-					array("Participations","SELECT ParLicCode As Numéro, EtabNomCourt As Etab, EtabNom As `Etab Nom`, EtabVille AS `Etab Ville`, Licenciés.LicNom As Nom, Licenciés.LicPrénom As Prénom, Licenciés.LicNaissance As Naiss, IF(CatSexCode = 1,'G','F') As Sexe, CatLibelCourt As Cat, EprLibelCourt As Epr, EquNum As Equ, ParObs1 As Obs1, ParObs2 As Obs2, ParObs3 As Obs3, ParObs4 As Obs4, ParObs5 As Obs5 FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode WHERE ((Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) AND ParCompetCode = $ListeExportCompet $mastrwhere ORDER BY Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
-					array("Equipes","SELECT EquNum As Numéro, EquComplément As Complément, EtabNomCourt As Etab, EtabNom As EtabNom, EtabVille As EtabVille, CatLibelCourt As Cat, EprLibelCourt As Epreuve, IF (EquPromo = 1, 'X','') As Promo, EquChall As Chall, EquRelayeurs As Relayeurs, EquObs1 As Obs1, EquObs2 As Obs2, EquObs3 As Obs3, EquObs4 As Obs4, EquObs5 As Obs5 FROM Etablissements, Catégories INNER JOIN Equipes ON Catégories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode WHERE Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $ListeExportCompet $mastrwhere $mastrwhere ORDER BY EtabNomCourt, EquNum, EquComplément, Epreuves.Ordre"),
+					array("Compï¿½titions","SELECT CompetLibellï¿½ As Compï¿½tition, CompetDateDï¿½b As Date, CompetLieu As Lieu, SpoLibelCourt As Sport, CompetObs As Obs FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode = $ListeExportCompet"),
+					array("Etablissements","(SELECT DISTINCTROW EtabNum As Numï¿½ro, EtabNomCourt As Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTï¿½l As Tï¿½l, EtabFax As Fax FROM Catï¿½gories RIGHT JOIN ((Epreuves RIGHT JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) RIGHT JOIN (Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode) ON `Epreuves Compï¿½titions`.EprCompetCode = Equipes.EquEprCompetCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Equipes.EquCompetCode = $ListeExportCompet $mastrwhere) UNION (SELECT DISTINCTROW EtabNum As Numï¿½ro, EtabNomCourt AS Etab, EtabNom As Nom, EtabVille AS Ville, EtabAdresse1 As Adresse1, EtabAdresse2 As Adresse2, EtabCp As CP, EtabVille As Ville, EtabTï¿½l As Tï¿½l, EtabFax As Fax FROM Catï¿½gories INNER JOIN ((Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode) INNER JOIN (Epreuves INNER JOIN (`Epreuves Compï¿½titions` INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode) ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode WHERE Participations.ParCompetCode = $ListeExportCompet $mastrwhere) ORDER BY Numï¿½ro"),
+					array("Participations","SELECT ParLicCode As Numï¿½ro, EtabNomCourt As Etab, EtabNom As `Etab Nom`, EtabVille AS `Etab Ville`, Licenciï¿½s.LicNom As Nom, Licenciï¿½s.LicPrï¿½nom As Prï¿½nom, Licenciï¿½s.LicNaissance As Naiss, IF(CatSexCode = 1,'G','F') As Sexe, CatLibelCourt As Cat, EprLibelCourt As Epr, EquNum As Equ, ParObs1 As Obs1, ParObs2 As Obs2, ParObs3 As Obs3, ParObs4 As Obs4, ParObs5 As Obs5 FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode WHERE ((Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) AND ParCompetCode = $ListeExportCompet $mastrwhere ORDER BY Participations.ParLicCode, Participations.ParTour, Epreuves.Ordre"),
+					array("Equipes","SELECT EquNum As Numï¿½ro, EquComplï¿½ment As Complï¿½ment, EtabNomCourt As Etab, EtabNom As EtabNom, EtabVille As EtabVille, CatLibelCourt As Cat, EprLibelCourt As Epreuve, IF (EquPromo = 1, 'X','') As Promo, EquChall As Chall, EquRelayeurs As Relayeurs, EquObs1 As Obs1, EquObs2 As Obs2, EquObs3 As Obs3, EquObs4 As Obs4, EquObs5 As Obs5 FROM Etablissements, Catï¿½gories INNER JOIN Equipes ON Catï¿½gories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode WHERE Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $ListeExportCompet $mastrwhere $mastrwhere ORDER BY EtabNomCourt, EquNum, EquComplï¿½ment, Epreuves.Ordre"),
 					array("",ConstruitStat($compets, $MonSportCode, $queryStr, $NomsColonnes, $ChampsAli, $ChampsFor, $ChampsAff, $ChampsType, $Choix, $mastrwhere))
 				);
 				if ($stat >= 1) {array_shift($listetable); array_shift($listetable); array_shift($listetable); array_shift($listetable);}
@@ -914,7 +914,7 @@ Function export($listetable = "", $auto = "", $externe = "") {
 			$num    = mysql_num_rows($pTable);
 		}
 		if (($sql) || ($ser)) {
-			if ($typeexp == "Compétition") {
+			if ($typeexp == "Compï¿½tition") {
 				$li = "-- #$typeexp#$UGSELNOM#$MonSport#$MaDescription#$MonObs#"."\r\n";
 				if ($sql) echo $li; else gzwrite($leFichier, $li);
 			}
@@ -947,7 +947,7 @@ Function export($listetable = "", $auto = "", $externe = "") {
 			$nbre    = mysql_num_rows($result);
 			$col     = mysql_num_fields($result);
 			if (($sql) || ($ser)) {
-				$contenu = "INSERT INTO `$tablename`";
+				$contenu = "INSERTï¿½INTO `$tablename`";
 				$listeChamp  =" (";
 			} else {
 				$contenu = ""; 
@@ -1017,14 +1017,14 @@ function RetourneFic ($chemin = ".", $Masque = "", $Type = "", $TriFic = "") {
 		if( (!(is_dir("$chemin/$file"))) && (!(!(strstr($file, $Masque)))) ){		
 			$tabfile[$fileind]["Nom"]       = $file;
 			$tabfile[$fileind]["Taille"]    = sprintf ("%.1f K%s",(filesize("$chemin/$file")/1024),"o");
-			$tabfile[$fileind]["Date"]      = array_search(Date("w", filemtime("$chemin/$file")),$arrayjours)." ".Date("d/m/Y", filemtime("$chemin/$file"));
+			$tabfile[$fileind]["Date"]      = array_search(Date("w", filemtime("$chemin/$file")), $arrayjours) . " ugselwebv1pt.php" .Date("d/m/Y", filemtime("$chemin/$file"));
 			$tabfile[$fileind]["Heure"]     = Date("H:i:s", filemtime("$chemin/$file"));
 			$tabfile[$fileind]["DateTri"]   = filemtime("$chemin/$file");
 			$tabfile[$fileind]["TailleTri"] = filesize("$chemin/$file");
 			$tabfile[$fileind]["Age"]       = ceil((($datenow - mktime(0,0,0, date('m', filemtime("$chemin/$file")), date('d', filemtime("$chemin/$file")), date('Y', filemtime("$chemin/$file")))) / 86400));
 			if (strstr($file, $Type) == True) $tabfile[$fileind]["Type"] = $Type; else $tabfile[$fileind]["Type"] = "Man";
 
-			if ($Masque == "Compétition") {
+			if ($Masque == "Compï¿½tition") {
 				$tabfile[$fileind]["Ugsel"] = "";
 				$tabfile[$fileind]["Sport"] = "";
 				$tabfile[$fileind]["Description"] = "";
@@ -1039,7 +1039,7 @@ function RetourneFic ($chemin = ".", $Masque = "", $Type = "", $TriFic = "") {
 							if($tab[2] != "") $tabfile[$fileind]["Sport"] = $tab[3]; 
 							if($tab[3] != "") $tabfile[$fileind]["Description"] = $tab[4]; 
 							if($tab[4] != "") $tabfile[$fileind]["Obs"] = $tab[5];
-							$tabfile[$fileind]["Résumé"] = $tabfile[$fileind]["Sport"]." - ".$tabfile[$fileind]["Ugsel"]." -> ".$tabfile[$fileind]["Date"]." à ".$tabfile[$fileind]["Heure"]." (".$tabfile[$fileind]["Taille"].") ".$tabfile[$fileind]["Description"]; 
+							$tabfile[$fileind]["Rï¿½sumï¿½"] = $tabfile[$fileind]["Sport"]." - ".$tabfile[$fileind]["Ugsel"]." -> ".$tabfile[$fileind]["Date"]." ï¿½ ".$tabfile[$fileind]["Heure"]." (".$tabfile[$fileind]["Taille"].") ".$tabfile[$fileind]["Description"]; 
 						}
 					}  
 				}
@@ -1051,7 +1051,7 @@ function RetourneFic ($chemin = ".", $Masque = "", $Type = "", $TriFic = "") {
 	}
 	@closedir($handle);
 	if ($fileind > 0) {
-		if ($Masque == "Compétition") {
+		if ($Masque == "Compï¿½tition") {
 			switch($TriFic) {
 				case "Date"   : $tabfile = TriTableau($tabfile, "DateTri","DATE","ASC", "Ugsel","STR","ASC", "Sport","STR","ASC"); Break;
 				case "Taille" : $tabfile = TriTableau($tabfile, "TailleTri","NB","ASC", "Ugsel","STR","ASC", "Sport","STR","ASC") ; Break;
@@ -1083,12 +1083,12 @@ function RetourneRep ($chemin = ".", $Masque = "") {
 				$tabfile[$fileind]["Mdp"] = TrouveDansFic($monIndex,"MDP");
 				$tabfile[$fileind]["Lic Externe"] = "-";
 				$tabfile[$fileind]["Lic Interne"] = "-";
-				$reqlicExt = bf_mysql_query("SELECT COUNT(*) AS NB FROM Licenciés", 0, "", $tabfile[$fileind]["Bdd"], $tabfile[$fileind]["Utilisateur"],$tabfile[$fileind]["Mdp"]);
+				$reqlicExt = bf_mysql_query("SELECT COUNT(*) AS NB FROM Licenciï¿½s", 0, "", $tabfile[$fileind]["Bdd"], $tabfile[$fileind]["Utilisateur"],$tabfile[$fileind]["Mdp"]);
 				if (!(!($reqlicExt))) {
 					$reslicExt = mysql_fetch_array($reqlicExt);
 					if (!(!($reslicExt))) $tabfile[$fileind]["Lic Externe"] = $reslicExt["NB"];
 				} 
-				$reqlicInt = bf_mysql_query("SELECT COUNT(*) AS NB FROM (Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel = ".substr($tabfile[$fileind]["Utilisateur"],5,3) );
+				$reqlicInt = bf_mysql_query("SELECT COUNT(*) AS NB FROM (Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode) INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel = ".substr($tabfile[$fileind]["Utilisateur"],5,3) );
 				if (!(!($reqlicInt))) {
 					$reslicInt = mysql_fetch_array($reqlicInt);
 					if (!(!($reslicInt))) $tabfile[$fileind]["Lic Interne"] = $reslicInt["NB"];
@@ -1136,14 +1136,14 @@ function ConvertTaille($Taille) {
 } 
 
 function ConstruitStat($TypeStat = 0, $MonSport = 1, &$queryStr, &$NomsColonnes, &$ChampsAli, &$ChampsFor, &$ChampsAff, &$ChampsType, &$Choix, $Etab = "") {			
-	$NomsColonnes  = array('','Code ','Numéro','Code','Nom','Ville','Total','Ins','Non','F','G');
+	$NomsColonnes  = array('','Code ','Numï¿½ro','Code','Nom','Ville','Total','Ins','Non','F','G');
 	$ChampsAli     = array('','','center','center','','','right','right','right','right','right');
 	$ChampsFor     = array('','','%06d','','','','','','','','');
 	$ChampsAff     = array(false,false,true,true,true,true,true,true,true,true,true);
 	$ChampsType    = array("","Texte","Texte","Texte","Texte","Texte","Texte","Texte","Texte","Texte","Texte");
 	$Choix = array("exporter", "liste");
 	$MaStr = " SUM(1) AS Total, SUM(IF(LicInscrit,1,0)) AS Ins, SUM(IF(NOT LicInscrit,1,0)) AS Non, SUM(IF(LicSexCode=2,1,0)) AS F, SUM(IF(LicSexCode=1,1,0)) AS G,";
-	$ResCat = bf_mysql_query("SELECT * FROM Sports INNER JOIN Catégories ON Sports.SpoCode = Catégories.CatSpoCode WHERE SpoCode = $MonSport AND CatPrim = TRUE ORDER BY Catégories.Ordre");
+	$ResCat = bf_mysql_query("SELECT * FROM Sports INNER JOIN Catï¿½gories ON Sports.SpoCode = Catï¿½gories.CatSpoCode WHERE SpoCode = $MonSport AND CatPrim = TRUE ORDER BY Catï¿½gories.Ordre");
 	while ($resCat = mysql_fetch_array($ResCat)) {
 				$MaStr = $MaStr." SUM(IF(CatLibelCourt='".$resCat['CatLibelCourt']."',1,0)) AS ".$resCat['CatLibelCourt'].",";
 				array_push ($NomsColonnes, $resCat['CatLibelCourt']);
@@ -1161,13 +1161,13 @@ function ConstruitStat($TypeStat = 0, $MonSport = 1, &$queryStr, &$NomsColonnes,
 			while ($resRel = mysql_fetch_array($reqRelay)) {
 				$strRel .= ",".str_replace(" - ", ",", RetRelayeurs($resRel['EquRelayeurs'],1));
 			}
-			$strRel = " SELECT LicNumLicence AS ParLicCode, ".$TypeStat." AS ParCompetCode FROM Licenciés WHERE LicNumLicence IN (".$strRel.") ";
+			$strRel = " SELECT LicNumLicence AS ParLicCode, ".$TypeStat." AS ParCompetCode FROM Licenciï¿½s WHERE LicNumLicence IN (".$strRel.") ";
 		}
 	}
 	for( $i = 0; $i <= 3; $i++ ) {
-		$Fin = "WHERE ( (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = $MonSport And CatPrim = TRUE) ";
+		$Fin = "WHERE ( (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = $MonSport And CatPrim = TRUE) ";
 		if ($i == 0) $Fin = $Fin.$Etab;
-		if ($TypeStat == -2) $MaStrTab[$i] = $MaStr." FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Secteurs ON Secteurs.SecCode = Etablissements.EtabSecCode ".$Fin;
+		if ($TypeStat == -2) $MaStrTab[$i] = $MaStr." FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Secteurs ON Secteurs.SecCode = Etablissements.EtabSecCode ".$Fin;
 		
 		$maUnionRelayeurs = "";
 		if (($TypeStat >= -1) && ($strRel != "")) {
@@ -1178,22 +1178,22 @@ function ConstruitStat($TypeStat = 0, $MonSport = 1, &$queryStr, &$NomsColonnes,
 		if ($TypeStat > 0) $select = "(SELECT ParLicCode, ParCompetCode FROM Participations GROUP BY ParLicCode, ParCompetCode HAVING ParCompetCode = $TypeStat) $maUnionRelayeurs"; else $select = "(SELECT ParLicCode FROM Participations GROUP BY ParLicCode) $maUnionRelayeurs";
 		if ($TypeStat >= -1) {
 			bf_mysql_query("CREATE TEMPORARY TABLE TempPar$i $select");
-			$MaStrTab[$i] = $MaStr." FROM Catégories, Licenciés INNER JOIN Etablissements ON LicEtabCode = EtabCode INNER JOIN Secteurs ON SecCode = EtabSecCode INNER JOIN TempPar$i ON Licenciés.LicNumLicence = TempPar$i.ParLicCode ".$Fin;
+			$MaStrTab[$i] = $MaStr." FROM Catï¿½gories, Licenciï¿½s INNER JOIN Etablissements ON LicEtabCode = EtabCode INNER JOIN Secteurs ON SecCode = EtabSecCode INNER JOIN TempPar$i ON Licenciï¿½s.LicNumLicence = TempPar$i.ParLicCode ".$Fin;
 		}
 	}
-	$queryStr      = "SELECT '' AS ' ', CONCAT(SecRégionCode, ' ',SecLibel,' ', EtabNomCourt) AS `Code `, EtabNum AS Numéro, EtabNomCourt AS Code, EtabNom AS Nom, EtabVille AS Ville, ".$MaStrTab[0]." GROUP BY EtabNum ";
+	$queryStr      = "SELECT '' AS ' ', CONCAT(SecRï¿½gionCode, ' ',SecLibel,' ', EtabNomCourt) AS `Code `, EtabNum AS Numï¿½ro, EtabNomCourt AS Code, EtabNom AS Nom, EtabVille AS Ville, ".$MaStrTab[0]." GROUP BY EtabNum ";
 	If ($Etab == "") $queryStr = $queryStr."
-					  UNION SELECT ' ' AS F, CONCAT(SecRégionCode, ' ', SecLibel, '  ') AS `Code `,  '' AS Numéro, '' AS Code, CONCAT(SecLibellé, ' (', COUNT(DISTINCT(EtabCode)),' Etab)') AS Nom, '' AS Ville, ".$MaStrTab[1]." GROUP BY SecCode 
-					  UNION SELECT '  ' AS F, CONCAT(SecRégionCode, '   ') AS `Code `,  '' AS Numéro, '' AS Code, CONCAT(SecRégionCode, ' (', COUNT(DISTINCT(EtabCode)),' Etab)') AS Nom, '' AS Ville, ".$MaStrTab[2]." GROUP BY SecRégionCode
-					  UNION SELECT '   ' AS F, '   ' AS `Code `,  '' AS Numéro, '' AS Code, CONCAT('Ugsel', ' (', COUNT(DISTINCT(EtabCode)),' Etab)')  AS Nom, '' AS Ville, ".$MaStrTab[3]." GROUP BY `Code `";  
+					  UNION SELECT 'ï¿½' AS F, CONCAT(SecRï¿½gionCode, ' ', SecLibel, 'ï¿½ï¿½') AS `Code `,  '' AS Numï¿½ro, '' AS Code, CONCAT(SecLibellï¿½, ' (', COUNT(DISTINCT(EtabCode)),' Etab)') AS Nom, '' AS Ville, ".$MaStrTab[1]." GROUP BY SecCode 
+					  UNION SELECT 'ï¿½ï¿½' AS F, CONCAT(SecRï¿½gionCode, 'ï¿½ï¿½ï¿½') AS `Code `,  '' AS Numï¿½ro, '' AS Code, CONCAT(SecRï¿½gionCode, ' (', COUNT(DISTINCT(EtabCode)),' Etab)') AS Nom, '' AS Ville, ".$MaStrTab[2]." GROUP BY SecRï¿½gionCode
+					  UNION SELECT 'ï¿½ï¿½ï¿½' AS F, 'ï¿½ï¿½ï¿½' AS `Code `,  '' AS Numï¿½ro, '' AS Code, CONCAT('Ugsel', ' (', COUNT(DISTINCT(EtabCode)),' Etab)')  AS Nom, '' AS Ville, ".$MaStrTab[3]." GROUP BY `Code `";  
 	$queryStr = $queryStr." ORDER BY `Code `";
 	Return($queryStr);
 }
 
 function RenumeroteEquipes($Compet) {
-	bf_mysql_query("UPDATE Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode INNER JOIN Equipes ON Compétitions.CompetCode = Equipes.EquCompetCode INNER JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode INNER JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode SET EquCatCode = EprCatCode WHERE (ISNULL(EquCatCode) OR EquCatCode = 0) AND SpoGestionPerf = -5 AND EquCompetCode = $Compet", 0, "`Equipes`");
-	bf_mysql_query("UPDATE Equipes SET EquNum = EquNum * -1, EquComplément = Null Where EquCompetCode = $Compet", 0, "`Equipes`");
-	$Res = bf_mysql_query("SELECT EquCode, EtabNum, EquTour, EquEtabCode, CatCode FROM Etablissements INNER JOIN Secteurs On Etablissements.EtabSecCode = Secteurs.SecCode, Catégories INNER JOIN Equipes ON Catégories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode where Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $Compet ORDER BY Catégories.Ordre, Epreuves.Ordre, Secteurs.Ordre, Etablissements.EtabNum, EquNum Desc, EquTour");
+	bf_mysql_query("UPDATE Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode INNER JOIN Equipes ON Compï¿½titions.CompetCode = Equipes.EquCompetCode INNER JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode INNER JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode SET EquCatCode = EprCatCode WHERE (ISNULL(EquCatCode) OR EquCatCode = 0) AND SpoGestionPerf = -5 AND EquCompetCode = $Compet", 0, "`Equipes`");
+	bf_mysql_query("UPDATE Equipes SET EquNum = EquNum * -1, EquComplï¿½ment = Null Where EquCompetCode = $Compet", 0, "`Equipes`");
+	$Res = bf_mysql_query("SELECT EquCode, EtabNum, EquTour, EquEtabCode, CatCode FROM Etablissements INNER JOIN Secteurs On Etablissements.EtabSecCode = Secteurs.SecCode, Catï¿½gories INNER JOIN Equipes ON Catï¿½gories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode where Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $Compet ORDER BY Catï¿½gories.Ordre, Epreuves.Ordre, Secteurs.Ordre, Etablissements.EtabNum, EquNum Desc, EquTour");
 	while ($res = mysql_fetch_array($Res)) {
 		if ( ($res["EquTour"] == 1) || ($res["EquTour"] == Null) ) { 
 			$Maxnum = mysql_fetch_array(bf_mysql_query("SELECT MAX(EquNum) AS Max FROM Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode WHERE EquNum > 0 AND EquCompetCode = $Compet AND EquEtabCode = ".$res["EquEtabCode"])); 
@@ -1201,11 +1201,11 @@ function RenumeroteEquipes($Compet) {
 			if (Floor($NumEqu / 10) - $res["EtabNum"] == 1) $NumEqu = (($NumEqu / 10) - 1) * 100 + 10;
 			$Countcomp = mysql_fetch_array(bf_mysql_query("SELECT COUNT(EquCode) AS Nbre FROM Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode WHERE EquTour = 1 AND EquNum > 0 AND EquCatCode = ".$res["CatCode"]." AND EquNum < $NumEqu AND EquCompetCode = $Compet AND EquEtabCode = ".$res["EquEtabCode"])); 
 			$NumComp = $Countcomp["Nbre"] + 1;
-			bf_mysql_query("UPDATE Equipes SET EquNum = $NumEqu, EquComplément = $NumComp Where EquCompetCode = $Compet AND EquCode = ".$res["EquCode"]);
+			bf_mysql_query("UPDATE Equipes SET EquNum = $NumEqu, EquComplï¿½ment = $NumComp Where EquCompetCode = $Compet AND EquCode = ".$res["EquCode"]);
 			$SauveNumEqu = $NumEqu;
 			$SauveCompEqu = $NumComp;
 		} Else {
-			bf_mysql_query("UPDATE Equipes SET EquNum = $SauveNumEqu, EquComplément = $SauveCompEqu Where EquCompetCode = $Compet AND EquCode = ".$res["EquCode"]);
+			bf_mysql_query("UPDATE Equipes SET EquNum = $SauveNumEqu, EquComplï¿½ment = $SauveCompEqu Where EquCompetCode = $Compet AND EquCode = ".$res["EquCode"]);
 		}
 	}
 }
@@ -1249,9 +1249,9 @@ function RetAS($Etab) {
 function PurgeTables() {
 	Global $PURGE, $Adm;
 	if (($Adm) && ($PURGE != 0)) {
-		bf_mysql_query("DELETE Participations FROM Participations INNER JOIN Licenciés ON Participations.ParLicCode = Licenciés.LicNumLicence INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel <> $PURGE");
+		bf_mysql_query("DELETE Participations FROM Participations INNER JOIN Licenciï¿½s ON Participations.ParLicCode = Licenciï¿½s.LicNumLicence INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel <> $PURGE");
 		bf_mysql_query("DELETE Equipes FROM Equipes INNER JOIN Etablissements ON Equipes.EquEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel <> $PURGE");
-		bf_mysql_query("DELETE Licenciés FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel <> $PURGE");
+		bf_mysql_query("DELETE Licenciï¿½s FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel <> $PURGE");
 		bf_mysql_query("DELETE Etablissements FROM Etablissements INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE SecLibel <> $PURGE");
 		bf_mysql_query("DELETE Secteurs FROM Secteurs WHERE SecLibel <> $PURGE");
 	}
@@ -1384,25 +1384,25 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		if ($MaReqErr == "") {
 			if (($menu == "competitions") && ($sousmenu == "individuels")) {
 				if ((!(isset($BValidernumlicence))) || (empty($BValidernumlicence))) {
-					$MaReqErr = "Cliquez sur le bouton Ok pour rechercher le licencié.";
+					$MaReqErr = "Cliquez sur le bouton Ok pour rechercher le licenciï¿½.";
 				} else {
-					$reqlicstr = "SELECT LicInscrit, LicNumLicence, LicNom, LicPrénom, LicNaissance, LicSexCode, LicAss, LicDateDem FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode WHERE LicNumLicence = ".$_POST["ParLicCode"];
+					$reqlicstr = "SELECT LicInscrit, LicNumLicence, LicNom, LicPrï¿½nom, LicNaissance, LicSexCode, LicAss, LicDateDem FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode WHERE LicNumLicence = ".$_POST["ParLicCode"];
 					if (!($Adm)) $reqlicstr .= " And (EtabNum = ".$Etab.RetAS($Etab).")";
 					$reqlic = bf_mysql_query($reqlicstr);
 					if ($reqlic) {
 						$reslic = mysql_fetch_array($reqlic);
 						if ($reslic) {
-							$reflic = sprintf('%010s',$reslic['LicNumLicence'])." ".$reslic['LicNom']." ".$reslic['LicPrénom'];
+							$reflic = sprintf('%010s', $reslic['LicNumLicence']) . " ugselwebv1pt.php" .$reslic['LicNom']." ".$reslic['LicPrï¿½nom'];
 							if ($reslic["LicInscrit"] != 1) {
-								$MaReqErr  = "Aucune licence n'a été établie pour ".$reflic.".";
+								$MaReqErr  = "Aucune licence n'a ï¿½tï¿½ ï¿½tablie pour ".$reflic.".";
 								$optionIns = TrouveParamweb("InscriptionLic");
 								if ($optionIns == 0) {
-									$MaReqErr .= " Contactez votre Ugsel pour établir la licence.";
+									$MaReqErr .= " Contactez votre Ugsel pour ï¿½tablir la licence.";
 								} else {
-									if ( ($optionIns == 1) && (!(is_null($reslic['LicDateDem']))) && (CompteEnr("Compétitions", $reslic['LicNumLicence']." IN(0".TrouveSport($Compet, "CompetDemLic").")") > 0) ) { 
-										$MaReqErr .= "<BR><BR> Une demande de licence a déjà été effectuée pour ".$reslic['LicPrénom']." ".$reslic['LicNom'].". Vous pourrez l'inscrire dans la compétition une fois la demande validée par l'Ugsel.";
+									if ( ($optionIns == 1) && (!(is_null($reslic['LicDateDem']))) && (CompteEnr("Compï¿½titions", $reslic['LicNumLicence']." IN(0".TrouveSport($Compet, "CompetDemLic").")") > 0) ) { 
+										$MaReqErr .= "<BR><BR> Une demande de licence a dï¿½jï¿½ ï¿½tï¿½ effectuï¿½e pour ".$reslic['LicPrï¿½nom']." ".$reslic['LicNom'].". Vous pourrez l'inscrire dans la compï¿½tition une fois la demande validï¿½e par l'Ugsel.";
 									} else {									
-										$MaReqErr .= "<BR><BR> &nbsp; Voulez-vous demander une licence pour ".$reslic['LicPrénom']." ".$reslic['LicNom']." ?";
+										$MaReqErr .= "<BR><BR> &nbsp; Voulez-vous demander une licence pour ".$reslic['LicPrï¿½nom']." ".$reslic['LicNom']." ?";
 										$MaReqErr .= "
 										<BR><BR>
 										<FORM method='post'>
@@ -1422,24 +1422,24 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 								}
 							} else {	
 								$resins = mysql_fetch_array(bf_mysql_query("SELECT ParCode FROM Participations WHERE ParEprCode = ".$_POST["EprLibelCourt"]." AND ParLicCode = ".$_POST["ParLicCode"]));
-								$resepr = mysql_fetch_array(bf_mysql_query("SELECT EprLibelCourt, CatDateDéb, CatDateFin, CatSexCode FROM Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE EprCompetCode = ".$_POST["EprLibelCourt"]));
+								$resepr = mysql_fetch_array(bf_mysql_query("SELECT EprLibelCourt, CatDateDï¿½b, CatDateFin, CatSexCode FROM Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE EprCompetCode = ".$_POST["EprLibelCourt"]));
 								if ( ($Sport == 13) || ($Sport == 15) || ($Sport == 16) || ($Sport == 17) || ($Sport == 18) || ($Sport == 19)) {
 									$resuni = mysql_fetch_array(bf_mysql_query("SELECT ParCode FROM Participations WHERE ParCompetCode = ".$Compet." AND ParLicCode = ".$_POST["ParLicCode"]));
-									if ($resuni) $MaReqErr = "Le licencié ".$reflic." est déjà inscrit dans la compétition (vous pouvez modifier son inscription)";
+									if ($resuni) $MaReqErr = "Le licenciï¿½ ".$reflic." est dï¿½jï¿½ inscrit dans la compï¿½tition (vous pouvez modifier son inscription)";
 								} 
 									if ($resins) {
-										$MaReqErr = "Le licencié ".$reflic." est déjà inscrit dans l'épreuve ".$resepr['EprLibelCourt'];
+										$MaReqErr = "Le licenciï¿½ ".$reflic." est dï¿½jï¿½ inscrit dans l'ï¿½preuve ".$resepr['EprLibelCourt'];
 									} else {
 										if ($resepr["CatSexCode"] <3) {
 											if (stristr($resepr['EprLibelCourt'], "OPEN") === false) {
-												if (!(($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDéb"]) && ($reslic["LicNaissance"] <= $resepr["CatDateFin"]))) {
-													if (isset($_POST["EprLibelCourt"])) $MaReqErr = "La catégorie du licencié ".$reflic." est différente de celle de l'épreuve ".$resepr['EprLibelCourt'];
-														else $MaReqErr = "Saisissez un N° de licence puis cliquez sur le bouton Ok";
+												if (!(($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDï¿½b"]) && ($reslic["LicNaissance"] <= $resepr["CatDateFin"]))) {
+													if (isset($_POST["EprLibelCourt"])) $MaReqErr = "La catï¿½gorie du licenciï¿½ ".$reflic." est diffï¿½rente de celle de l'ï¿½preuve ".$resepr['EprLibelCourt'];
+														else $MaReqErr = "Saisissez un Nï¿½ de licence puis cliquez sur le bouton Ok";
 													
 													if ( ($Sport == 7) || ($Sport == 11) || ($Sport == 12) || ($Sport == 20) ) { 
-														if ((($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDéb"]) && ($reslic["LicNaissance"] <= date('Y/m/d', strtotime('+1 year',strtotime($resepr["CatDateFin"])))  ))) {
+														if ((($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDï¿½b"]) && ($reslic["LicNaissance"] <= date('Y/m/d', strtotime('+1 year',strtotime($resepr["CatDateFin"])))  ))) {
 															if (!(isset($BAjouterSurclassement))) {
-																$MaReqErr .= "<BR><BR> &nbsp; < Vous pouvez cliquer sur le bouton 'SurClasser' pour inscrire ce participant (vérifiez au pralable si le règlement vous l'autorise) >"; 
+																$MaReqErr .= "<BR><BR> &nbsp; < Vous pouvez cliquer sur le bouton 'SurClasser' pour inscrire ce participant (vï¿½rifiez au pralable si le rï¿½glement vous l'autorise) >"; 
 																$SurClass = 1;
 															} else {
 																$MaReqErr = "";
@@ -1450,7 +1450,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 												}
 											} else {
 												if (!(($reslic["LicSexCode"] == $resepr["CatSexCode"]))) {
-													if ($MaReqErr == "") $MaReqErr = "La catégorie du licencié ".$reflic." est différente de celle de l'épreuve ".$resepr['EprLibelCourt'];
+													if ($MaReqErr == "") $MaReqErr = "La catï¿½gorie du licenciï¿½ ".$reflic." est diffï¿½rente de celle de l'ï¿½preuve ".$resepr['EprLibelCourt'];
 												}
 											}
 										}
@@ -1462,7 +1462,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 									$nbTot++;
 								}
 								if ($nbInsc > $maxInsc) {
-									$MaReqErr = "Vous ne pouvez pas inscrire un participant dans plus de $maxInsc épreuve";
+									$MaReqErr = "Vous ne pouvez pas inscrire un participant dans plus de $maxInsc ï¿½preuve";
 									if ($maxInsc > 1) $MaReqErr .= "s";
 									$MaReqErr .= ".";
 								} else {
@@ -1471,7 +1471,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 								while (isset($_POST['Epr'.$l])) {	
 									$MaReq = ""; $strPost = ""; $MaReqErrLigne = false;
 									if ($l == 0) $MaReqErr = "";
-									if ($_POST['Lic'.$l] != $_POST['ParLicCode']) {$MaReqErr = "Cliquez sur le bouton 'Ok' après avoir modifié le numéro de licence."; break;}
+									if ($_POST['Lic'.$l] != $_POST['ParLicCode']) {$MaReqErr = "Cliquez sur le bouton 'Ok' aprï¿½s avoir modifiï¿½ le numï¿½ro de licence."; break;}
 									$postParQuadra = "Null"; $postEquNum = "Null"; $postParPerfQualif = "0";
 									if ($_POST['ParQuadra'.$_POST['Epr'.$l]] > 0) $postParQuadra = "True";
 									if ($_POST['EquNum'.$_POST['Epr'.$l]] > 0) $postEquNum = $_POST['EquNum'.$_POST['Epr'.$l]];
@@ -1504,7 +1504,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 											if ($messageAj != "") $messageAj = $messageAj.", "; else $messageAj = " <BR> &nbsp;&nbsp; Ajout en : "; $messageAj = $messageAj.$_POST['Lib'.$l];
 										} else {
 											$strPost = "UPDATE Participations SET ".$strPost." WHERE ParCode = ".$_POST['Par'.$l]; 
-											if ($messageMo != "") $messageMo = $messageMo.", "; else $messageMo = " <BR> &nbsp;&nbsp; Mise à jour en : "; $messageMo = $messageMo.$_POST['Lib'.$l];
+											if ($messageMo != "") $messageMo = $messageMo.", "; else $messageMo = " <BR> &nbsp;&nbsp; Mise ï¿½ jour en : "; $messageMo = $messageMo.$_POST['Lib'.$l];
 										}
 									} else {
 										if ($_POST['Par'.$l] != "")	{
@@ -1519,23 +1519,23 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 								}
 							}
 						} else {
-							$MaReqErr = "Le licencié ".$_POST["ParLicCode"]." est introuvable.";
+							$MaReqErr = "Le licenciï¿½ ".$_POST["ParLicCode"]." est introuvable.";
 						}
 					} else {
-						$MaReqErr = "Le licencié ".$_POST["ParLicCode"]." est introuvable.";
+						$MaReqErr = "Le licenciï¿½ ".$_POST["ParLicCode"]." est introuvable.";
 					}
 				}
 			}
 			
 			if (($menu == "competitions") && ($sousmenu == "equipes") && isset($_POST["EprLibelCourt"])) {
-				$reqetabcat = bf_mysql_query("SELECT EprCatCode, EprLibelCourt, SpoGestionPerf FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode INNER JOIN `Epreuves Compétitions` ON Compétitions.CompetCode = `Epreuves Compétitions`.EprCompetCompetCode INNER JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode INNER JOIN Catégories ON Epreuves.EprCatCode = Catégories.CatCode WHERE `Epreuves Compétitions`.EprCompetCode = ".$_POST["EprLibelCourt"]);
+				$reqetabcat = bf_mysql_query("SELECT EprCatCode, EprLibelCourt, SpoGestionPerf FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode INNER JOIN `Epreuves Compï¿½titions` ON Compï¿½titions.CompetCode = `Epreuves Compï¿½titions`.EprCompetCompetCode INNER JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode INNER JOIN Catï¿½gories ON Epreuves.EprCatCode = Catï¿½gories.CatCode WHERE `Epreuves Compï¿½titions`.EprCompetCode = ".$_POST["EprLibelCourt"]);
 				if (!(!($reqetabcat))) {
 					$resetabcat = mysql_fetch_array($reqetabcat);
 					if (!(!($resetabcat))) {
 						if ($resetabcat['SpoGestionPerf'] == -1) {
 							if ($resetabcat['EprCatCode'] != $_POST["CatLibelCourt"]) {
-								$rescat = mysql_fetch_array(bf_mysql_query("SELECT CatLibelCourt FROM Catégories WHERE CatCode = ".$_POST["CatLibelCourt"]));
-								$MaReqErr = "La catégorie de l'équipe ".$rescat['CatLibelCourt'] ." est différente de celle de l'épreuve ".$resetabcat['EprLibelCourt'];
+								$rescat = mysql_fetch_array(bf_mysql_query("SELECT CatLibelCourt FROM Catï¿½gories WHERE CatCode = ".$_POST["CatLibelCourt"]));
+								$MaReqErr = "La catï¿½gorie de l'ï¿½quipe ".$rescat['CatLibelCourt'] ." est diffï¿½rente de celle de l'ï¿½preuve ".$resetabcat['EprLibelCourt'];
 							}
 						}
 					}
@@ -1553,9 +1553,9 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		if ($MaReqErr == ""){
 		
 			if (($menu == "parametres") && ($sousmenu == "epreuves")) {
-				$Res = bf_mysql_query("SELECT CompetCode FROM Compétitions WHERE CompetSpoCode = $ListeSport");
+				$Res = bf_mysql_query("SELECT CompetCode FROM Compï¿½titions WHERE CompetSpoCode = $ListeSport");
 				while ($res = mysql_fetch_array($Res)) {
-					bf_mysql_query("INSERT INTO `Epreuves Compétitions` (`EprCompetEprCode`, `EprCompetCompetCode`) SELECT `EprCode`, ".$res['CompetCode']." AS Compet FROM `Epreuves` WHERE `EprCode` = ".$_POST['EprCode'],0 , "`Epreuves Compétitions`");
+					bf_mysql_query("INSERT INTO `Epreuves Compï¿½titions` (`EprCompetEprCode`, `EprCompetCompetCode`) SELECT `EprCode`, ".$res['CompetCode']." AS Compet FROM `Epreuves` WHERE `EprCode` = ".$_POST['EprCode'],0 , "`Epreuves Compï¿½titions`");
 				}
 			}
 		
@@ -1563,7 +1563,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 				$res = mysql_fetch_array(bf_mysql_query("SELECT SpoCode FROM Sports WHERE SpoLibelCourt = '".$_POST['SpoLibelCourt']."'"));
 				$resepr = bf_mysql_query("SELECT `EprCode` FROM `Epreuves` WHERE `EprSpoCode` = ".$res["SpoCode"]);
 				while ($res = mysql_fetch_array($resepr)) {
-					bf_mysql_query("INSERT INTO `Epreuves Compétitions` (`EprCompetEprCode`, `EprCompetCompetCode`) VALUES(".$res["EprCode"].",".$_POST["CompetCode"].")",0 , "`Epreuves Compétitions`"); 
+					bf_mysql_query("INSERT INTO `Epreuves Compï¿½titions` (`EprCompetEprCode`, `EprCompetCompetCode`) VALUES(".$res["EprCode"].",".$_POST["CompetCode"].")",0 , "`Epreuves Compï¿½titions`"); 
 				}
 			}
 	
@@ -1574,7 +1574,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 			if (($menu == "competitions") && ($sousmenu == "individuels")) {
 				$message = "Inscription de ".$reflic;
 				if (!(isset($_POST['Epr1']))) {
-					if ($ChampsAff[8]) $message = $message." en ".$resepr['EprLibelCourt']." effectuée."; else $message = $message." effectuée.";
+					if ($ChampsAff[8]) $message = $message." en ".$resepr['EprLibelCourt']." effectuï¿½e."; else $message = $message." effectuï¿½e.";
 				} else {
 					if (($messageAj != "") || ($messageMo != "") || ($messageSu != "")) $message = $message." : ".$messageAj.$messageMo.$messageSu; else $message = "";
 				}
@@ -1679,23 +1679,23 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		
 		if ($MaReqErr == "") {
 			if (($menu == "competitions") && ($sousmenu == "individuels") && isset($_POST["EprLibelCourt"]) ) {
-				$reslic = mysql_fetch_array(bf_mysql_query("SELECT LicNumLicence, LicNom, LicPrénom, LicNaissance, LicSexCode FROM Licenciés INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode WHERE ParCode = ".$modif));
+				$reslic = mysql_fetch_array(bf_mysql_query("SELECT LicNumLicence, LicNom, LicPrï¿½nom, LicNaissance, LicSexCode FROM Licenciï¿½s INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode WHERE ParCode = ".$modif));
 				if ($reslic) {
-					$reflic = sprintf('%010s',$reslic['LicNumLicence'])." ".$reslic['LicNom']." ".$reslic['LicPrénom'];
+					$reflic = sprintf('%010s', $reslic['LicNumLicence']) . " ugselwebv1pt.php" .$reslic['LicNom']." ".$reslic['LicPrï¿½nom'];
 					$resins = mysql_fetch_array(bf_mysql_query("SELECT ParCode FROM Participations WHERE ParCode <> ".$modif." AND ParEprCode = ".$_POST["EprLibelCourt"]." AND ParLicCode = ".$reslic["LicNumLicence"]));
-					$resepr = mysql_fetch_array(bf_mysql_query("SELECT EprLibelCourt, CatDateDéb, CatDateFin, CatSexCode, CatLibelCourt FROM  Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE EprCompetCode = ".$_POST["EprLibelCourt"]));	
+					$resepr = mysql_fetch_array(bf_mysql_query("SELECT EprLibelCourt, CatDateDï¿½b, CatDateFin, CatSexCode, CatLibelCourt FROM  Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE EprCompetCode = ".$_POST["EprLibelCourt"]));	
 					if ($resins) {
-						$MaReqErr = "Le licencié $reflic est déjà inscrit dans l'épreuve ".$resepr['EprLibelCourt'];
+						$MaReqErr = "Le licenciï¿½ $reflic est dï¿½jï¿½ inscrit dans l'ï¿½preuve ".$resepr['EprLibelCourt'];
 					} else {
 						if (stristr($resepr['EprLibelCourt'], "OPEN") === false) {
-							if (!(($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDéb"]) && ($reslic["LicNaissance"] <= $resepr["CatDateFin"]))) {
+							if (!(($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDï¿½b"]) && ($reslic["LicNaissance"] <= $resepr["CatDateFin"]))) {
 								if (!(((CalculCat("", $reslic["LicNaissance"], $reslic["LicSexCode"], 1) == "PF") && ($resepr["CatLibelCourt"] == "BF")) || ((CalculCat("", $reslic["LicNaissance"], $reslic["LicSexCode"], 1) == "PG") && ($resepr["CatLibelCourt"] == "BG")))) {
-									$MaReqErr = "La catégorie du licencié $reflic est différente de celle de l'épreuve ".$resepr['EprLibelCourt'];
+									$MaReqErr = "La catï¿½gorie du licenciï¿½ $reflic est diffï¿½rente de celle de l'ï¿½preuve ".$resepr['EprLibelCourt'];
 								}
 								if ( ($Sport == 7) || ($Sport == 11) || ($Sport == 12) || ($Sport == 20) ) { 
-									if ((($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDéb"]) && ($reslic["LicNaissance"] <= date('Y/m/d', strtotime('+1 year',strtotime($resepr["CatDateFin"])))  ))) {
+									if ((($reslic["LicSexCode"] == $resepr["CatSexCode"]) && ($reslic["LicNaissance"] >= $resepr["CatDateDï¿½b"]) && ($reslic["LicNaissance"] <= date('Y/m/d', strtotime('+1 year',strtotime($resepr["CatDateFin"])))  ))) {
 										if (!(isset($BModifierSurclassement))) {
-											$MaReqErr .= "<BR><BR> &nbsp; < Vous pouvez cliquer sur le bouton 'SurClasser' pour inscrire ce participant < Cliquez sur le bouton 'SurClasser' pour inscrire ce participant (vérifiez au pralable si le règlement l'autorise) >>"; 
+											$MaReqErr .= "<BR><BR> &nbsp; < Vous pouvez cliquer sur le bouton 'SurClasser' pour inscrire ce participant < Cliquez sur le bouton 'SurClasser' pour inscrire ce participant (vï¿½rifiez au pralable si le rï¿½glement l'autorise) >>"; 
 											$SurClass = 1;
 										} else {
 											$MaReqErr = "";
@@ -1706,24 +1706,24 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 							}	
 						} else {
 							if (!(($reslic["LicSexCode"] == $resepr["CatSexCode"]))) {
-								$MaReqErr = "La catégorie du licencié ".$reflic." est différente de celle de l'épreuve ".$resepr['EprLibelCourt'];
+								$MaReqErr = "La catï¿½gorie du licenciï¿½ ".$reflic." est diffï¿½rente de celle de l'ï¿½preuve ".$resepr['EprLibelCourt'];
 							}
 						}
 					}
 				} else {
-					$MaReqErr = "Le licencié ".$_POST["ParLicCode"]." est introuvable.";
+					$MaReqErr = "Le licenciï¿½ ".$_POST["ParLicCode"]." est introuvable.";
 				}
 			}
 			
 			if (($menu == "competitions") && ($sousmenu == "equipes") && isset($_POST["EprLibelCourt"])) {
-				$reqetabcat = bf_mysql_query("SELECT EprCatCode, EprLibelCourt, SpoGestionPerf FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode INNER JOIN `Epreuves Compétitions` ON Compétitions.CompetCode = `Epreuves Compétitions`.EprCompetCompetCode INNER JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode INNER JOIN Catégories ON Epreuves.EprCatCode = Catégories.CatCode WHERE `Epreuves Compétitions`.EprCompetCode = ".$_POST["EprLibelCourt"]);
+				$reqetabcat = bf_mysql_query("SELECT EprCatCode, EprLibelCourt, SpoGestionPerf FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode INNER JOIN `Epreuves Compï¿½titions` ON Compï¿½titions.CompetCode = `Epreuves Compï¿½titions`.EprCompetCompetCode INNER JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode INNER JOIN Catï¿½gories ON Epreuves.EprCatCode = Catï¿½gories.CatCode WHERE `Epreuves Compï¿½titions`.EprCompetCode = ".$_POST["EprLibelCourt"]);
 				if (!(!($reqetabcat))) {
 					$resetabcat = mysql_fetch_array($reqetabcat);
 					if (!(!($resetabcat))) {
 						if ($resetabcat['SpoGestionPerf'] == -1) {
 							if ($resetabcat['EprCatCode'] != $_POST["CatLibelCourt"]) {
-								$rescat = mysql_fetch_array(bf_mysql_query("SELECT CatLibelCourt FROM Catégories WHERE CatCode = ".$_POST["CatLibelCourt"]));
-								$MaReqErr = "La catégorie de l'équipe ".$rescat['CatLibelCourt'] ." est différente de celle de l'épreuve ".$resetabcat['EprLibelCourt'];
+								$rescat = mysql_fetch_array(bf_mysql_query("SELECT CatLibelCourt FROM Catï¿½gories WHERE CatCode = ".$_POST["CatLibelCourt"]));
+								$MaReqErr = "La catï¿½gorie de l'ï¿½quipe ".$rescat['CatLibelCourt'] ." est diffï¿½rente de celle de l'ï¿½preuve ".$resetabcat['EprLibelCourt'];
 							}
 						}
 					}
@@ -1732,27 +1732,27 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 									
 			if (($menu == "competitions") && ($sousmenu == "references")) {
 				$MaCompet = $_POST["modif"]; 
-				$ressport = mysql_fetch_array(bf_mysql_query("SELECT SpoLibelCourt FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode = ".$MaCompet));
+				$ressport = mysql_fetch_array(bf_mysql_query("SELECT SpoLibelCourt FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode = ".$MaCompet));
 				if ($_POST['SpoLibelCourt'] <> $ressport['SpoLibelCourt']) {
 					$respar = mysql_fetch_array(bf_mysql_query("SELECT COUNT(ParCode) AS NbPar FROM Participations WHERE ParCompetCode = ".$MaCompet));
 					$resequ = mysql_fetch_array(bf_mysql_query("SELECT COUNT(EquCode) AS NbEqu FROM Equipes WHERE EquCompetCode = ".$MaCompet));
 					if ( ($respar) && ($resequ) ) { 
 						if (($respar['NbPar'] > 0) || ($resequ['NbEqu'] > 0) ) {
-							$MaReqErr = "Impossible de changer de sport car des participations existent dans la compétition.";
+							$MaReqErr = "Impossible de changer de sport car des participations existent dans la compï¿½tition.";
 						} else {
-							bf_mysql_query("DELETE FROM `Epreuves Compétitions` WHERE EprCompetCompetCode = $MaCompet",0,"`Epreuves Compétitions`");
+							bf_mysql_query("DELETE FROM `Epreuves Compï¿½titions` WHERE EprCompetCompetCode = $MaCompet",0,"`Epreuves Compï¿½titions`");
 							$resspo = mysql_fetch_array(bf_mysql_query("SELECT SpoCode FROM Sports WHERE SpoLibelCourt = '".$_POST['SpoLibelCourt']."'"));
-							bf_mysql_query("INSERT INTO `Epreuves Compétitions` (`EprCompetEprCode`, `EprCompetCompetCode`) SELECT `EprCode`, $MaCompet AS Compet FROM `Epreuves` WHERE `EprSpoCode` = ".$resspo["SpoCode"]);
+							bf_mysql_query("INSERT INTO `Epreuves Compï¿½titions` (`EprCompetEprCode`, `EprCompetCompetCode`) SELECT `EprCode`, $MaCompet AS Compet FROM `Epreuves` WHERE `EprSpoCode` = ".$resspo["SpoCode"]);
 						}
 					}
 				}
 				
-				$rescompetequ = mysql_fetch_array(bf_mysql_query("SELECT CompetEqu FROM Compétitions WHERE CompetCode = ".$MaCompet));
+				$rescompetequ = mysql_fetch_array(bf_mysql_query("SELECT CompetEqu FROM Compï¿½titions WHERE CompetCode = ".$MaCompet));
 				if ( ($_POST['CompetEqu'] == 0) && ($rescompetequ['CompetEqu'] == 1) ) {
 					$resequ = mysql_fetch_array(bf_mysql_query("SELECT COUNT(EquCode) AS NbEqu FROM Equipes WHERE EquCompetCode = ".$MaCompet));
 					if ( $resequ ) { 
 						if ($resequ['NbEqu'] > 0) {
-							if ($MaReqErr == "") $MaReqErr = "Impossible de changer 'Equ' car des équipes existent dans la compétition.";
+							if ($MaReqErr == "") $MaReqErr = "Impossible de changer 'Equ' car des ï¿½quipes existent dans la compï¿½tition.";
 						}
 					}
 				}
@@ -1767,15 +1767,15 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 			if ($MaReqErr == "") {
 				bf_mysql_query($MaReq, 0, "`$tablename`");
 				if (($menu == "competitions") && ($sousmenu == "equipes")) {
-					bf_mysql_query("UPDATE Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode INNER JOIN Equipes ON Compétitions.CompetCode = Equipes.EquCompetCode INNER JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode INNER JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode SET EquCatCode = EprCatCode WHERE SpoGestionPerf = -5 AND EquCompetCode = $Compet", 0, "`Equipes`");
+					bf_mysql_query("UPDATE Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode INNER JOIN Equipes ON Compï¿½titions.CompetCode = Equipes.EquCompetCode INNER JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode INNER JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode SET EquCatCode = EprCatCode WHERE SpoGestionPerf = -5 AND EquCompetCode = $Compet", 0, "`Equipes`");
 					RenumeroteEquipes($Compet);
 				}
 				if ($licence == 1) {
 					if (isset($_GET['valid'])) {
-						bf_mysql_query("UPDATE Licenciés SET LicInscrit = TRUE, LicDateValid = CURDATE() WHERE $MaKey = $modif");
-						$message = "La demande de licence de ".$_POST["LicNom"]." ".$_POST["LicPrénom"]." a été validée.";
+						bf_mysql_query("UPDATE Licenciï¿½s SET LicInscrit = TRUE, LicDateValid = CURDATE() WHERE $MaKey = $modif");
+						$message = "La demande de licence de ".$_POST["LicNom"]." ".$_POST["LicPrï¿½nom"]." a ï¿½tï¿½ validï¿½e.";
 					}
-					if (!($Adm)) bf_mysql_query("UPDATE Licenciés SET LicDateAss = CURDATE() WHERE LicAss = TRUE AND $MaKey = $modif");
+					if (!($Adm)) bf_mysql_query("UPDATE Licenciï¿½s SET LicDateAss = CURDATE() WHERE LicAss = TRUE AND $MaKey = $modif");
 				}
 				if ($menu == "etablissements") bf_mysql_query("UPDATE Etablissements INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode SET EtabMemo3 = IF(RAND() > 0.33, IF(RAND() > 0.66, CONCAT(SecLibel, LOWER(EtabNomCourt), FLOOR(RAND()*100)), CONCAT(LOWER(EtabNomCourt), SecLibel, FLOOR(RAND()*100))), CONCAT(FLOOR(RAND()*100), LOWER(EtabNomCourt), SecLibel)) WHERE EtabMemo3 = '' OR EtabMemo3 IS NULL");
 				$modif = "";
@@ -1790,64 +1790,64 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		$mesTables = "`$tablename`";
 	
 		if ( ($menu == "parametres") && ($sousmenu == "sports") ) {
-			$mesTables = array("`Sports`", "`Participations`", "`Equipes`", "`Compétitions`","`Epreuves Compétitions`", "`Tours Epreuves Compétitions`", "`Epreuves`", "`Catégories`", "`Groupes`");
-			bf_mysql_query("DELETE `Participations` FROM Participations INNER JOIN Compétitions ON Participations.ParCompetCode = Compétitions.CompetCode WHERE CompetSpoCode = $suppr",0,$mesTables);
-			bf_mysql_query("DELETE `Equipes` FROM Equipes INNER JOIN Compétitions ON Equipes.EquCompetCode = Compétitions.CompetCode WHERE CompetSpoCode = $suppr");
-			bf_mysql_query("DELETE `Tours Epreuves Compétitions` FROM Compétitions INNER JOIN `Epreuves Compétitions` ON Compétitions.CompetCode = `Epreuves Compétitions`.EprCompetCompetCode INNER JOIN `Tours Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = `Tours Epreuves Compétitions`.TouEprCompetEprCompetCode WHERE CompetSpoCode = $suppr");
-			bf_mysql_query("DELETE `Epreuves Compétitions` FROM `Epreuves Compétitions` INNER JOIN Compétitions  ON `Epreuves Compétitions`.EprCompetCompetCode = Compétitions.CompetCode WHERE CompetSpoCode = $suppr");
-			bf_mysql_query("DELETE `Compétitions` FROM Compétitions WHERE CompetSpoCode = $suppr");
+			$mesTables = array("`Sports`", "`Participations`", "`Equipes`", "`Compï¿½titions`","`Epreuves Compï¿½titions`", "`Tours Epreuves Compï¿½titions`", "`Epreuves`", "`Catï¿½gories`", "`Groupes`");
+			bf_mysql_query("DELETE `Participations` FROM Participations INNER JOIN Compï¿½titions ON Participations.ParCompetCode = Compï¿½titions.CompetCode WHERE CompetSpoCode = $suppr",0,$mesTables);
+			bf_mysql_query("DELETE `Equipes` FROM Equipes INNER JOIN Compï¿½titions ON Equipes.EquCompetCode = Compï¿½titions.CompetCode WHERE CompetSpoCode = $suppr");
+			bf_mysql_query("DELETE `Tours Epreuves Compï¿½titions` FROM Compï¿½titions INNER JOIN `Epreuves Compï¿½titions` ON Compï¿½titions.CompetCode = `Epreuves Compï¿½titions`.EprCompetCompetCode INNER JOIN `Tours Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = `Tours Epreuves Compï¿½titions`.TouEprCompetEprCompetCode WHERE CompetSpoCode = $suppr");
+			bf_mysql_query("DELETE `Epreuves Compï¿½titions` FROM `Epreuves Compï¿½titions` INNER JOIN Compï¿½titions  ON `Epreuves Compï¿½titions`.EprCompetCompetCode = Compï¿½titions.CompetCode WHERE CompetSpoCode = $suppr");
+			bf_mysql_query("DELETE `Compï¿½titions` FROM Compï¿½titions WHERE CompetSpoCode = $suppr");
 			bf_mysql_query("DELETE `Epreuves` FROM `Epreuves` WHERE EprSpoCode = $suppr");
-			bf_mysql_query("DELETE `Catégories` FROM `Catégories` WHERE CatSpoCode = $suppr");
+			bf_mysql_query("DELETE `Catï¿½gories` FROM `Catï¿½gories` WHERE CatSpoCode = $suppr");
 			bf_mysql_query("DELETE `Groupes` FROM `Groupes` WHERE GrSpoCode = $suppr");
 		}
 
 		if ( ($menu == "parametres") && ($sousmenu == "categories") ) {
-			$mesTables = array("`Catégories`", "`Participations`", "`Equipes`", "`Epreuves Compétitions`", "`Tours Epreuves Compétitions`", "`Epreuves`");
-			bf_mysql_query("DELETE `Participations` FROM `Epreuves` INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`. EprCompetEprCode INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode WHERE EprCatCode = $suppr",0,$mesTables);
+			$mesTables = array("`Catï¿½gories`", "`Participations`", "`Equipes`", "`Epreuves Compï¿½titions`", "`Tours Epreuves Compï¿½titions`", "`Epreuves`");
+			bf_mysql_query("DELETE `Participations` FROM `Epreuves` INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`. EprCompetEprCode INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode WHERE EprCatCode = $suppr",0,$mesTables);
 			bf_mysql_query("DELETE `Equipes` FROM Equipes WHERE EquCatCode = $suppr");
-			bf_mysql_query("DELETE `Tours Epreuves Compétitions` FROM `Epreuves` INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`. EprCompetEprCode INNER JOIN `Tours Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = `Tours Epreuves Compétitions`.TouEprCompetEprCompetCode WHERE EprCatCode = $suppr");
-			bf_mysql_query("DELETE `Epreuves Compétitions` FROM Epreuves INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE EprCatCode = $suppr");
+			bf_mysql_query("DELETE `Tours Epreuves Compï¿½titions` FROM `Epreuves` INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`. EprCompetEprCode INNER JOIN `Tours Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = `Tours Epreuves Compï¿½titions`.TouEprCompetEprCompetCode WHERE EprCatCode = $suppr");
+			bf_mysql_query("DELETE `Epreuves Compï¿½titions` FROM Epreuves INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE EprCatCode = $suppr");
 			bf_mysql_query("DELETE `Epreuves` FROM `Epreuves` WHERE EprCatCode = $suppr");	
 		}
 		
 		if ( ($menu == "parametres") && ($sousmenu == "epreuves") ) {
-			$mesTables = array("`Epreuves`", "`Participations`", "`Equipes`", "`Epreuves Compétitions`", "`Tours Epreuves Compétitions`");
-			bf_mysql_query("DELETE `Participations` FROM `Epreuves Compétitions` INNER JOIN Participations ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode WHERE EprCompetEprCode = $suppr",0,$mesTables);
-			bf_mysql_query("DELETE `Equipes` FROM `Epreuves Compétitions` INNER JOIN Equipes ON `Epreuves Compétitions`.EprCompetCode = Equipes.EquEprCompetCode WHERE EprCompetEprCode = $suppr");
-			bf_mysql_query("DELETE `Tours Epreuves Compétitions` FROM `Epreuves Compétitions` INNER JOIN `Tours Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = `Tours Epreuves Compétitions`.TouEprCompetEprCompetCode WHERE EprCompetEprCode = $suppr");
-			bf_mysql_query("DELETE `Epreuves Compétitions` FROM `Epreuves Compétitions` WHERE EprCompetEprCode = $suppr");
+			$mesTables = array("`Epreuves`", "`Participations`", "`Equipes`", "`Epreuves Compï¿½titions`", "`Tours Epreuves Compï¿½titions`");
+			bf_mysql_query("DELETE `Participations` FROM `Epreuves Compï¿½titions` INNER JOIN Participations ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode WHERE EprCompetEprCode = $suppr",0,$mesTables);
+			bf_mysql_query("DELETE `Equipes` FROM `Epreuves Compï¿½titions` INNER JOIN Equipes ON `Epreuves Compï¿½titions`.EprCompetCode = Equipes.EquEprCompetCode WHERE EprCompetEprCode = $suppr");
+			bf_mysql_query("DELETE `Tours Epreuves Compï¿½titions` FROM `Epreuves Compï¿½titions` INNER JOIN `Tours Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = `Tours Epreuves Compï¿½titions`.TouEprCompetEprCompetCode WHERE EprCompetEprCode = $suppr");
+			bf_mysql_query("DELETE `Epreuves Compï¿½titions` FROM `Epreuves Compï¿½titions` WHERE EprCompetEprCode = $suppr");
 		} 
 	
 		if ( ($menu == "etablissements") ) {
-			$mesTables = array("`Etablissements`", "`Participations`", "`Equipes`", "`Licenciés`");
-			bf_mysql_query("DELETE Participations FROM Participations INNER JOIN Licenciés ON Participations.ParLicCode = Licenciés.LicNumLicence WHERE LicEtabCode = $suppr",0,$mesTables);
+			$mesTables = array("`Etablissements`", "`Participations`", "`Equipes`", "`Licenciï¿½s`");
+			bf_mysql_query("DELETE Participations FROM Participations INNER JOIN Licenciï¿½s ON Participations.ParLicCode = Licenciï¿½s.LicNumLicence WHERE LicEtabCode = $suppr",0,$mesTables);
 			bf_mysql_query("DELETE Equipes FROM Equipes WHERE EquEtabCode = $suppr");
-			bf_mysql_query("DELETE Licenciés FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode WHERE LicEtabCode = $suppr");
+			bf_mysql_query("DELETE Licenciï¿½s FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode WHERE LicEtabCode = $suppr");
 		}
 	
 		if ( ($menu == "licencies") && (!($licence == 1)) ) {
-			$mesTables = array("`Licenciés`", "`Participations`");
-			bf_mysql_query("DELETE Participations FROM Participations INNER JOIN Licenciés ON Participations.ParLicCode = Licenciés.LicNumLicence WHERE LicCode = $suppr");
+			$mesTables = array("`Licenciï¿½s`", "`Participations`");
+			bf_mysql_query("DELETE Participations FROM Participations INNER JOIN Licenciï¿½s ON Participations.ParLicCode = Licenciï¿½s.LicNumLicence WHERE LicCode = $suppr");
 		}
 	
 		if ( ($menu == "competitions") && ($sousmenu == "references") ) {
-			$mesTables = array("`Compétitions`", "`Participations`", "`Equipes`", "`Epreuves Compétitions`", "`Tours Epreuves Compétitions`");
-			bf_mysql_query("DELETE `Epreuves Compétitions` FROM `Epreuves Compétitions` WHERE EprCompetCompetCode = $suppr",0,$mesTables);
+			$mesTables = array("`Compï¿½titions`", "`Participations`", "`Equipes`", "`Epreuves Compï¿½titions`", "`Tours Epreuves Compï¿½titions`");
+			bf_mysql_query("DELETE `Epreuves Compï¿½titions` FROM `Epreuves Compï¿½titions` WHERE EprCompetCompetCode = $suppr",0,$mesTables);
 			bf_mysql_query("DELETE Participations FROM Participations WHERE ParCompetCode = $suppr");
 			bf_mysql_query("DELETE Equipes FROM Equipes WHERE EquCompetCode = $suppr");
-			bf_mysql_query("DELETE `Tours Epreuves Compétitions` FROM `Tours Epreuves Compétitions` WHERE EprCompetCompetCode = $suppr");
+			bf_mysql_query("DELETE `Tours Epreuves Compï¿½titions` FROM `Tours Epreuves Compï¿½titions` WHERE EprCompetCompetCode = $suppr");
 		}
 		
 		if ($licence == 1) {
 			$queryStrDelete = "";
 			$nbDem = 0;
-			$req = bf_mysql_query("SELECT COUNT(*) FROM Compétitions WHERE CompetDemLic LIKE '%".$_GET['Lic']."%'"); 
+			$req = bf_mysql_query("SELECT COUNT(*) FROM Compï¿½titions WHERE CompetDemLic LIKE '%".$_GET['Lic']."%'"); 
 			if ( (!(!($req))) && ($menu == "competitions") ) {
 				$res = mysql_fetch_array($req);
 				if ($res) $nbDem = $res[0];
 			}
-			if ($nbDem == 0) bf_mysql_query("UPDATE Licenciés SET LicInscrit = FALSE, LicAss = FALSE, LicNomAss = NULL, LicDateAss = NULL, LicDateDem = NULL, LicDateValid = NULL WHERE $MaKey = $suppr");
-			$message = "La demande de licence de ".$_GET["LicNom"]." ".$_GET["LicPrénom"]." a été annulée.";
+			if ($nbDem == 0) bf_mysql_query("UPDATE Licenciï¿½s SET LicInscrit = FALSE, LicAss = FALSE, LicNomAss = NULL, LicDateAss = NULL, LicDateDem = NULL, LicDateValid = NULL WHERE $MaKey = $suppr");
+			$message = "La demande de licence de ".$_GET["LicNom"]." ".$_GET["LicPrï¿½nom"]." a ï¿½tï¿½ annulï¿½e.";
 		}
 		
 		bf_mysql_query($queryStrDelete);
@@ -1861,7 +1861,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 	
 	if (($action == "monter") || ($action == "descendre")) {
 		$WhereCompOrdre = "";
-		if ($tablename == "Catégories") $WhereCompOrdre = "AND CatSpoCode = $ListeSport";
+		if ($tablename == "Catï¿½gories") $WhereCompOrdre = "AND CatSpoCode = $ListeSport";
 		if ($tablename == "Epreuves")   $WhereCompOrdre = "AND EprSpoCode = $ListeSport";
 		$ResOrdre = mysql_fetch_array(bf_mysql_query("SELECT $MaKey, Ordre From $tablename Where $MaKey = $changeordre"));
 		if ($ResOrdre) {
@@ -1887,12 +1887,12 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 
 	if ((isset($BValidernumlicence)) && (!(empty($BValidernumlicence))) && (!(empty($_POST["ParLicCode"])))) {
 		$monsport = 1;
-		$reqsport = bf_mysql_query("SELECT CompetSpoCode FROM Compétitions WHERE CompetCode = $Compet");
+		$reqsport = bf_mysql_query("SELECT CompetSpoCode FROM Compï¿½titions WHERE CompetCode = $Compet");
 		if ($reqsport) {
 			$ressport = mysql_fetch_array($reqsport);
 			if ($ressport) $monsport = $ressport["CompetSpoCode"];	
 		}
-		$reqlicstr = "SELECT Secteurs.*, Etablissements.*, Licenciés.*, CatLibelCourt FROM Catégories, Licenciés INNER JOIN Etablissements On Licenciés.LicEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = "."1"." And LicNumLicence = ".$_POST["ParLicCode"];
+		$reqlicstr = "SELECT Secteurs.*, Etablissements.*, Licenciï¿½s.*, CatLibelCourt FROM Catï¿½gories, Licenciï¿½s INNER JOIN Etablissements On Licenciï¿½s.LicEtabCode = Etablissements.EtabCode INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode WHERE (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = "."1"." And LicNumLicence = ".$_POST["ParLicCode"];
 		if (!($Adm)) $reqlicstr .= " And (EtabNum = ".$Etab.RetAS($Etab).")";
 		
 		$reqlic = bf_mysql_query($reqlicstr);
@@ -1911,7 +1911,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 							if (!(!($reslic))) {
 								Maj(1,"Secteurs", $reslic);
 								Maj(1,"Etablissements", $reslic, Array("EtabSecCode" => "SELECT SecCode From Secteurs WHERE SecLibel = ".$reslic["SecLibel"]));
-								Maj(1,"Licenciés", $reslic, Array("LicEtabCode" => "SELECT EtabCode From Etablissements WHERE EtabNum = ".$reslic["EtabNum"]));
+								Maj(1,"Licenciï¿½s", $reslic, Array("LicEtabCode" => "SELECT EtabCode From Etablissements WHERE EtabNum = ".$reslic["EtabNum"]));
 								break;
 							}
 						}
@@ -1919,12 +1919,12 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 				} 
 			}
 		}
-		if ( (!($reqlic)) || ((!(!($reqlic))) && (!($reslic)))) $MaReqErr = "Le licencié ".$_POST["ParLicCode"]." est introuvable.";
+		if ( (!($reqlic)) || ((!(!($reqlic))) && (!($reslic)))) $MaReqErr = "Le licenciï¿½ ".$_POST["ParLicCode"]." est introuvable.";
 	}
 	
 	if ( ($menu == "competitions") && ($sousmenu == "individuels") ) {
 		if (  ((isset($BValidernumlicence)) && (!(empty($BValidernumlicence))) && (empty($_POST["ParLicCode"]))) || ((!(isset($message))) && (isset($BAjouter)) && ( (empty($BValidernumlicence)) || (empty($_POST["ParLicCode"])) || (strlen($_POST["ParLicCode"]) < 9)))) {
-			$MaReqErr = "Saisissez un N° de licence puis cliquez sur le bouton Ok";
+			$MaReqErr = "Saisissez un Nï¿½ de licence puis cliquez sur le bouton Ok";
 		}
 	}
 	if ((isset($BFiltrer)) || (isset($racnom))) { 
@@ -2035,20 +2035,20 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					$messageAss.= " SANS assurance $trouveAss Ugsel"; 
 				} else {
 					$messageAss.= " AVEC assurance $trouveAss Ugsel";
-					bf_mysql_query("UPDATE Licenciés SET LicAss = 1 WHERE LicNumLicence = $ParLicCode");
-					bf_mysql_query("UPDATE Licenciés SET LicDateAss = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateAss IS NULL");
+					bf_mysql_query("UPDATE Licenciï¿½s SET LicAss = 1 WHERE LicNumLicence = $ParLicCode");
+					bf_mysql_query("UPDATE Licenciï¿½s SET LicDateAss = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateAss IS NULL");
 				}
-				bf_mysql_query("UPDATE Compétitions SET CompetDemLic = IF(CompetDemLic IS NULL,',".$ParLicCode."',CONCAT(CompetDemLic,',".$ParLicCode."')) WHERE CompetCode = ".$Compet." AND NOT '".$ParLicCode."' IN(0".TrouveSport($Compet, "CompetDemLic").")");
+				bf_mysql_query("UPDATE Compï¿½titions SET CompetDemLic = IF(CompetDemLic IS NULL,',".$ParLicCode."',CONCAT(CompetDemLic,',".$ParLicCode."')) WHERE CompetCode = ".$Compet." AND NOT '".$ParLicCode."' IN(0".TrouveSport($Compet, "CompetDemLic").")");
 				$optionIns = TrouveParamweb("InscriptionLic");
 				if ($optionIns == 1) {
-					bf_mysql_query("UPDATE Licenciés SET LicDateDem = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateDem IS NULL");
-					$message.= $messageAss." a été effectuée pour $reflicins. Vous pourrez l'inscrire dans la compétition une fois la demande validée par l'Ugsel.";
+					bf_mysql_query("UPDATE Licenciï¿½s SET LicDateDem = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateDem IS NULL");
+					$message.= $messageAss." a ï¿½tï¿½ effectuï¿½e pour $reflicins. Vous pourrez l'inscrire dans la compï¿½tition une fois la demande validï¿½e par l'Ugsel.";
 				}
 				if ($optionIns == 2) {
-					bf_mysql_query("UPDATE Licenciés SET LicInscrit = TRUE WHERE LicNumLicence = $ParLicCode");
-					bf_mysql_query("UPDATE Licenciés SET LicDateDem = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateDem IS NULL");
-					bf_mysql_query("UPDATE Licenciés SET LicDateValid = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateValid IS NULL");
-					$message.= $messageAss." a été effectuée pour $reflicins. Vous pouvez maintenant l'inscrire dans la compétition.";
+					bf_mysql_query("UPDATE Licenciï¿½s SET LicInscrit = TRUE WHERE LicNumLicence = $ParLicCode");
+					bf_mysql_query("UPDATE Licenciï¿½s SET LicDateDem = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateDem IS NULL");
+					bf_mysql_query("UPDATE Licenciï¿½s SET LicDateValid = CURDATE() WHERE LicNumLicence = $ParLicCode AND LicDateValid IS NULL");
+					$message.= $messageAss." a ï¿½tï¿½ effectuï¿½e pour $reflicins. Vous pouvez maintenant l'inscrire dans la compï¿½tition.";
 				}
 				$BValidernumlicence = "Ok";
 		}
@@ -2095,18 +2095,18 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 	
 	if (($menu == "parametres") && ($sousmenu == "sports") && (isset($valideimportsport))) {
 		$trans = "trans ".session_id();
-		$reqImport = bf_mysql_query("SELECT `".$trans." Sports`.*, `".$trans." Catégories`.*, `".$trans." Groupes`.*, `".$trans." Epreuves`.* FROM `".$trans." Sports` INNER JOIN `".$trans." Catégories` On `".$trans." Sports`.SpoCode = `".$trans." Catégories`.CatSpoCode  INNER JOIN `".$trans." Epreuves` ON `".$trans." Catégories`.CatCode = `".$trans." Epreuves`.EprCatCode LEFT JOIN `".$trans." Groupes` ON `".$trans." Groupes`.GrCode = `".$trans." Epreuves`.EprGrCode WHERE SpoCode = ".$ListeImportSport);
+		$reqImport = bf_mysql_query("SELECT `".$trans." Sports`.*, `".$trans." Catï¿½gories`.*, `".$trans." Groupes`.*, `".$trans." Epreuves`.* FROM `".$trans." Sports` INNER JOIN `".$trans." Catï¿½gories` On `".$trans." Sports`.SpoCode = `".$trans." Catï¿½gories`.CatSpoCode  INNER JOIN `".$trans." Epreuves` ON `".$trans." Catï¿½gories`.CatCode = `".$trans." Epreuves`.EprCatCode LEFT JOIN `".$trans." Groupes` ON `".$trans." Groupes`.GrCode = `".$trans." Epreuves`.EprGrCode WHERE SpoCode = ".$ListeImportSport);
 		if (!(!($reqImport))) {	
 			while ($resImport = mysql_fetch_array($reqImport)) { 
-				Maj(1,"Catégories", $resImport, Array("CatSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport));
+				Maj(1,"Catï¿½gories", $resImport, Array("CatSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport));
 				Maj(1,"Groupes", $resImport, Array("GrSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport));	
-				Maj(1,"Epreuves", $resImport, Array("EprSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport, "EprCatCode" => "SELECT CatCode FROM Catégories WHERE CatLibelCourt = '".$resImport["CatLibelCourt"]."'", "EprGrCode" => "SELECT GrCode FROM Groupes INNER JOIN Sports ON Groupes.GrSpoCode = Sports.SpoCode WHERE GrLibelCourt = ".$resImport["GrLibelCourt"]. " AND SpoCode = ".$Sport));
+				Maj(1,"Epreuves", $resImport, Array("EprSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport, "EprCatCode" => "SELECT CatCode FROM Catï¿½gories WHERE CatLibelCourt = '".$resImport["CatLibelCourt"]."'", "EprGrCode" => "SELECT GrCode FROM Groupes INNER JOIN Sports ON Groupes.GrSpoCode = Sports.SpoCode WHERE GrLibelCourt = ".$resImport["GrLibelCourt"]. " AND SpoCode = ".$Sport));
 			} 
 		}
-		$reqImport = bf_mysql_query("SELECT `".$trans." Sports`.*, `".$trans." Catégories`.* FROM `".$trans." Sports` INNER JOIN `".$trans." Catégories` On `".$trans." Sports`.SpoCode = `".$trans." Catégories`.CatSpoCode WHERE (`".$trans." Catégories`.CatType = 99 OR `".$trans." Catégories`.CatType = 1) AND SpoCode = ".$ListeImportSport);
+		$reqImport = bf_mysql_query("SELECT `".$trans." Sports`.*, `".$trans." Catï¿½gories`.* FROM `".$trans." Sports` INNER JOIN `".$trans." Catï¿½gories` On `".$trans." Sports`.SpoCode = `".$trans." Catï¿½gories`.CatSpoCode WHERE (`".$trans." Catï¿½gories`.CatType = 99 OR `".$trans." Catï¿½gories`.CatType = 1) AND SpoCode = ".$ListeImportSport);
 		if (!(!($reqImport))) {	
 			while ($resImport = mysql_fetch_array($reqImport)) {
-				Maj(1,"Catégories", $resImport, Array("CatSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport)); 	
+				Maj(1,"Catï¿½gories", $resImport, Array("CatSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = ".$Sport)); 	
 			}
 		}
 		SupprimeTables($BDD, $trans);
@@ -2119,9 +2119,9 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		bf_mysql_query("DELETE FROM `".$trans." Participations` WHERE ParTour > 1");
 		bf_mysql_query("DELETE FROM `".$trans." Equipes` WHERE EquTour > 1");
 		bf_mysql_query("UPDATE `".$trans." Etablissements` INNER JOIN Etablissements ON `".$trans." Etablissements`.EtabNum = Etablissements.EtabNum SET `".$trans." Etablissements`.EtabMemo3 = Etablissements.EtabMemo3 WHERE NOT (Etablissements.EtabMemo3 IS NULL OR Etablissements.EtabMemo3 = '')");
-		$reqImportEqu = bf_mysql_query("SELECT * FROM Compétitions WHERE CompetEqu = 1 AND CompetCode = $Compet");
+		$reqImportEqu = bf_mysql_query("SELECT * FROM Compï¿½titions WHERE CompetEqu = 1 AND CompetCode = $Compet");
 		if ((!(!($reqImportEqu))) && (mysql_num_rows($reqImportEqu) > 0)) {
-			$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`. * , `".$trans." Etablissements`. * , `".$trans." Equipes`. * , `".$trans." Epreuves Compétitions`. * , `".$trans." Epreuves`. * , `".$trans." Compétitions`. * , `".$trans." Sports`. * , `".$trans." Catégories`. * FROM `".$trans." Equipes`INNER JOIN `".$trans." Etablissements` ON `".$trans." Equipes`.EquEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode LEFT JOIN `".$trans." Epreuves Compétitions` ON `".$trans." Epreuves Compétitions`.EprCompetCode = `".$trans." Equipes`.EquEprCompetCode LEFT JOIN `".$trans." Epreuves` ON `".$trans." Epreuves Compétitions`.EprCompetEprCode = `".$trans." Epreuves`.EprCode INNER JOIN `".$trans." Compétitions` ON `".$trans." Compétitions`.CompetCode = `".$trans." Equipes`.EquCompetCode INNER JOIN `".$trans." Sports` ON `".$trans." Sports`.SpoCode = `".$trans." Compétitions`.CompetSpoCode LEFT JOIN `".$trans." Catégories` ON `".$trans." Equipes`.EquCatCode = `".$trans." Catégories`.CatCode WHERE `".$trans." Equipes`.EquCompetCode = ".$ListeImportCompet);
+			$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`. * , `".$trans." Etablissements`. * , `".$trans." Equipes`. * , `".$trans." Epreuves Compï¿½titions`. * , `".$trans." Epreuves`. * , `".$trans." Compï¿½titions`. * , `".$trans." Sports`. * , `".$trans." Catï¿½gories`. * FROM `".$trans." Equipes`INNER JOIN `".$trans." Etablissements` ON `".$trans." Equipes`.EquEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode LEFT JOIN `".$trans." Epreuves Compï¿½titions` ON `".$trans." Epreuves Compï¿½titions`.EprCompetCode = `".$trans." Equipes`.EquEprCompetCode LEFT JOIN `".$trans." Epreuves` ON `".$trans." Epreuves Compï¿½titions`.EprCompetEprCode = `".$trans." Epreuves`.EprCode INNER JOIN `".$trans." Compï¿½titions` ON `".$trans." Compï¿½titions`.CompetCode = `".$trans." Equipes`.EquCompetCode INNER JOIN `".$trans." Sports` ON `".$trans." Sports`.SpoCode = `".$trans." Compï¿½titions`.CompetSpoCode LEFT JOIN `".$trans." Catï¿½gories` ON `".$trans." Equipes`.EquCatCode = `".$trans." Catï¿½gories`.CatCode WHERE `".$trans." Equipes`.EquCompetCode = ".$ListeImportCompet);
 			if (!(!($reqImport))) {
 				while ($resImport = mysql_fetch_array($reqImport)) {
 					Maj(1,"Secteurs", $resImport);
@@ -2129,31 +2129,31 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					bf_mysql_query("ALTER TABLE Equipes ADD UNIQUE KEY (EquNum, EquCompetCode)");
 					Maj(1,"Equipes", $resImport, Array(
 						"EquEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"],
-						"EquCatCode"  => "SELECT CatCode FROM Catégories INNER JOIN Sports ON Catégories.CatSpoCode = Sports.SpoCode INNER JOIN Compétitions ON Compétitions.CompetSpoCode = Sports.SpoCode WHERE Catégories.CatLibelCourt = '".$resImport["CatLibelCourt"]."' AND CompetCode = $Compet",
-						"EquCompetCode" => "SELECT CompetCode From Compétitions Where CompetCode = ".$Compet, 
-						"EquEprCompetCode" => "SELECT EprCompetCode FROM Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode WHERE SpoLibelCourt = '".$resImport["SpoLibelCourt"]."' AND EprLibelCourt = '".$resImport["EprLibelCourt"]."'"
+						"EquCatCode"  => "SELECT CatCode FROM Catï¿½gories INNER JOIN Sports ON Catï¿½gories.CatSpoCode = Sports.SpoCode INNER JOIN Compï¿½titions ON Compï¿½titions.CompetSpoCode = Sports.SpoCode WHERE Catï¿½gories.CatLibelCourt = '".$resImport["CatLibelCourt"]."' AND CompetCode = $Compet",
+						"EquCompetCode" => "SELECT CompetCode From Compï¿½titions Where CompetCode = ".$Compet, 
+						"EquEprCompetCode" => "SELECT EprCompetCode FROM Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode WHERE SpoLibelCourt = '".$resImport["SpoLibelCourt"]."' AND EprLibelCourt = '".$resImport["EprLibelCourt"]."'"
 					));
 					bf_mysql_query("ALTER TABLE Equipes DROP INDEX EquNum");
 				}
 			}
 		}
 		
-		$reqImport = bf_mysql_query("SELECT DISTINCT `".$trans." Secteurs`.*, `".$trans." Etablissements`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` ON `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode INNER JOIN `".$trans." Participations`On `".$trans." Participations`.ParLicCode = `".$trans." Licenciés`.LicNumLicence INNER JOIN `".$trans." Epreuves Compétitions` ON `".$trans." Epreuves Compétitions`.EprCompetCode = `".$trans." Participations`.ParEprCode INNER JOIN `".$trans." Epreuves` ON `".$trans." Epreuves Compétitions`.EprCompetEprCode = `".$trans." Epreuves`.EprCode INNER JOIN `".$trans." Compétitions` ON `".$trans." Compétitions`.CompetCode = `".$trans." Participations`.ParCompetCode INNER JOIN `".$trans." Sports` ON `".$trans." Sports`.SpoCode = `".$trans." Compétitions`.CompetSpoCode LEFT JOIN `".$trans." Equipes` ON `".$trans." Participations`.ParEquCode = `".$trans." Equipes`.EquCode WHERE `".$trans." Participations`.ParCompetCode = ".$ListeImportCompet);
+		$reqImport = bf_mysql_query("SELECT DISTINCT `".$trans." Secteurs`.*, `".$trans." Etablissements`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` ON `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode INNER JOIN `".$trans." Participations`On `".$trans." Participations`.ParLicCode = `".$trans." Licenciï¿½s`.LicNumLicence INNER JOIN `".$trans." Epreuves Compï¿½titions` ON `".$trans." Epreuves Compï¿½titions`.EprCompetCode = `".$trans." Participations`.ParEprCode INNER JOIN `".$trans." Epreuves` ON `".$trans." Epreuves Compï¿½titions`.EprCompetEprCode = `".$trans." Epreuves`.EprCode INNER JOIN `".$trans." Compï¿½titions` ON `".$trans." Compï¿½titions`.CompetCode = `".$trans." Participations`.ParCompetCode INNER JOIN `".$trans." Sports` ON `".$trans." Sports`.SpoCode = `".$trans." Compï¿½titions`.CompetSpoCode LEFT JOIN `".$trans." Equipes` ON `".$trans." Participations`.ParEquCode = `".$trans." Equipes`.EquCode WHERE `".$trans." Participations`.ParCompetCode = ".$ListeImportCompet);
 		if (!(!($reqImport))) {
 			while ($resImport = mysql_fetch_array($reqImport)) {
 				Maj(1,"Secteurs", $resImport);
 				Maj(1,"Etablissements", $resImport, Array("EtabSecCode" => "SELECT SecCode FROM Secteurs WHERE SecLibel = ".$resImport["SecLibel"]));
 			}	
 		}		
-		$resultLIC = bf_mysql_query("SELECT * FROM Licenciés");
+		$resultLIC = bf_mysql_query("SELECT * FROM Licenciï¿½s");
 		$resultPAR = bf_mysql_query("SELECT * FROM Participations");
-		$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciés`.*, `".$trans." Participations`.*, `".$trans." Epreuves Compétitions`.*, `".$trans." Epreuves`.*, `".$trans." Compétitions`.*, `".$trans." Sports`.* , `".$trans." Equipes`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` ON `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode INNER JOIN `".$trans." Participations`On `".$trans." Participations`.ParLicCode = `".$trans." Licenciés`.LicNumLicence INNER JOIN `".$trans." Epreuves Compétitions` ON `".$trans." Epreuves Compétitions`.EprCompetCode = `".$trans." Participations`.ParEprCode INNER JOIN `".$trans." Epreuves` ON `".$trans." Epreuves Compétitions`.EprCompetEprCode = `".$trans." Epreuves`.EprCode INNER JOIN `".$trans." Compétitions` ON `".$trans." Compétitions`.CompetCode = `".$trans." Participations`.ParCompetCode INNER JOIN `".$trans." Sports` ON `".$trans." Sports`.SpoCode = `".$trans." Compétitions`.CompetSpoCode LEFT JOIN `".$trans." Equipes` ON `".$trans." Participations`.ParEquCode = `".$trans." Equipes`.EquCode WHERE `".$trans." Participations`.ParCompetCode = ".$ListeImportCompet);
+		$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciï¿½s`.*, `".$trans." Participations`.*, `".$trans." Epreuves Compï¿½titions`.*, `".$trans." Epreuves`.*, `".$trans." Compï¿½titions`.*, `".$trans." Sports`.* , `".$trans." Equipes`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` ON `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode INNER JOIN `".$trans." Participations`On `".$trans." Participations`.ParLicCode = `".$trans." Licenciï¿½s`.LicNumLicence INNER JOIN `".$trans." Epreuves Compï¿½titions` ON `".$trans." Epreuves Compï¿½titions`.EprCompetCode = `".$trans." Participations`.ParEprCode INNER JOIN `".$trans." Epreuves` ON `".$trans." Epreuves Compï¿½titions`.EprCompetEprCode = `".$trans." Epreuves`.EprCode INNER JOIN `".$trans." Compï¿½titions` ON `".$trans." Compï¿½titions`.CompetCode = `".$trans." Participations`.ParCompetCode INNER JOIN `".$trans." Sports` ON `".$trans." Sports`.SpoCode = `".$trans." Compï¿½titions`.CompetSpoCode LEFT JOIN `".$trans." Equipes` ON `".$trans." Participations`.ParEquCode = `".$trans." Equipes`.EquCode WHERE `".$trans." Participations`.ParCompetCode = ".$ListeImportCompet);
 		if (!(!($reqImport))) {
 			while ($resImport = mysql_fetch_array($reqImport)) {
-				Maj(1,"Licenciés", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]),$resultLIC);
+				Maj(1,"Licenciï¿½s", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]),$resultLIC);
 				Maj(1,"Participations", $resImport, Array(
-					"ParCompetCode" => "SELECT CompetCode From Compétitions Where CompetCode = ".$Compet,
-					"ParEprCode" => "SELECT EprCompetCode FROM Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode WHERE EprCompetCompetCode = ".$Compet." AND SpoLibelCourt = '".$resImport["SpoLibelCourt"]."' AND EprLibelCourt = '".$resImport["EprLibelCourt"]."'",
+					"ParCompetCode" => "SELECT CompetCode From Compï¿½titions Where CompetCode = ".$Compet,
+					"ParEprCode" => "SELECT EprCompetCode FROM Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode WHERE EprCompetCompetCode = ".$Compet." AND SpoLibelCourt = '".$resImport["SpoLibelCourt"]."' AND EprLibelCourt = '".$resImport["EprLibelCourt"]."'",
 					"ParEquCode" => "SELECT EquCode FROM Equipes WHERE EquNum = ".$resImport["EquNum"]." AND EquCompetCode = $Compet"
 				),$resultPAR); 
 			}
@@ -2177,25 +2177,25 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					$res = mysql_fetch_array($req);
 					if (!(!$res)) $MonSportLibel = $res["SpoLibelCourt"];
 				}
-				$req = bf_mysql_query("SELECT CompetCode, CompetLibellé, DATE_FORMAT(CompetDateDéb,'%d/%m/%Y') AS CompetDateDéb, CompetLieu, SpoLibelCourt FROM `Sports` INNER JOIN `Compétitions` ON `Sports`.SpoCode = `Compétitions`.CompetSpoCode WHERE CompetCode <> ". $Compet ." AND SpoLibelCourt = '".$MonSportLibel."'");
+				$req = bf_mysql_query("SELECT CompetCode, CompetLibellï¿½, DATE_FORMAT(CompetDateDï¿½b,'%d/%m/%Y') AS CompetDateDï¿½b, CompetLieu, SpoLibelCourt FROM `Sports` INNER JOIN `Compï¿½titions` ON `Sports`.SpoCode = `Compï¿½titions`.CompetSpoCode WHERE CompetCode <> ". $Compet ." AND SpoLibelCourt = '".$MonSportLibel."'");
 				if ((!(!$req)) && (mysql_num_rows($req) > 0)) {
-					echo " Importer la compétition ";
-					listederoulante("ListeImportCompetInterne", "Compétition...", "SELECT CompetCode, CompetLibellé, DATE_FORMAT(CompetDateDéb,'%d/%m/%Y') AS CompetDateDéb, CompetLieu, SpoLibelCourt FROM `Sports` INNER JOIN `Compétitions` ON `Sports`.SpoCode = `Compétitions`.CompetSpoCode WHERE CompetCode <> ". $Compet ." AND SpoLibelCourt = '".$MonSportLibel."'", array("SpoLibelCourt","-","CompetLibellé","-","CompetDateDéb","-","CompetLieu"), array("","","","","","",""),"CompetCode" , 0,  350);
+					echo " Importer la compï¿½tition ";
+					listederoulante("ListeImportCompetInterne", "Compï¿½tition...", "SELECT CompetCode, CompetLibellï¿½, DATE_FORMAT(CompetDateDï¿½b,'%d/%m/%Y') AS CompetDateDï¿½b, CompetLieu, SpoLibelCourt FROM `Sports` INNER JOIN `Compï¿½titions` ON `Sports`.SpoCode = `Compï¿½titions`.CompetSpoCode WHERE CompetCode <> ". $Compet ." AND SpoLibelCourt = '".$MonSportLibel."'", array("SpoLibelCourt","-","CompetLibellï¿½","-","CompetDateDï¿½b","-","CompetLieu"), array("","","","","","",""),"CompetCode" , 0,  350);
 					echo " &nbsp; Ou &nbsp; <BR><BR>";
 				}
-				$tabImport = RetourneFic(".", "Compétition","Comp", "");
+				$tabImport = RetourneFic(".", "Compï¿½tition","Comp", "");
 				$listeImport = array();
 				if (count($tabImport) > 0) {
 					for( $i = 0; $i < count($tabImport); $i++ ) {
 						if ( ($MonSportLibel) == ($tabImport[$i]["Sport"]) ) {
-							$listeImport[$i] = $tabImport[$i]["Résumé"];
-							$listeImportClé[$i] = $tabImport[$i]["Nom"];
+							$listeImport[$i] = $tabImport[$i]["Rï¿½sumï¿½"];
+							$listeImportClï¿½[$i] = $tabImport[$i]["Nom"];
 						}
 					}
 				}
 				if (count($listeImport) > 0) {
-					echo "Importer du serveur une compétition en attente ";
-					listederoulante("ListeImportCompet", "Fichiers...", $listeImport, "", "", $listeImportClé, $ListeImportCompet, 230);
+					echo "Importer du serveur une compï¿½tition en attente ";
+					listederoulante("ListeImportCompet", "Fichiers...", $listeImport, "", "", $listeImportClï¿½, $ListeImportCompet, 230);
 					echo " &nbsp; Ou &nbsp; <BR><BR>";
 				}
 			}
@@ -2204,7 +2204,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 			echo "<input type='hidden' name='MAX_FILE_SIZE' value='50000000'>";
 			echo "<input name='userfile' type='file' id='userfile' >&nbsp;"; 
 			echo "<input name='upload' type='submit' id='upload' value='Importer' class='bouton'>";
-			if (($menu == "etablissements") || ($menu == "licencies")) echo " <B>&nbsp; Attention ! Cette opération peut durer plusieurs minutes...</B>";
+			if (($menu == "etablissements") || ($menu == "licencies")) echo " <B>&nbsp; Attention ! Cette opï¿½ration peut durer plusieurs minutes...</B>";
 			echo "</TD>";
 			echo "</TR>";
 			echo "</TABLE>";
@@ -2264,7 +2264,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					if (!($Ligne=='' || $Ligne{0}=='-' || $Ligne{0}=='#')){
 						$LigneSQL .= $Ligne;
 						if (strlen($Ligne) > 0 && $Ligne{strlen($Ligne)-1} == ';'){
-							$LigneSQL = str_replace(" "," ",$LigneSQL); 
+							$LigneSQL = str_replace("ï¿½"," ",$LigneSQL); 
 							$MaPos = strpos($LigneSQL, "INSERT INTO ");
 							if ($MaPos !== false) {
 								$LigneSQL = substr_replace($LigneSQL, $trans." ", 13, 0);
@@ -2290,13 +2290,13 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 								$mastrwhereetab = " WHERE `".$trans." Etablissements`.EtabCode = ".$resEtab["EtabCode"];
 							}
 						}
-						$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciés`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode ".$mastrwhereetab);
+						$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciï¿½s`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode ".$mastrwhereetab);
 						if (!(!($reqImport))) {
 							while ($resImport = mysql_fetch_array($reqImport)) {
 								Maj(1,"Secteurs", $resImport);
 								Maj(1,"Etablissements", $resImport, Array("EtabSecCode" => "SELECT SecCode From Secteurs WHERE SecLibel = ".$resImport["SecLibel"]));
 								if (isset($_GET["EtabImport"])) {
-									Maj(1,"Licenciés", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]));
+									Maj(1,"Licenciï¿½s", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]));
 								}
 							}
 						}
@@ -2305,21 +2305,21 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					}
 					
 					if ($menu == "licencies") {
-						$reqImport = bf_mysql_query("SELECT DISTINCT `".$trans." Secteurs`.*, `".$trans." Etablissements`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
+						$reqImport = bf_mysql_query("SELECT DISTINCT `".$trans." Secteurs`.*, `".$trans." Etablissements`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
 						if (!(!($reqImport))) {
 							while ($resImport = mysql_fetch_array($reqImport)) {
 								Maj(1,"Secteurs", $resImport);
 								Maj(1,"Etablissements", $resImport, Array("EtabSecCode" => "SELECT SecCode FROM Secteurs WHERE SecLibel = ".$resImport["SecLibel"]));
 							}
 						}
-						$resultLIC = bf_mysql_query("SELECT * FROM Licenciés");
-						$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciés`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
+						$resultLIC = bf_mysql_query("SELECT * FROM Licenciï¿½s");
+						$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciï¿½s`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
 						if (!(!($reqImport))) {
 							while ($resImport = mysql_fetch_array($reqImport)) {
-								Maj(1,"Licenciés", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]), $resultLIC);
+								Maj(1,"Licenciï¿½s", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]), $resultLIC);
 							}
 							bf_mysql_query("INSERT INTO Sports (SELECT `".$trans." Sports`.* FROM `".$trans." Sports` WHERE `".$trans." Sports`.SpoCode = 1)");
-							bf_mysql_query("INSERT INTO Catégories (SELECT `".$trans." Catégories`.* FROM `".$trans." Catégories` WHERE `".$trans." Catégories`.CatSpoCode = 1)");
+							bf_mysql_query("INSERT INTO Catï¿½gories (SELECT `".$trans." Catï¿½gories`.* FROM `".$trans." Catï¿½gories` WHERE `".$trans." Catï¿½gories`.CatSpoCode = 1)");
 						}
 						SupprimeTables($BDD, $trans);
 						$imp = false;
@@ -2327,19 +2327,19 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					if (($menu == "parametres") && ($sousmenu == "sports") && (!(isset($valideimportsport)))){
 						echo "<FORM method='post'><TABLE CLASS = 'tableconopt'><TR><TD>";
 						echo "Sport ";
-						listederoulante("ListeImportSport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellé FROM `".$trans." Sports` ORDER BY Ordre ", array("SpoLibelCourt","-","SpoLibellé"), array("","",""), "SpoCode" ,0, 300);
+						listederoulante("ListeImportSport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellï¿½ FROM `".$trans." Sports` ORDER BY Ordre ", array("SpoLibelCourt","-","SpoLibellï¿½"), array("","",""), "SpoCode" ,0, 300);
 						echo "&nbsp;<input name='valideimportsport' type='submit' id='valideimportsport' value='Importer' class='bouton'>";
 						echo "</TD></TR></TABLE></FORM>";
 					}	
 					
 					if (($menu == "competitions") && ($sousmenu == "references") && (!(isset($valideimportcompet)))){
-						$reqsport = bf_mysql_query("SELECT SpoLibelCourt FROM Compétitions INNER JOIN Sports ON Compétitions.CompetSpoCode = Sports.SpoCode WHERE CompetCode = $Compet");
+						$reqsport = bf_mysql_query("SELECT SpoLibelCourt FROM Compï¿½titions INNER JOIN Sports ON Compï¿½titions.CompetSpoCode = Sports.SpoCode WHERE CompetCode = $Compet");
 						if ($reqsport) {
 							$ressport = mysql_fetch_array($reqsport);
 							if (!(!($ressport))) {
 								echo "<FORM method='post'><TABLE CLASS = 'tableconopt'><TR><TD>";
-								echo " Importer la compétition ";
-								listederoulante("ListeImportCompet", "", "SELECT CompetCode, CompetLibellé, DATE_FORMAT(CompetDateDéb,'%d/%m/%Y') AS CompetDateDéb, CompetLieu, SpoLibelCourt FROM `".$trans." Sports` INNER JOIN `".$trans." Compétitions` ON `".$trans." Sports`.SpoCode = `".$trans." Compétitions`.CompetSpoCode Where SpoLibelCourt = '".$ressport["SpoLibelCourt"]."'", array("SpoLibelCourt","-","CompetLibellé","-","CompetDateDéb","-","CompetLieu"), array("","","","","","",""),"CompetCode" , 0,  350);
+								echo " Importer la compï¿½tition ";
+								listederoulante("ListeImportCompet", "", "SELECT CompetCode, CompetLibellï¿½, DATE_FORMAT(CompetDateDï¿½b,'%d/%m/%Y') AS CompetDateDï¿½b, CompetLieu, SpoLibelCourt FROM `".$trans." Sports` INNER JOIN `".$trans." Compï¿½titions` ON `".$trans." Sports`.SpoCode = `".$trans." Compï¿½titions`.CompetSpoCode Where SpoLibelCourt = '".$ressport["SpoLibelCourt"]."'", array("SpoLibelCourt","-","CompetLibellï¿½","-","CompetDateDï¿½b","-","CompetLieu"), array("","","","","","",""),"CompetCode" , 0,  350);
 								echo "&nbsp;<input name='valideimportcompet' type='submit' id='valideimportcompet' value='Importer' class='bouton'>";
 								echo "</TD></TR></TABLE></FORM>";
 							} else echo "Erreur...";
@@ -2354,7 +2354,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 	$pResult = bf_mysql_query($queryStr);
 	
 	if (!$pResult) {
-		echo "<TABLE CLASS='tablemessageerreur'> <TR> <TD> Impossible de lire les données pour l'instant.</TD> </TR> </TABLE> <BR>";
+		echo "<TABLE CLASS='tablemessageerreur'> <TR> <TD> Impossible de lire les donnï¿½es pour l'instant.</TD> </TR> </TABLE> <BR>";
 	} else {
 	
 	$row = mysql_num_rows( $pResult );
@@ -2412,13 +2412,13 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		}
 		if ($filter != "") $tfiltre = "(filtre actif)"; else $tfiltre = "";
 		if ($nbaffiche > 1) $s="s"; else $s="";
-		$selecteur .= "&nbsp;&nbsp;$nbaffiche ligne$s affichée$s";
+		$selecteur .= "&nbsp;&nbsp;$nbaffiche ligne$s affichï¿½e$s";
 		if ($Adm) $selecteur .= " sur un total de $row";
 		$selecteur .= "  $tfiltre"; 
 		if ( ($Adm) && ($menu == "licencies") && ($horscat == 0) && ($stat == 0) && ($fi == 0)) {
-			$pResulttot = bf_mysql_query("SELECT * FROM Licenciés");
+			$pResulttot = bf_mysql_query("SELECT * FROM Licenciï¿½s");
 			$rowtot = mysql_num_rows($pResulttot);
-			if ($row != $rowtot) $selecteur .=  "&nbsp; &nbsp; <BLINK> Attention ! </BLINK><a href='$PHP_SELF?".$par."action=GereData&horscat=1&aj=0'>Afficher la liste des licenciés Hors Catégories</a>\n";
+			if ($row != $rowtot) $selecteur .=  "&nbsp; &nbsp; <BLINK> Attention ! </BLINK><a href='$PHP_SELF?".$par."action=GereData&horscat=1&aj=0'>Afficher la liste des licenciï¿½s Hors Catï¿½gories</a>\n";
 		}
 		$selecteur .=  "</TD></TR></TABLE>\n";
 	}	
@@ -2485,7 +2485,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 			echo "'>Fermer</a>\n"; 
 			
 			if ( ((!($Adm))&&($data == '1')) || ((($Adm))&&($data > 0)) ) {
-				echo "<BR>Sélection : "; 
+				echo "<BR>Sï¿½lection : "; 
 				echo " <a href='$PHP_SELF?".$par."action=GereData&licence=1&aj=0&seltous=1'>Tous</a>\n"; 
 				echo "/";
 				echo " <a href='$PHP_SELF?".$par."action=GereData&licence=1&aj=0&selaucun=1'>Aucun</a>\n"; 
@@ -2578,16 +2578,16 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 		
 		if ($sousmenu == "individuels")  {
 			echo "<TR><TD COLSPAN='$col'><SPAN CLASS='pasimprimer'> 
-			&nbsp;&nbsp;Pour inscrire un participant : Saisissez son <a CLASS = 'inv'; href='$PHP_SELF?action=VoirMenu&menu=licencies&sousmenu=$sousmenu&Compet=$Compet&licence=0&affcompet=$affcompet&selectionner=true';>&nbsp;n° de Licence&nbsp;</a> puis cliquez sur 'Ok'. &nbsp;Complétez si besoin les autres champs (Epreuve...) et cliquez sur 'Inscrire'.<BR>";
+			&nbsp;&nbsp;Pour inscrire un participant : Saisissez son <a CLASS = 'inv'; href='$PHP_SELF?action=VoirMenu&menu=licencies&sousmenu=$sousmenu&Compet=$Compet&licence=0&affcompet=$affcompet&selectionner=true';>&nbsp;nï¿½ de Licence&nbsp;</a> puis cliquez sur 'Ok'. &nbsp;Complï¿½tez si besoin les autres champs (Epreuve...) et cliquez sur 'Inscrire'.<BR>";
 			if ($ChampsAff[12]) 
-			echo "<BLINK><B>&nbsp;&nbsp; -> Attention ! </B></BLINK> Si le participant appartient à une équipe qui ne figure pas dans la liste 'Equipe...', procédez au préalable à l'
-			<a CLASS = 'inv'; href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=equipes&Compet=$Compet&affcompet=$affcompet'>&nbsp;inscription d'une équipe&nbsp;</a>
+			echo "<BLINK><B>&nbsp;&nbsp; -> Attention ! </B></BLINK> Si le participant appartient ï¿½ une ï¿½quipe qui ne figure pas dans la liste 'Equipe...', procï¿½dez au prï¿½alable ï¿½ l'
+			<a CLASS = 'inv'; href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=equipes&Compet=$Compet&affcompet=$affcompet'>&nbsp;inscription d'une ï¿½quipe&nbsp;</a>
 			</SPAN></TD></TR>";
 		}
 		if ($sousmenu == "equipes")  {
 			echo "<TR><TD COLSPAN='$col'><SPAN CLASS='pasimprimer'>
-			&nbsp;&nbsp;Remarque : La numérotation des relais est automatique et les numéros déjà attribués peuvent être modifiés suite à l'inscription d'un nouveau relais. &nbsp;
-			<BR> &nbsp; Pour les relayeurs, saisissez les numéros de Licence.";
+			&nbsp;&nbsp;Remarque : La numï¿½rotation des relais est automatique et les numï¿½ros dï¿½jï¿½ attribuï¿½s peuvent ï¿½tre modifiï¿½s suite ï¿½ l'inscription d'un nouveau relais. &nbsp;
+			<BR> &nbsp; Pour les relayeurs, saisissez les numï¿½ros de Licence.";
 			echo "</SPAN></TD></TR>";
 		}
 	}
@@ -2626,9 +2626,9 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 					if ((($action == "confirmedeletedata") && ($key == $suppr)) || ($supprtout == true) ) {
 						echo "trsuppr";
 					} else {
-						if ($rowArray[0] == " ") echo "trtotal"; else {
-							if ($rowArray[0] == "  ") echo "trimpexp"; else {
-								if ($rowArray[0] == "   ") echo "trsuppr"; else {
+						if ($rowArray[0] == "ï¿½") echo "trtotal"; else {
+							if ($rowArray[0] == "ï¿½ï¿½") echo "trimpexp"; else {
+								if ($rowArray[0] == "ï¿½ï¿½ï¿½") echo "trsuppr"; else {
 									if (($menu == "licencies") && (isset($selectionner)) && ($selectionner == true)) {
 										if ( (round($i / 2) - ($i / 2)) == "0" ) echo "tr1' onmouseover='this.className=\"trsel\"' onmouseout='this.className=\"tr1\""; else echo "tr2' onmouseover='this.className=\"trsel\"' onmouseout='this.className=\"tr2\"";
 									} else {
@@ -2756,29 +2756,29 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 								}
 							}
 							if (($menu == "competitions") && ($sousmenu == "individuels") && ($field->name == "EprLibelCourt") && (isset($_POST["ParLicCode"]))) {
-								$reqlicstrinit = "SELECT LicNaissance, LicSexCode FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode WHERE LicNumLicence = ".$_POST["ParLicCode"];
+								$reqlicstrinit = "SELECT LicNaissance, LicSexCode FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode WHERE LicNumLicence = ".$_POST["ParLicCode"];
 								if (!($Adm)) $reqlicstrinit .= " And (EtabNum = ".$Etab.RetAS($Etab).")";
 								$reqlicinit = bf_mysql_query($reqlicstrinit);
 								if (!(!($reqlicinit))) {
 									$reslicinit = mysql_fetch_array($reqlicinit);
 									if (!(!($reslicinit))) {
 										$reqeprinit = bf_mysql_query("SELECT EprCompetCode
-																	  FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-																	  WHERE (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet." AND (Catégories.CatSexCode = ".$reslicinit["LicSexCode"]." AND Catégories.CatDateDéb <= Date('".$reslicinit["LicNaissance"]."') AND Catégories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) ORDER BY Epreuves.Ordre LIMIT 1");
+																	  FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+																	  WHERE (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet." AND (Catï¿½gories.CatSexCode = ".$reslicinit["LicSexCode"]." AND Catï¿½gories.CatDateDï¿½b <= Date('".$reslicinit["LicNaissance"]."') AND Catï¿½gories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) ORDER BY Epreuves.Ordre LIMIT 1");
 										if (!(!($reqeprinit))) {
 											$reseprinit = mysql_fetch_array($reqeprinit);
 											if ($MaReqErr == "") {if (!(!($reseprinit))) $data = $reseprinit["EprCompetCode"];} else $data = $_POST["EprLibelCourt"];
 										}
 										$reqeprinitBIS = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt 
-																	     FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-																	     WHERE Catégories.CatPrim = TRUE $strCatEpr AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet." AND (Catégories.CatSexCode = ".$reslicinit["LicSexCode"]." AND ( (Catégories.CatDateDéb <= Date('".$reslicinit["LicNaissance"]."') AND Catégories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) OR (EprLibelCourt LIKE '%Open%') )) 
+																	     FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+																	     WHERE Catï¿½gories.CatPrim = TRUE $strCatEpr AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet." AND (Catï¿½gories.CatSexCode = ".$reslicinit["LicSexCode"]." AND ( (Catï¿½gories.CatDateDï¿½b <= Date('".$reslicinit["LicNaissance"]."') AND Catï¿½gories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) OR (EprLibelCourt LIKE '%Open%') )) 
 																		 ORDER BY Epreuves.Ordre");
 										$nbLignesEpr = 0;
 										$nbLignesEpr = mysql_num_rows($reqeprinitBIS);
 										if ($nbLignesEpr > 1) $testNbLignesEpr = true;				
 										$reqeprinitTER = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt 
-																	     FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-																	     WHERE Catégories.CatPrim = TRUE $strCatEpr AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet." AND (Catégories.CatSexCode = ".$reslicinit["LicSexCode"]." AND ( (Catégories.CatDateDéb <= Date('".$reslicinit["LicNaissance"]."') AND Catégories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) )) 
+																	     FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+																	     WHERE Catï¿½gories.CatPrim = TRUE $strCatEpr AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet." AND (Catï¿½gories.CatSexCode = ".$reslicinit["LicSexCode"]." AND ( (Catï¿½gories.CatDateDï¿½b <= Date('".$reslicinit["LicNaissance"]."') AND Catï¿½gories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) )) 
 																		 ORDER BY Epreuves.Ordre");
 										$nbLignesEprSansOpen = 0;
 										$nbLignesEprSansOpen = mysql_num_rows($reqeprinitTER);
@@ -2786,8 +2786,8 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 											$catInitBIS = CalculCat("", $reslicinit["LicNaissance"], $reslicinit["LicSexCode"], 1);
 											if (($catInitBIS == "PF") || ($catInitBIS == "PG")) {
 												$reqeprinitBIS = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt 
-																				 FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-																				 WHERE Catégories.CatPrim = TRUE AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet." AND Catégories.CatSexCode = ".$reslicinit["LicSexCode"]." AND (Catégories.CatLibelCourt ='BF' OR Catégories.CatLibelCourt ='BG' OR EprLibelCourt LIKE '%Open%' OR EprLibelCourt LIKE '%Col %')
+																				 FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+																				 WHERE Catï¿½gories.CatPrim = TRUE AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet." AND Catï¿½gories.CatSexCode = ".$reslicinit["LicSexCode"]." AND (Catï¿½gories.CatLibelCourt ='BF' OR Catï¿½gories.CatLibelCourt ='BG' OR EprLibelCourt LIKE '%Open%' OR EprLibelCourt LIKE '%Col %')
 																				 ORDER BY Epreuves.Ordre");
 												
 												$nbLignesEpr = mysql_num_rows($reqeprinitBIS);
@@ -2851,12 +2851,12 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 						
 						if ((isset($BValidernumlicence)) && (!(empty($BValidernumlicence)) )) {
 							$monsport = 1;
-							$reqsport = bf_mysql_query("SELECT CompetSpoCode FROM Compétitions WHERE CompetCode = $Compet");
+							$reqsport = bf_mysql_query("SELECT CompetSpoCode FROM Compï¿½titions WHERE CompetCode = $Compet");
 							if ($reqsport) {
 								$ressport = mysql_fetch_array($reqsport);
 								if ($ressport) $monsport = $ressport["CompetSpoCode"];	
 							}
-							$reqlicstr = "SELECT EtabNum, EtabNomCourt, LicEtabCode, LicInscrit, LicNumLicence, LicNom, LicPrénom, LicSexCode, LicNaissance, LicDateEnr, LicDateLic, LicAss, LicNomAss, LicObs, CatLibelCourt FROM Catégories, Licenciés INNER JOIN Etablissements On Licenciés.LicEtabCode = Etablissements.EtabCode WHERE (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1 And LicNumLicence = ".$_POST["ParLicCode"];
+							$reqlicstr = "SELECT EtabNum, EtabNomCourt, LicEtabCode, LicInscrit, LicNumLicence, LicNom, LicPrï¿½nom, LicSexCode, LicNaissance, LicDateEnr, LicDateLic, LicAss, LicNomAss, LicObs, CatLibelCourt FROM Catï¿½gories, Licenciï¿½s INNER JOIN Etablissements On Licenciï¿½s.LicEtabCode = Etablissements.EtabCode WHERE (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1 And LicNumLicence = ".$_POST["ParLicCode"];
 							if (!($Adm)) $reqlicstr .= " And (EtabNum = ".$Etab.RetAS($Etab).")";
 							$reqlic = bf_mysql_query($reqlicstr);
 														
@@ -2886,7 +2886,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 						} else {
 							if ($field->name == 'EquRelayeurs') $data = str_replace(" - ","<BR>",$data); 
 							
-							if ($field->name == 'CompetLibellé') { 
+							if ($field->name == 'CompetLibellï¿½') { 
 								$SpoG = TrouveSport($rowArray[0], "SpoGestionPerf") * -1;
 								$SpoL = $rowArray["SpoLibelCourt"];
 								if ($SpoG == 99) $SpoG = 10;
@@ -2968,7 +2968,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 			else {
 				if (($action == "confirmedeletedata") && ($key == $suppr)) {
 					echo "<TD CLASS = 'tddercol'>\n";
-					echo "<a href='$PHP_SELF?".$par."action=deleteData&suppr=$key&LicNom=".$rowArray['LicNom']."&LicPrénom=".$rowArray['LicPrénom']."&Lic=".$rowArray['LicNumLicence']."'>&nbsp;Supprimer&nbsp;</a>\n";
+					echo "<a href='$PHP_SELF?".$par."action=deleteData&suppr=$key&LicNom=".$rowArray['LicNom']."&LicPrï¿½nom=".$rowArray['LicPrï¿½nom']."&Lic=".$rowArray['LicNumLicence']."'>&nbsp;Supprimer&nbsp;</a>\n";
 					echo "<a href='$PHP_SELF?".$par."action=VoirMenu'>&nbsp;Annuler&nbsp;</a>\n";
 					echo "</TD>\n";
 				} else {
@@ -2982,15 +2982,15 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 							if (!($protect)) {
 								$testNbLignesEpr = false;
 								if (($menu == "competitions") && ($sousmenu == "individuels")) {
-									$reqlicstrinit = "SELECT LicNaissance, LicSexCode FROM Licenciés INNER JOIN Etablissements ON Licenciés.LicEtabCode = Etablissements.EtabCode WHERE LicNumLicence = ".$rowArray[2];
+									$reqlicstrinit = "SELECT LicNaissance, LicSexCode FROM Licenciï¿½s INNER JOIN Etablissements ON Licenciï¿½s.LicEtabCode = Etablissements.EtabCode WHERE LicNumLicence = ".$rowArray[2];
 									if (!($Adm)) $reqlicstrinit .= " And (EtabNum = ".$Etab.RetAS($Etab).")";
 									$reqlicinit = bf_mysql_query($reqlicstrinit);
 									if (!(!($reqlicinit))) {
 										$reslicinit = mysql_fetch_array($reqlicinit);
 										if (!(!($reslicinit))) {
 											$reqeprinitBIS = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt 
-																	     FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-																	     WHERE Catégories.CatPrim = TRUE AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet." AND (Catégories.CatSexCode = ".$reslicinit["LicSexCode"]." AND Catégories.CatDateDéb <= Date('".$reslicinit["LicNaissance"]."') AND Catégories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) ORDER BY Epreuves.Ordre");
+																	     FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+																	     WHERE Catï¿½gories.CatPrim = TRUE AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet." AND (Catï¿½gories.CatSexCode = ".$reslicinit["LicSexCode"]." AND Catï¿½gories.CatDateDï¿½b <= Date('".$reslicinit["LicNaissance"]."') AND Catï¿½gories.CatDateFin >= Date('".$reslicinit["LicNaissance"]."')) ORDER BY Epreuves.Ordre");
 											$nbLignesEpr = 0;
 											$nbLignesEpr = mysql_num_rows($reqeprinitBIS);
 											if ($nbLignesEpr > 1) $testNbLignesEpr = true;				
@@ -2998,8 +2998,8 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 												$catInitBIS = CalculCat("", $reslicinit["LicNaissance"], $reslicinit["LicSexCode"], 1);
 												if (($catInitBIS == "PF") || ($catInitBIS == "PG")) {
 													$reqeprinitBIS = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt 
-																				 FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-																				 WHERE Catégories.CatPrim = TRUE AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet." AND Catégories.CatSexCode = ".$reslicinit["LicSexCode"]." AND (Catégories.CatLibelCourt ='BF' OR Catégories.CatLibelCourt ='BG') ORDER BY Epreuves.Ordre");
+																				 FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+																				 WHERE Catï¿½gories.CatPrim = TRUE AND (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet." AND Catï¿½gories.CatSexCode = ".$reslicinit["LicSexCode"]." AND (Catï¿½gories.CatLibelCourt ='BF' OR Catï¿½gories.CatLibelCourt ='BG') ORDER BY Epreuves.Ordre");
 													$nbLignesEpr = mysql_num_rows($reqeprinitBIS);
 													if ($nbLignesEpr > 1) $testNbLignesEpr = true;
 												}
@@ -3046,7 +3046,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 							if ( ($rowArray['LicInscrit'] == 1) && ( $data > 0) ) {
 								if ( ($Adm) || ( (!($Adm)) && ($data == 1)) ) {
 									echo "<p style ='margin:0px; text-align:left;'> &nbsp;";
-									echo "<INPUT type='checkbox' name='licence".$key."' value='".$rowArray['LicNumLicence']."'".$check."> ".strtoupper($rowArray['LicNom'])." ".strtoupper(substr($rowArray['LicPrénom'],0,1)).".";
+									echo "<INPUT type='checkbox' name='licence".$key."' value='".$rowArray['LicNumLicence']."'".$check."> ".strtoupper($rowArray['LicNom'])." ".strtoupper(substr($rowArray['LicPrï¿½nom'],0,1)).".";
 									if ($Adm) echo " &nbsp;-&nbsp; <a id='$i' href='$PHP_SELF?".$par."action=modifiedata&modif=$key#".($i-10)."'>&nbsp;Modifier&nbsp;</a>"; 
 									echo "</p>\n";
 								}
@@ -3067,7 +3067,7 @@ function GereData($tablename, $queryStr, $MaKey="", $NomsColonnes="", $ChampsTri
 						
 						if ( in_array("selectionner",$Choix) ) {
 							if ( (isset($Compet)) && (!(empty($Compet))) && ($Compet > 0) && ($selectionner == true) )
-								if ($sousmenu == "individuels")	echo "<a href='$PHP_SELF?".$par."action=VoirMenu&menu=competitions&sousmenu=individuels&aj=1&ParLicCode=".$rowArray['LicNumLicence']."&BValidernumlicence=Ok&affcompet=$affcompet&filter=&filtre1=&fi=0'>&nbsp;Sélectionner&nbsp;</a>";
+								if ($sousmenu == "individuels")	echo "<a href='$PHP_SELF?".$par."action=VoirMenu&menu=competitions&sousmenu=individuels&aj=1&ParLicCode=".$rowArray['LicNumLicence']."&BValidernumlicence=Ok&affcompet=$affcompet&filter=&filtre1=&fi=0'>&nbsp;Sï¿½lectionner&nbsp;</a>";
 								
 						}
 												
@@ -3205,7 +3205,7 @@ Function VoirMenu() {
 		"licence" => $licence
 	);
 	
-	if ((isset($BAjouter)) && ($menu == "competitions") && ($sousmenu == "references")) $Compet = TrouveMax("SELECT MAX(CompetCode) AS Max FROM Compétitions") + 1;
+	if ((isset($BAjouter)) && ($menu == "competitions") && ($sousmenu == "references")) $Compet = TrouveMax("SELECT MAX(CompetCode) AS Max FROM Compï¿½titions") + 1;
 	if (isset($Compet)) $montableau["Compet"] = $Compet;
 	if (!(isset($stat))) $stat = 0;
 	if (!(isset($horscat))) $horscat = 0;	
@@ -3232,15 +3232,15 @@ Function VoirMenu() {
 	
 	if ($Adm) $s = "s"; else $s="";
 	echo "<TABLE CLASS = 'tablemenu'>\n<TR>\n<TD>\n";
-    if ($Adm) {echo  "<a "; if ($menu =="parametres") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=$sousmenu&Compet=$Compet'> &nbsp;Paramètres&nbsp; </a>\n";}  
+    if ($Adm) {echo  "<a "; if ($menu =="parametres") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=$sousmenu&Compet=$Compet'> &nbsp;Paramï¿½tres&nbsp; </a>\n";}  
 	if (!($Consult)) { if ($Adm) echo "|"; echo "<a "; if ($menu =="etablissements") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=etablissements&sousmenu=$sousmenu&Compet=$Compet' > &nbsp;Etablissement$s&nbsp; </a>\n";}
-    if (!($Consult)) {echo "|<a "; if ($menu =="licencies") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=licencies&sousmenu=$sousmenu&Compet=$Compet&licence=0'> &nbsp;Licenciés&nbsp; </a>\n";} 
-    if (!($Consult)) echo "|"; echo "<a "; if ($menu =="competitions") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=$sousmenu&Compet=$Compet&Etab=$Etab&licence=0'> &nbsp;Compétitions&nbsp; </a>\n";
+    if (!($Consult)) {echo "|<a "; if ($menu =="licencies") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=licencies&sousmenu=$sousmenu&Compet=$Compet&licence=0'> &nbsp;Licenciï¿½s&nbsp; </a>\n";} 
+    if (!($Consult)) echo "|"; echo "<a "; if ($menu =="competitions") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=$sousmenu&Compet=$Compet&Etab=$Etab&licence=0'> &nbsp;Compï¿½titions&nbsp; </a>\n";
 	echo "|<a "; if ($menu =="options") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=options&sousmenu=$sousmenu&Compet=$Compet&Etab=$Etab'> &nbsp;Options&nbsp; </a>\n";
 	if ($Adm) {echo "|<a "; if ($menu =="outils") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=outils&sousmenu=$sousmenu&Compet=$Compet'> &nbsp;Outils&nbsp; </a>\n";}
 	if ($Adm) {echo "|<a "; if ($menu =="connexions") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=connexions&sousmenu=$sousmenu&Compet=$Compet'> &nbsp;En ligne&nbsp; </a>\n";}
 	echo "|<a "; if ($menu =="apropos") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=apropos&sousmenu=$sousmenu&Compet=$Compet&Etab=$Etab'> &nbsp;A propos&nbsp; </a>\n";
-	if (!($Consult)) {echo "|<a href='$PHP_SELF?action=logout'> &nbsp;Déconnexion&nbsp; </a>\n";}
+	if (!($Consult)) {echo "|<a href='$PHP_SELF?action=logout'> &nbsp;Dï¿½connexion&nbsp; </a>\n";}
 	
 	echo "</TD>\n<TD align = 'right'>";
 	echo "<a href='$PHP_SELF?".$par."action=VoirMenu&modiftaille=".($TAILLE - 1)."&sousmenu=$sousmenu&Compet=$Compet&Etab=$Etab' CLASS = 'tailleur'>&nbsp;-&nbsp;</a>";
@@ -3259,17 +3259,17 @@ Function VoirMenu() {
 		echo "<TABLE CLASS = 'tablesousmenu'><TR><TD>";
 		echo" &nbsp;";
 		echo "<a "; if ($sousmenu == "sports") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=sports&Compet=$Compet&ListeSport=$ListeSport'  > &nbsp; Sports  &nbsp; </a>"; echo"|";
-		echo "<a "; if ($sousmenu == "categories") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&Compet=$Compet&ListeSport=$ListeSport'  > &nbsp; Catégories &nbsp; </a>"; echo"|";
+		echo "<a "; if ($sousmenu == "categories") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&Compet=$Compet&ListeSport=$ListeSport'  > &nbsp; Catï¿½gories &nbsp; </a>"; echo"|";
 		echo "<a "; if ($sousmenu == "epreuves") echo "CLASS = 'inv'"; echo "href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=epreuves&Compet=$Compet&ListeSport=$ListeSport'  > &nbsp; Epreuves &nbsp; </a>"; 
 		echo "</TD></TR></TABLE>";
 		
 		if ($sousmenu == "sports") {		
 		$tablename     = "Sports";
-		$queryStr      = "SELECT `SpoCode`,`SpoLibelCourt`, `SpoLibellé`, `Ordre`, `SpoGestionPerf` 
+		$queryStr      = "SELECT `SpoCode`,`SpoLibelCourt`, `SpoLibellï¿½`, `Ordre`, `SpoGestionPerf` 
 						  FROM `Sports`"; 
 		if(!isset($orderby)) $orderby = "Ordre";
 		$MaKey         = "SpoCode";
-		$NomsColonnes  = array('Code','Code','Libellé','Ordre','Gestion');
+		$NomsColonnes  = array('Code','Code','Libellï¿½','Ordre','Gestion');
 		$ChampsTri     = array('/', '/', '/', '/','/');
 		$ChampsAli     = array('center','center','','center','center');
 		$ChampsFor     = array('','','','','');
@@ -3297,8 +3297,8 @@ Function VoirMenu() {
 		$ChampsRacFiltre = array(false,false,false,false,false);		
 		$ChampsRacParam  = array(array(2,'parametres','categories','ListeSport',0,'->'));
 		$sousqueryStr    = "";
-		$messagedel      = "Attention ! la suppression d'un sport entraîne la suppression des catégories, des épreuves et des compétitions dans ce sport.";
-		$MajChpOrdre     = array(array("Catégories","CatSpoCode"),array("Epreuves","EprSpoCode"));
+		$messagedel      = "Attention ! la suppression d'un sport entraï¿½ne la suppression des catï¿½gories, des ï¿½preuves et des compï¿½titions dans ce sport.";
+		$MajChpOrdre     = array(array("Catï¿½gories","CatSpoCode"),array("Epreuves","EprSpoCode"));
 		GereData($tablename, $queryStr, $MaKey, $NomsColonnes, $ChampsTri, $ChampsAli, $ChampsFor, $ChampsAff, $action, $orderby, $Choix, $ChampsEdit, $ChampsInsert, $ChampsType, $ChampsTypeExt, $ChampsFiltre, $where, $ChampsNomFil, $ChampsRacFiltre, $ChampsRacParam, $sousqueryStr, $messagedel, $MajChpOrdre);
 		}
 		
@@ -3320,7 +3320,7 @@ Function VoirMenu() {
 			echo "<TR>";
 			echo "<TD>";
 			echo "&nbsp;Sport &nbsp;";
-			listederoulante("ListeSport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellé FROM Sports ORDER BY Ordre ", array("SpoLibelCourt","-","SpoLibellé"), array("","",""), "SpoCode" ,$ListeSport, 350);
+			listederoulante("ListeSport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellï¿½ FROM Sports ORDER BY Ordre ", array("SpoLibelCourt","-","SpoLibellï¿½"), array("","",""), "SpoCode" ,$ListeSport, 350);
 			echo "&nbsp;";
 			echo "<input type='submit' name='action' value='Ok' class ='bouton'>";
 			echo "</TD>";
@@ -3328,10 +3328,10 @@ Function VoirMenu() {
 			echo "<TR>";
 			echo "<TD>";
 			if (($majcat != true) && ($importcat != true)) {
-				echo "<a href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&majcat=true&importcat=&ListeSport=$ListeSport'>&nbsp;Mettre à jour les années des catégories de tous les sports&nbsp;</a>";
+				echo "<a href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&majcat=true&importcat=&ListeSport=$ListeSport'>&nbsp;Mettre ï¿½ jour les annï¿½es des catï¿½gories de tous les sports&nbsp;</a>";
 			} 
 			if ($majcat == true) {
-				echo "Mettre à jour les catégories de tous les sports ";
+				echo "Mettre ï¿½ jour les catï¿½gories de tous les sports ";
 				echo "<input type='submit' name='moinsunan' value='-1 an' class ='bouton'>";
 				echo "&nbsp;";
 				echo "<input type='submit' name='plusunan'  value='+1 an' class ='bouton'>";
@@ -3339,11 +3339,11 @@ Function VoirMenu() {
 				echo "<a href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&majcat=&importcat=&ListeSport=$ListeSport'>&nbsp;Terminer&nbsp;</a>";
 			}
 			if ( ($SpoGestion == -99) && ($importcat != true) && ($majcat != true)) {
-				echo " - <a href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&majcat=&importcat=true&ListeSport=$ListeSport'>&nbsp;Importer les catégories&nbsp;</a>";
+				echo " - <a href='$PHP_SELF?action=VoirMenu&menu=parametres&sousmenu=categories&majcat=&importcat=true&ListeSport=$ListeSport'>&nbsp;Importer les catï¿½gories&nbsp;</a>";
 			}
 			if ($importcat == true) {
-				echo "Importer les catégories du sport ";
-				listederoulante("ListeSportImport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellé FROM Sports WHERE SpoCode <> $ListeSport ORDER BY Ordre ", array("SpoLibelCourt","-","SpoLibellé"), array("","",""), "SpoCode" ,$ListeSportImport, 300);
+				echo "Importer les catï¿½gories du sport ";
+				listederoulante("ListeSportImport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellï¿½ FROM Sports WHERE SpoCode <> $ListeSport ORDER BY Ordre ", array("SpoLibelCourt","-","SpoLibellï¿½"), array("","",""), "SpoCode" ,$ListeSportImport, 300);
 				echo "&nbsp;";
 				echo "<input type='submit' name='Bimportcat' value='Ok' class ='bouton'>"; 
 				echo "&nbsp;";
@@ -3360,43 +3360,43 @@ Function VoirMenu() {
 			echo "</SPAN>";	
 			
 			if (isset($plusunan)) {
-				bf_mysql_query("UPDATE Catégories SET CatDateDéb = DATE_ADD( CatDateDéb, INTERVAL 1 YEAR ), CatDateFin = DATE_ADD( CatDateFin, INTERVAL 1 YEAR ) WHERE YEAR( CatDateDéb ) <> 1970",0,"`Catégories`"); 
-				bf_mysql_query("UPDATE Catégories SET CatDateFin = DATE_ADD( CatDateFin, INTERVAL 1 YEAR ) WHERE YEAR( CatDateDéb ) = 1970",0,"`Catégories`"); 
+				bf_mysql_query("UPDATE Catï¿½gories SET CatDateDï¿½b = DATE_ADD( CatDateDï¿½b, INTERVAL 1 YEAR ), CatDateFin = DATE_ADD( CatDateFin, INTERVAL 1 YEAR ) WHERE YEAR( CatDateDï¿½b ) <> 1970",0,"`Catï¿½gories`"); 
+				bf_mysql_query("UPDATE Catï¿½gories SET CatDateFin = DATE_ADD( CatDateFin, INTERVAL 1 YEAR ) WHERE YEAR( CatDateDï¿½b ) = 1970",0,"`Catï¿½gories`"); 
 				unset($plusunan);
 				bf_mysql_query("UNLOCK TABLES");
 			}
 			if (isset($moinsunan)) {
-				bf_mysql_query("UPDATE Catégories SET CatDateDéb = DATE_ADD( CatDateDéb, INTERVAL -1 YEAR ), CatDateFin = DATE_ADD( CatDateFin, INTERVAL -1 YEAR ) WHERE YEAR( CatDateDéb ) <> 1970",0,"`Catégories`");
-				bf_mysql_query("UPDATE Catégories SET CatDateFin = DATE_ADD( CatDateFin, INTERVAL -1 YEAR ) WHERE YEAR( CatDateDéb ) = 1970",0,"`Catégories`");
+				bf_mysql_query("UPDATE Catï¿½gories SET CatDateDï¿½b = DATE_ADD( CatDateDï¿½b, INTERVAL -1 YEAR ), CatDateFin = DATE_ADD( CatDateFin, INTERVAL -1 YEAR ) WHERE YEAR( CatDateDï¿½b ) <> 1970",0,"`Catï¿½gories`");
+				bf_mysql_query("UPDATE Catï¿½gories SET CatDateFin = DATE_ADD( CatDateFin, INTERVAL -1 YEAR ) WHERE YEAR( CatDateDï¿½b ) = 1970",0,"`Catï¿½gories`");
 				unset($moinsunan);
 				bf_mysql_query("UNLOCK TABLES");
 			}
 			
 			if (isset($Bimportcat)) {
-				$reqImport = bf_mysql_query("SELECT Catégories.* FROM `Catégories` WHERE Catégories.CatSpoCode = $ListeSportImport");
+				$reqImport = bf_mysql_query("SELECT Catï¿½gories.* FROM `Catï¿½gories` WHERE Catï¿½gories.CatSpoCode = $ListeSportImport");
 				if (!(!($reqImport))) {
 					while ($resImport = mysql_fetch_array($reqImport)) {
-						Maj(1,"Catégories", $resImport, Array("CatSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = $ListeSport"));
+						Maj(1,"Catï¿½gories", $resImport, Array("CatSpoCode" => "SELECT SpoCode FROM Sports WHERE SpoCode = $ListeSport"));
 					}
 				}
 				unset($Bimportcat);
-				$Res = bf_mysql_query("SELECT * FROM Sports INNER JOIN Catégories ON Sports.SpoCode = Catégories.CatSpoCode ORDER BY Sports.Ordre, Catégories.Ordre");
+				$Res = bf_mysql_query("SELECT * FROM Sports INNER JOIN Catï¿½gories ON Sports.SpoCode = Catï¿½gories.CatSpoCode ORDER BY Sports.Ordre, Catï¿½gories.Ordre");
 				$cpte = 0;
 				while ($res = mysql_fetch_array($Res)) {
 					$cpte = $cpte + 1;
-					bf_mysql_query("UPDATE Catégories SET Ordre = $cpte WHERE CatCode = ".$res['CatCode'],0,"`Catégories`");
+					bf_mysql_query("UPDATE Catï¿½gories SET Ordre = $cpte WHERE CatCode = ".$res['CatCode'],0,"`Catï¿½gories`");
 				}
 				bf_mysql_query("UNLOCK TABLES");
 			}
 		} else $SpoGestion = -99;
 		
-		$tablename     = "Catégories";
-		$queryStr      = "SELECT `CatCode`, `SpoLibelCourt`, `CatLibelCourt`, `CatLibellé`, `CatDateDéb`, `CatDateFin`, `CatSexCode`, `CatSpoCode`, `CatPrim`, Catégories.`Ordre`, `SpoGestionPerf` 
-						  FROM `Catégories` INNER JOIN `Sports` ON Catégories.CatSpoCode = Sports.SpoCode"; 
+		$tablename     = "Catï¿½gories";
+		$queryStr      = "SELECT `CatCode`, `SpoLibelCourt`, `CatLibelCourt`, `CatLibellï¿½`, `CatDateDï¿½b`, `CatDateFin`, `CatSexCode`, `CatSpoCode`, `CatPrim`, Catï¿½gories.`Ordre`, `SpoGestionPerf` 
+						  FROM `Catï¿½gories` INNER JOIN `Sports` ON Catï¿½gories.CatSpoCode = Sports.SpoCode"; 
 		if (!(!$req)) $where = "(CatSpoCode = $ListeSport)";
-		if(!isset($orderby)) $orderby = "Catégories.Ordre";
+		if(!isset($orderby)) $orderby = "Catï¿½gories.Ordre";
 		$MaKey         = "CatCode";
-		$NomsColonnes  = array('Code','Sport', 'Code', 'Libellé','Début','Fin', 'Sexe', 'Sport', 'Prim', 'Ordre', 'Gestion');
+		$NomsColonnes  = array('Code','Sport', 'Code', 'Libellï¿½','Dï¿½but','Fin', 'Sexe', 'Sport', 'Prim', 'Ordre', 'Gestion');
 		$ChampsTri     = array('/', '/', '/', '/', '/', '/', '/', '/', '/', '/', '/');
 		$ChampsAli     = array('center', 'center', 'center','','center','center','center','center','center','center','center');
 		$ChampsFor     = array('','','','','','','','','','','');
@@ -3436,8 +3436,8 @@ Function VoirMenu() {
 						   array("Texte" ,true ,"","", Array("Max","Ordre"), true,true,false),
 						   array("Texte" ,false ,"","","",true,true,false)						   
 						   );
-	    $messagedel      = "Attention ! la suppression d'une catégorie entraîne la suppression des épreuves et des participations dans cette catégorie.";
-		$MajChpOrdre     = array(array("Catégories","CatSpoCode"),array("Epreuves","EprSpoCode"));
+	    $messagedel      = "Attention ! la suppression d'une catï¿½gorie entraï¿½ne la suppression des ï¿½preuves et des participations dans cette catï¿½gorie.";
+		$MajChpOrdre     = array(array("Catï¿½gories","CatSpoCode"),array("Epreuves","EprSpoCode"));
 		GereData($tablename, $queryStr, $MaKey, $NomsColonnes, $ChampsTri, $ChampsAli, $ChampsFor, $ChampsAff, $action, $orderby, $Choix, $ChampsEdit, $ChampsInsert, $ChampsType, $ChampsTypeExt, $ChampsFiltre, $where, $ChampsNomFil, $ChampsRacFiltre, $ChampsRacParam, $sousqueryStr, $messagedel, $MajChpOrdre);
 		}
 	
@@ -3462,7 +3462,7 @@ Function VoirMenu() {
 			if ($res) $SpoGestion = $res["SpoGestionPerf"];
 			if ($SpoGestion > 0) $ListeSport = 2; 
 			echo "&nbsp;Sport &nbsp;";
-			listederoulante("ListeSport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellé FROM Sports WHERE SpoGestionPerf <= 0 ORDER BY Ordre", array("SpoLibelCourt","-","SpoLibellé"), array("","",""), "SpoCode" ,$ListeSport, 350);
+			listederoulante("ListeSport", "", "SELECT SpoCode, SpoLibelCourt, SpoLibellï¿½ FROM Sports WHERE SpoGestionPerf <= 0 ORDER BY Ordre", array("SpoLibelCourt","-","SpoLibellï¿½"), array("","",""), "SpoCode" ,$ListeSport, 350);
 			echo "&nbsp;";
 			echo "<input type='submit' name='action' value='Ok' class ='bouton'>";
 			echo "</TD>";
@@ -3476,12 +3476,12 @@ Function VoirMenu() {
 		} else $SpoGestion = -99;
 		
 		$tablename     = "Epreuves";
-		$queryStr      = "SELECT `EprCode`, `SpoLibelCourt`, `EprLibelCourt`, `EprLibellé`, `CatLibelCourt`, `EprSpoCode`, Epreuves.`Ordre`, `SpoGestionPerf`
-						  FROM (Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode) INNER JOIN Catégories ON Epreuves.EprCatCode = Catégories.CatCode" ; 
+		$queryStr      = "SELECT `EprCode`, `SpoLibelCourt`, `EprLibelCourt`, `EprLibellï¿½`, `CatLibelCourt`, `EprSpoCode`, Epreuves.`Ordre`, `SpoGestionPerf`
+						  FROM (Sports INNER JOIN Epreuves ON Sports.SpoCode = Epreuves.EprSpoCode) INNER JOIN Catï¿½gories ON Epreuves.EprCatCode = Catï¿½gories.CatCode" ; 
 		if (!(!$req)) $where = "(EprSpoCode = $ListeSport)";
 		if(!isset($orderby)) $orderby = "Epreuves.Ordre";
 		$MaKey         = "EprCode";
-		$NomsColonnes  = array('Code','Sport','Code','Libellé','Cat', 'Sport', 'Ordre', 'Gestion');
+		$NomsColonnes  = array('Code','Sport','Code','Libellï¿½','Cat', 'Sport', 'Ordre', 'Gestion');
 		$ChampsTri     = array('/', '/', '/', '/', '/', '/', '/', '/');
 		$ChampsAli     = array('center','center', 'center','','center','center','center','center');
 		$ChampsFor     = array('','','','','','','','');
@@ -3500,7 +3500,7 @@ Function VoirMenu() {
 						   array("Texte" ,false,"","",true),
 						   array("Texte" ,true ,"","",true),
 						   array("Texte" ,true ,"","",true),
-						   array("ListeD",true ,"EprCatCode",array("selcat", "Cat...","SELECT CatLibelCourt, CatLibellé FROM Catégories WHERE CatSpoCode = $ListeSport ORDER BY Ordre", Array("CatLibelCourt", "-", "CatLibellé"), Array("", "", ""), "CatLibelCourt","","SELECT CatCode FROM Catégories WHERE CatSpoCode = $ListeSport AND CatLibelCourt = ","150"),true),
+						   array("ListeD",true ,"EprCatCode",array("selcat", "Cat...","SELECT CatLibelCourt, CatLibellï¿½ FROM Catï¿½gories WHERE CatSpoCode = $ListeSport ORDER BY Ordre", Array("CatLibelCourt", "-", "CatLibellï¿½"), Array("", "", ""), "CatLibelCourt","","SELECT CatCode FROM Catï¿½gories WHERE CatSpoCode = $ListeSport AND CatLibelCourt = ","150"),true),
 						   array("Texte" ,false,"","",true),
 						   array("Texte" ,true ,"","",true),
 						   array("Texte" ,false,"","",true)
@@ -3510,12 +3510,12 @@ Function VoirMenu() {
 						   array("Texte" ,false,"","","",true,true,false),
 						   array("Texte" ,true ,"","","",true,true,false),
 						   array("Texte" ,true ,"","","",true,true,false),
-						   array("ListeD",true,"EprCatCode",array("selcat", "Cat...","SELECT CatLibelCourt, CatLibellé FROM Catégories WHERE CatSpoCode = $ListeSport ORDER BY Ordre", Array("CatLibelCourt", "-", "CatLibellé"), Array("", "", ""), "CatLibelCourt","","SELECT CatCode FROM Catégories WHERE CatSpoCode = $ListeSport AND CatLibelCourt = ","150"),"", true,true,false),
+						   array("ListeD",true,"EprCatCode",array("selcat", "Cat...","SELECT CatLibelCourt, CatLibellï¿½ FROM Catï¿½gories WHERE CatSpoCode = $ListeSport ORDER BY Ordre", Array("CatLibelCourt", "-", "CatLibellï¿½"), Array("", "", ""), "CatLibelCourt","","SELECT CatCode FROM Catï¿½gories WHERE CatSpoCode = $ListeSport AND CatLibelCourt = ","150"),"", true,true,false),
 						   array("Texte" ,true ,"","",$ListeSport,true,true,false),
 						   array("Texte" ,true ,"","", Array("Max","Ordre"), true,true,false),
 						   array("Texte" ,false,"","","",true,true,false)
 						   );
-	     $messagedel      = "Attention ! la suppression d'une épreuve entraîne la suppression des participations dans cette épreuve.";
+	     $messagedel      = "Attention ! la suppression d'une ï¿½preuve entraï¿½ne la suppression des participations dans cette ï¿½preuve.";
 		 $MajChpOrdre     = array(array("Epreuves","EprSpoCode"));
 		 GereData($tablename, $queryStr, $MaKey, $NomsColonnes, $ChampsTri, $ChampsAli, $ChampsFor, $ChampsAff, $action, $orderby, $Choix, $ChampsEdit, $ChampsInsert, $ChampsType, $ChampsTypeExt, $ChampsFiltre, $where, $ChampsNomFil, $ChampsRacFiltre, $ChampsRacParam, $sousqueryStr, $messagedel, $MajChpOrdre);
 		}
@@ -3527,13 +3527,13 @@ Function VoirMenu() {
 		bf_mysql_query("UPDATE Etablissements INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode SET EtabMemo3 = IF(RAND() > 0.33, IF(RAND() > 0.66, CONCAT(SecLibel, LOWER(EtabNomCourt), FLOOR(RAND()*100)), CONCAT(LOWER(EtabNomCourt), SecLibel, FLOOR(RAND()*100))), CONCAT(FLOOR(RAND()*100), LOWER(EtabNomCourt), SecLibel)) WHERE EtabMemo3 = '' OR EtabMemo3 IS NULL");
 		
 		$tablename     = "Etablissements";
-		$queryStr      = "SELECT `EtabCode`,`EtabNum`, `EtabNomCourt`, `EtabNom`, `EtabAS`, `EtabAdresse1`, `EtabAdresse2`, `EtabCP`, `EtabVille`, `EtabTél`, `EtabFax`, `EtabMail`, `EtabTélEps`, `EtabMemo3`, `SecLibel`,
-						  (SELECT COUNT(LicEtabCode) FROM `Licenciés` where LicEtabCode = EtabCode) AS Lic
+		$queryStr      = "SELECT `EtabCode`,`EtabNum`, `EtabNomCourt`, `EtabNom`, `EtabAS`, `EtabAdresse1`, `EtabAdresse2`, `EtabCP`, `EtabVille`, `EtabTï¿½l`, `EtabFax`, `EtabMail`, `EtabTï¿½lEps`, `EtabMemo3`, `SecLibel`,
+						  (SELECT COUNT(LicEtabCode) FROM `Licenciï¿½s` where LicEtabCode = EtabCode) AS Lic
 						  FROM `Etablissements` INNER JOIN `Secteurs` ON Etablissements.EtabSecCode = Secteurs.SecCode"; 
 		if (!$Adm) $where = "(EtabNum = $Etab)".RetAS($Etab);
 		if ((!isset($orderby)) || ($orderby == "")) $orderby = "Secteurs.Ordre, EtabNomCourt";
 		$MaKey         = "EtabCode";
-		$NomsColonnes  = array('Code','Numéro','Code','Nom','A.S.','Adresse1','Adresse2','CP','Ville','Tél','Fax','Mail','Tél Eps','Passe','Secteur','Nbre');
+		$NomsColonnes  = array('Code','Numï¿½ro','Code','Nom','A.S.','Adresse1','Adresse2','CP','Ville','Tï¿½l','Fax','Mail','Tï¿½l Eps','Passe','Secteur','Nbre');
 		$ChampsTri     = array('','Secteurs.Ordre, EtabNum', 'Secteurs.Ordre, EtabNomCourt', 'EtabNom','','','','EtabCP, Secteurs.Ordre, EtabNomCourt','EtabVille, Secteurs.Ordre, EtabNomCourt','','','','','','','');
 		$ChampsAli     = array('','center','center','','','','','center','','center','center','','','center','center','center');
 		$ChampsFor     = array('','%06d','','','','','','','','','','','','','','');
@@ -3562,7 +3562,7 @@ Function VoirMenu() {
 						   array("Texte" ,True ,"","",false),
 						   array("Texte" ,$Adm ,"","",false),
 						   array("Texte" ,$Adm ,"","",false),
-						   array("ListeD",$Adm,"EtabSecCode",array("selsect", "Secteur...","SELECT SecLibel, SecLibellé FROM Secteurs WHERE SecLibel <> '0' ORDER BY Ordre", Array("SecLibel", "SecLibellé"), Array("", ""), "SecLibel","","SELECT SecCode FROM Secteurs WHERE SecLibel = ","75"),true),
+						   array("ListeD",$Adm,"EtabSecCode",array("selsect", "Secteur...","SELECT SecLibel, SecLibellï¿½ FROM Secteurs WHERE SecLibel <> '0' ORDER BY Ordre", Array("SecLibel", "SecLibellï¿½"), Array("", ""), "SecLibel","","SELECT SecCode FROM Secteurs WHERE SecLibel = ","75"),true),
 						   array("Texte" ,False ,"","",false)
 						   );
 		$ChampsInsert    = array(
@@ -3580,10 +3580,10 @@ Function VoirMenu() {
 						   array("Texte" ,true ,"","","",true,false,false),
 						   array("Texte" ,true ,"","","",true,false,false),
 						   array("Texte" ,true ,"","","",true,false,false),
-						   array("ListeD",true,"EtabSecCode",array("selsect", "Secteur...","SELECT SecLibel, SecLibellé FROM Secteurs WHERE SecLibel <> '0' ORDER BY Ordre", Array("SecLibel", "SecLibellé"), Array("", ""), "SecLibel","","SELECT SecCode FROM Secteurs WHERE SecLibel = ","75"),"",true,true,false),
+						   array("ListeD",true,"EtabSecCode",array("selsect", "Secteur...","SELECT SecLibel, SecLibellï¿½ FROM Secteurs WHERE SecLibel <> '0' ORDER BY Ordre", Array("SecLibel", "SecLibellï¿½"), Array("", ""), "SecLibel","","SELECT SecCode FROM Secteurs WHERE SecLibel = ","75"),"",true,true,false),
 						   array("Texte" ,false,"","","",false,false,false),
 						   );
-		$messagedel      = "Attention ! la suppression d'un établissement entraîne la suppression des licenciés et des participations de cet établissement.";
+		$messagedel      = "Attention ! la suppression d'un ï¿½tablissement entraï¿½ne la suppression des licenciï¿½s et des participations de cet ï¿½tablissement.";
 		GereData($tablename, $queryStr, $MaKey, $NomsColonnes, $ChampsTri, $ChampsAli, $ChampsFor, $ChampsAff, $action, $orderby, $Choix, $ChampsEdit, $ChampsInsert, $ChampsType, $ChampsTypeExt, $ChampsFiltre, $where, $ChampsNomFil, $ChampsRacFiltre, $ChampsRacParam,$sousqueryStr,$messagedel );
 	} else {
 		ConstruitStat(-2, 1, $queryStr, $NomsColonnes, $ChampsAli, $ChampsFor, $ChampsAff, $ChampsType, $Choix);
@@ -3595,31 +3595,31 @@ Function VoirMenu() {
 		
 		if ($stat == 0) {
 		
-		$tablename     = "Licenciés";
+		$tablename     = "Licenciï¿½s";
 		if ($horscat == 0) {
 			
 			if ($licence != 1)
-				$queryStr      = "SELECT EtabNomCourt, Licenciés.LicCode, Licenciés.LicInscrit, Licenciés.LicNumLicence, Licenciés.LicNom, Licenciés.LicPrénom, Licenciés.LicNaissance, Licenciés.LicSexCode, CatLibelCourt, EtabNomCourt, EtabNom, EtabVille
-							  FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode";
+				$queryStr      = "SELECT EtabNomCourt, Licenciï¿½s.LicCode, Licenciï¿½s.LicInscrit, Licenciï¿½s.LicNumLicence, Licenciï¿½s.LicNom, Licenciï¿½s.LicPrï¿½nom, Licenciï¿½s.LicNaissance, Licenciï¿½s.LicSexCode, CatLibelCourt, EtabNomCourt, EtabNom, EtabVille
+							  FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode";
 			else
-				$queryStr      = "SELECT EtabNomCourt, Licenciés.LicCode, Licenciés.LicInscrit, Licenciés.LicNumLicence, Licenciés.LicNom, Licenciés.LicPrénom, Licenciés.LicNaissance, Licenciés.LicSexCode, CatLibelCourt, EtabNomCourt, EtabNom, EtabVille, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
-							  FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode";
+				$queryStr      = "SELECT EtabNomCourt, Licenciï¿½s.LicCode, Licenciï¿½s.LicInscrit, Licenciï¿½s.LicNumLicence, Licenciï¿½s.LicNom, Licenciï¿½s.LicPrï¿½nom, Licenciï¿½s.LicNaissance, Licenciï¿½s.LicSexCode, CatLibelCourt, EtabNomCourt, EtabNom, EtabVille, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
+							  FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode";
 		
-			$where = "( CatSpoCode = 1 AND LicSexCode = CatSexCode AND (Licenciés.LicNaissance >= CatDateDéb And Licenciés.LicNaissance <= CatDateFin) ";
+			$where = "( CatSpoCode = 1 AND LicSexCode = CatSexCode AND (Licenciï¿½s.LicNaissance >= CatDateDï¿½b And Licenciï¿½s.LicNaissance <= CatDateFin) ";
 			if (!$Adm) $where .= " And (EtabNum = $Etab".RetAS($Etab)."))"; else $where.=")";
 			if ($Adm) $Choix = array("importer","exporter","ajout","modifier","filtrage","supprimer","stat","selectionner"); else $Choix = array("exporter","filtrage","selectionner");
 			if ( ( ((!($Adm)) && (TrouveParamweb("ImpressionLic") == 1)) || (($Adm) && (TrouveParamweb("ImpressionLic") > 0)) ) || (TrouveParamweb("InscriptionLic") > 0)) array_push($Choix,"licence");
 		} else {
-			$queryStr      = "SELECT EtabNomCourt, Licenciés.LicCode, Licenciés.LicInscrit, Licenciés.LicNumLicence, Licenciés.LicNom, Licenciés.LicPrénom, Licenciés.LicNaissance, Licenciés.LicSexCode, '' AS Cat, EtabNomCourt, EtabNom, EtabVille, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
-						      FROM Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode";
-			$where = " ( LicNaissance < (SELECT CatDateDéb FROM Catégories WHERE CatSpoCode = 1 ORDER BY CatDateDéb LIMIT 1) OR LicNaissance > (SELECT CatDateFin FROM Catégories WHERE CatSpoCode = 1 ORDER BY CatDateFin DESC LIMIT 1)";
+			$queryStr      = "SELECT EtabNomCourt, Licenciï¿½s.LicCode, Licenciï¿½s.LicInscrit, Licenciï¿½s.LicNumLicence, Licenciï¿½s.LicNom, Licenciï¿½s.LicPrï¿½nom, Licenciï¿½s.LicNaissance, Licenciï¿½s.LicSexCode, '' AS Cat, EtabNomCourt, EtabNom, EtabVille, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
+						      FROM Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode";
+			$where = " ( LicNaissance < (SELECT CatDateDï¿½b FROM Catï¿½gories WHERE CatSpoCode = 1 ORDER BY CatDateDï¿½b LIMIT 1) OR LicNaissance > (SELECT CatDateFin FROM Catï¿½gories WHERE CatSpoCode = 1 ORDER BY CatDateFin DESC LIMIT 1)";
 			if (!$Adm) $where .= " And EtabNum = $Etab)"; else $where.=")";
 			if ($Adm) $Choix = array("modifier","filtrage","supprimer","liste"); else $Choix = array("filtrage");
 		}
-		if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrénom";
+		if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrï¿½nom";
 		$MaKey         = "LicCode";
-		$NomsColonnes  = array('Etab','Code','Inscrit','Numéro','Nom','Prénom','Naissance','Sexe','Cat','Etab','Etab Nom','Etab Ville','Ass','Ass Nom','Ass Date','Demande','Validation');
-		$ChampsTri     = array('EtabNomCourt, LicNom, LicPrénom','', 'LicInscrit DESC, LicNom, LicPrénom', 'LicNumLicence', 'LicNom, LicPrénom', 'LicPrénom, LicNom', 'LicNaissance, LicNom, LicPrénom', 'LicSexCode DESC, LicNom, LicPrénom', 'LicSexCode DESC, LicNaissance DESC, LicNom, LicPrénom', 'EtabNomCourt, LicNom, LicPrénom', 'EtabNom, LicNom, LicPrénom','EtabVille, EtabNomCourt, LicNom, LicPrénom','LicAss Desc, LicNom, LicPrénom','LicNomAss, LicNom, LicPrénom', 'LicDateAss DESC, LicNom, LicPrénom','LicDateDem DESC, LicNom, LicPrénom','LicDateValid DESC, LicNom, LicPrénom');
+		$NomsColonnes  = array('Etab','Code','Inscrit','Numï¿½ro','Nom','Prï¿½nom','Naissance','Sexe','Cat','Etab','Etab Nom','Etab Ville','Ass','Ass Nom','Ass Date','Demande','Validation');
+		$ChampsTri     = array('EtabNomCourt, LicNom, LicPrï¿½nom','', 'LicInscrit DESC, LicNom, LicPrï¿½nom', 'LicNumLicence', 'LicNom, LicPrï¿½nom', 'LicPrï¿½nom, LicNom', 'LicNaissance, LicNom, LicPrï¿½nom', 'LicSexCode DESC, LicNom, LicPrï¿½nom', 'LicSexCode DESC, LicNaissance DESC, LicNom, LicPrï¿½nom', 'EtabNomCourt, LicNom, LicPrï¿½nom', 'EtabNom, LicNom, LicPrï¿½nom','EtabVille, EtabNomCourt, LicNom, LicPrï¿½nom','LicAss Desc, LicNom, LicPrï¿½nom','LicNomAss, LicNom, LicPrï¿½nom', 'LicDateAss DESC, LicNom, LicPrï¿½nom','LicDateDem DESC, LicNom, LicPrï¿½nom','LicDateValid DESC, LicNom, LicPrï¿½nom');
 		$ChampsAli     = array('center','','center','center','','','center','center','center','center','','','center','center','center','center','center');
 		$ChampsFor     = array('','','','%010s','','','','','','','','','','','','','');
 		$ChampsAff     = array(!$Adm,false,true,true,true,true,true,true,true,$Adm,$Adm && (!($licence)),$Adm && (!($licence)),$licence,false,$licence,$licence,$licence);
@@ -3668,7 +3668,7 @@ Function VoirMenu() {
 						   array("Date"  ,true ,""             ,"","NULL",true,false,false),
 						   array("Date"  ,true ,""             ,"","NULL",true,false,false)
 						   );
-		if ($licence == 1) $messagedel = ""; else $messagedel      = "Attention ! la suppression d'un licencié entraîne la suppression des participations de ce licencié.";
+		if ($licence == 1) $messagedel = ""; else $messagedel      = "Attention ! la suppression d'un licenciï¿½ entraï¿½ne la suppression des participations de ce licenciï¿½.";
 		if ( (!($licence == 1)) && (isset($filter)) ) {
 			$tabfilter = explode(" AND ", $filter);
 			$counttab = count($tabfilter);
@@ -3692,27 +3692,27 @@ Function VoirMenu() {
 		if (($licence == 0) && ($sousmenu == "licences")) {if ($Adm) $sousmenu = "references"; else $sousmenu = "individuels";}
 		if ($licence == 1) $sousmenu = "licences";
 		if ( (!isset($affcompet)) || (empty($affcompet)) ) $affcompet = "oui";
-		if ($affcompet == "oui") $affcompettexte = " &nbsp; Masquer les autres compétitions disponibles&nbsp;"; else $affcompettexte = " &nbsp; Afficher les autres compétitions disponibles &nbsp;";
+		if ($affcompet == "oui") $affcompettexte = " &nbsp; Masquer les autres compï¿½titions disponibles&nbsp;"; else $affcompettexte = " &nbsp; Afficher les autres compï¿½titions disponibles &nbsp;";
 		if ($sousmenu == "equipes") $WhereComp = "AND CompetEqu = 1"; else $WhereComp = "";
 		if ($Adm) { if ($affcompet == "nonfermees") $WhereEtat = " CompetEtat = 1 "; else $WhereEtat = " CompetEtat >= 0 ";} else $WhereEtat = " CompetEtat = 1 ";
-		$CompetStatut ="Inscriptions fermées";			
+		$CompetStatut ="Inscriptions fermï¿½es";			
 		$affgrillecompet = "non";
-		$queryCompet = bf_mysql_query("SELECT CompetCode, CompetLibellé, DATE_FORMAT(CompetDateDéb,'%d/%m/%Y') AS CompetDateDébut, CompetLieu, CompetCalculAutoEqu, SpoLibellé, SpoCode, CompetEqu, CompetStatut, CompetEtat, CompetObs, Compétitions.Ordre FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE $WhereEtat $WhereComp ORDER BY Compétitions.Ordre, CompetDateDéb DESC");
+		$queryCompet = bf_mysql_query("SELECT CompetCode, CompetLibellï¿½, DATE_FORMAT(CompetDateDï¿½b,'%d/%m/%Y') AS CompetDateDï¿½but, CompetLieu, CompetCalculAutoEqu, SpoLibellï¿½, SpoCode, CompetEqu, CompetStatut, CompetEtat, CompetObs, Compï¿½titions.Ordre FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE $WhereEtat $WhereComp ORDER BY Compï¿½titions.Ordre, CompetDateDï¿½b DESC");
 		if (!(!($queryCompet))) {
 			$res = mysql_fetch_array($queryCompet);
 			if ($res) {
 				$affgrillecompet = "oui";
-				$req = bf_mysql_query("SELECT CompetCode, CompetLibellé, DATE_FORMAT(CompetDateDéb,'%d/%m/%Y') AS CompetDateDébut, CompetLieu, CompetCalculAutoEqu, SpoLibellé, SpoCode, CompetEqu, CompetStatut, CompetEtat, CompetObs, Compétitions.Ordre FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode = $Compet AND $WhereEtat $WhereComp ORDER BY Compétitions.Ordre, CompetDateDéb DESC");
+				$req = bf_mysql_query("SELECT CompetCode, CompetLibellï¿½, DATE_FORMAT(CompetDateDï¿½b,'%d/%m/%Y') AS CompetDateDï¿½but, CompetLieu, CompetCalculAutoEqu, SpoLibellï¿½, SpoCode, CompetEqu, CompetStatut, CompetEtat, CompetObs, Compï¿½titions.Ordre FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode = $Compet AND $WhereEtat $WhereComp ORDER BY Compï¿½titions.Ordre, CompetDateDï¿½b DESC");
 				$res1 = mysql_fetch_array($req);	
 				if ($res1) $res = $res1;
 				if (!( (isset($BAjouter)) && ($menu == "competitions") && ($sousmenu == "references") )) $Compet = $res["CompetCode"];
 				if (mysql_num_rows($queryCompet) > 1) $monnum = "1 -"; else $monnum = "";
-				$TexteCompet = "<B>".$monnum."<BLINK>&nbsp;".$res["SpoLibellé"]." ->&nbsp; </BLINK> ".$res["CompetLibellé"]." - ".$res["CompetDateDébut"]." - ".$res["CompetLieu"]
+				$TexteCompet = "<B>".$monnum."<BLINK>&nbsp;".$res["SpoLibellï¿½"]." ->&nbsp; </BLINK> ".$res["CompetLibellï¿½"]." - ".$res["CompetDateDï¿½but"]." - ".$res["CompetLieu"]
 				."<span class='pasimprimer'>";
 				if (!($Consult)) $TexteCompet.= " - ".$res["CompetStatut"];
 				if (!($res["CompetObs"]) == "") $TexteCompet.= " - ".$res["CompetObs"];
 				$TexteCompet.= "</span></B>";
-				$Req = bf_mysql_query("SELECT CompetCode, CompetLibellé, DATE_FORMAT(CompetDateDéb,'%d/%m/%Y') AS CompetDateDébut, CompetLieu, SpoLibellé, SpoCode, CompetEqu, CompetStatut, CompetEtat, CompetObs, Compétitions.Ordre FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode WHERE CompetCode <> $Compet AND $WhereEtat $WhereComp ORDER BY Compétitions.Ordre, CompetDateDéb DESC");
+				$Req = bf_mysql_query("SELECT CompetCode, CompetLibellï¿½, DATE_FORMAT(CompetDateDï¿½b,'%d/%m/%Y') AS CompetDateDï¿½but, CompetLieu, SpoLibellï¿½, SpoCode, CompetEqu, CompetStatut, CompetEtat, CompetObs, Compï¿½titions.Ordre FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode WHERE CompetCode <> $Compet AND $WhereEtat $WhereComp ORDER BY Compï¿½titions.Ordre, CompetDateDï¿½b DESC");
 				if (mysql_num_rows($Req) > 0) { 
 					$TexteCompet .= "<span class='pasimprimer'><BR>&nbsp;&nbsp;&nbsp;<FONT Size=1> <a href=$PHP_SELF?action=VoirMenu&sousmenu=$sousmenu&affcompet=";
 					if ($affcompet == "oui") $TexteCompet .="non"; else $TexteCompet .="oui";
@@ -3720,7 +3720,7 @@ Function VoirMenu() {
 					if ( ($Adm) && ($affcompet == "oui") ) {
 						$TexteCompet .= "<span class='pasimprimer'>&nbsp;<FONT Size=1> <a href=$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=$sousmenu&affcompet=";
 						if ($affcompet == "oui") $TexteCompet .="nonfermees"; else $TexteCompet .="oui";
-						$TexteCompet .= "&Compet=$Compet&licence=$licence> &nbsp; Masquer les compétitions non visibles par les utilisateurs &nbsp; </a></FONT></span><HR CLASS = 'hr2'>";
+						$TexteCompet .= "&Compet=$Compet&licence=$licence> &nbsp; Masquer les compï¿½titions non visibles par les utilisateurs &nbsp; </a></FONT></span><HR CLASS = 'hr2'>";
 					}
 				} else $affcompet = "non";
 				$Sport               = $res["SpoCode"];
@@ -3728,7 +3728,7 @@ Function VoirMenu() {
 				$CompetCalculAutoEqu = $res["CompetCalculAutoEqu"];
 				$CompetStatut        = $res["CompetStatut"];
 			} else {
-				$TexteCompet = "&nbsp; Aucune compétition disponible pour l'instant !";
+				$TexteCompet = "&nbsp; Aucune compï¿½tition disponible pour l'instant !";
 				$affcompet = "non";
 			}
 		}
@@ -3739,7 +3739,7 @@ Function VoirMenu() {
 		if (((!$Adm) && ($CompetEqu != 0)) || ($Adm) ) {
 			$TxtSM.="<TABLE CLASS = 'tablesousmenu'><TR><TD>";
 			$TxtSM.=" &nbsp;";
-			if ($Adm) {$TxtSM.= "<a "; if ($sousmenu =="references") $TxtSM.= "CLASS = 'inv'"; $TxtSM.= "href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=references&Compet=$Compet&affcompet=$affcompet'  > &nbsp; Références  &nbsp; </a>"; $TxtSM.="|";}
+			if ($Adm) {$TxtSM.= "<a "; if ($sousmenu =="references") $TxtSM.= "CLASS = 'inv'"; $TxtSM.= "href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=references&Compet=$Compet&affcompet=$affcompet'  > &nbsp; Rï¿½fï¿½rences  &nbsp; </a>"; $TxtSM.="|";}
 			$TxtSM.= "<a "; if (($sousmenu == "individuels") || ($sousmenu =="individuels(2)")) $TxtSM.="CLASS = 'inv'"; $TxtSM.="href='$PHP_SELF?action=VoirMenu&menu=competitions&sousmenu=individuels&Compet=$Compet&affcompet=$affcompet&Etab=$Etab' > &nbsp; Individuels &nbsp; </a>"; 
 			$montexteequipe = "";
 			if (($SpoGestion ==  0) || ($SpoGestion == -2) || ($SpoGestion == -3) || ($SpoGestion == -4) || ($SpoGestion == -99)) $montexteequipe = "Equipes";
@@ -3751,12 +3751,12 @@ Function VoirMenu() {
 		
 		if ($Consult) {
 			if (isset($Etab)) $compEtab = "AND EtabNum = ".$Etab." "; else $compEtab = "";			
-			$selectEt1 = "SELECT DISTINCT Etablissements.* FROM Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode
+			$selectEt1 = "SELECT DISTINCT Etablissements.* FROM Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode
 					     WHERE Participations.ParCompetCode = $Compet $compEtab
 						 UNION SELECT Etablissements.* FROM Etablissements INNER JOIN Equipes ON Etablissements.EtabCode = Equipes.EquEtabCode
 						 WHERE Equipes.EquCompetCode = $Compet $compEtab
 						 ORDER BY EtabNum";
-			$selectEt2 = "SELECT DISTINCT Etablissements.* FROM Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode
+			$selectEt2 = "SELECT DISTINCT Etablissements.* FROM Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode
 					     WHERE Participations.ParCompetCode = $Compet
 						 UNION SELECT Etablissements.* FROM Etablissements INNER JOIN Equipes ON Etablissements.EtabCode = Equipes.EquEtabCode
 						 WHERE Equipes.EquCompetCode = $Compet
@@ -3772,7 +3772,7 @@ Function VoirMenu() {
 					$prec = mysql_fetch_array(bf_mysql_query("SELECT DISTINCT MAX(EtabNum) FROM ". $sousR ." WHERE EtabNum <".$Etab));$prec = $prec[0];
 					$suiv = mysql_fetch_array(bf_mysql_query("SELECT DISTINCT MIN(EtabNum) FROM ". $sousR ." WHERE EtabNum >".$Etab));$suiv = $suiv[0];
 					$dern = mysql_fetch_array(bf_mysql_query("SELECT DISTINCT MAX(EtabNum) FROM ". $sousR .""));$dern = $dern[0];
-					echo "<span class='pasimprimer' ><BR><i>&nbsp;&nbsp;Choisissez un établissement dans la liste et cliquez sur <B>Sélectionner</B> :";
+					echo "<span class='pasimprimer' ><BR><i>&nbsp;&nbsp;Choisissez un ï¿½tablissement dans la liste et cliquez sur <B>Sï¿½lectionner</B> :";
 					echo "</i></SPAN>"; 
 					echo "<form action='$PHP_SELF' method=post>\n";
 					echo "<TABLE CLASS ='tableselecteurEtab'>";	
@@ -3783,7 +3783,7 @@ Function VoirMenu() {
 					} else echo "<span class='pasimprimer'> << < </span>\n";
 					echo "&nbsp;&nbsp;";
 					listederoulante("SelecteurEtab", "", $selectEt2, array("EtabNum","-","EtabNomCourt","-","EtabNom","-","EtabVille"), array("%06s","","","","","",""), "EtabNum", $Etab, 400);
-					echo "&nbsp;&nbsp;<INPUT TYPE='submit' NAME='ValideSelecteurEtab' VALUE='Sélectionner' class='bouton'>&nbsp;&nbsp;";
+					echo "&nbsp;&nbsp;<INPUT TYPE='submit' NAME='ValideSelecteurEtab' VALUE='Sï¿½lectionner' class='bouton'>&nbsp;&nbsp;";
 					if( $Etab < $dern) {
 						echo "<a Class='navig' href='$PHP_SELF?".$par."action=VoirMenu&Consult=true&sousmenu=$sousmenu&&Compet=$Compet&Etab=$suiv'>> </a>\n";
 						echo "<a Class='navig' href='$PHP_SELF?".$par."action=VoirMenu&Consult=true&sousmenu=$sousmenu&&Compet=$Compet&Etab=$dern'>>> </a>\n";
@@ -3798,23 +3798,23 @@ Function VoirMenu() {
 		
 		if (($sousmenu == "references") && ($Adm)) {
 		If ($stat == 0) {
-		$tablename     = "Compétitions";
-		$queryStr      = "SELECT CompetCode, CompetLibellé, CompetDateDéb, CompetLieu, SpoLibelCourt, CompetEqu, CompetCalculAutoEqu, CompetChpSup, CompetEtat, CompetStatut, CompetObs,
+		$tablename     = "Compï¿½titions";
+		$queryStr      = "SELECT CompetCode, CompetLibellï¿½, CompetDateDï¿½b, CompetLieu, SpoLibelCourt, CompetEqu, CompetCalculAutoEqu, CompetChpSup, CompetEtat, CompetStatut, CompetObs,
 						  (SELECT COUNT(ParCode) FROM `Participations` where ParCompetCode = CompetCode) AS Ind, 
 						  (SELECT COUNT(EquCode) FROM `Equipes` where EquCompetCode = CompetCode) AS Equ, 
-						  Compétitions.Ordre
-						  FROM Sports INNER JOIN Compétitions ON Sports.SpoCode = Compétitions.CompetSpoCode";
+						  Compï¿½titions.Ordre
+						  FROM Sports INNER JOIN Compï¿½titions ON Sports.SpoCode = Compï¿½titions.CompetSpoCode";
 		$where		   = "";
-		if ((!isset($orderby)) || ($orderby == "")) $orderby = "Compétitions.Ordre, CompetDateDéb DESC";
+		if ((!isset($orderby)) || ($orderby == "")) $orderby = "Compï¿½titions.Ordre, CompetDateDï¿½b DESC";
 		$MaKey         = "CompetCode";
-		$NomsColonnes  = array('Code','Libellé','Date','Lieu','Sport','Equ','Equ Auto','Options Colonnes','Etat','Statut','Obs','Ind','Equ','Num');
+		$NomsColonnes  = array('Code','Libellï¿½','Date','Lieu','Sport','Equ','Equ Auto','Options Colonnes','Etat','Statut','Obs','Ind','Equ','Num');
 		$ChampsTri     = array('/','/','/','/','/','/','/','/','/','/','/','/','/','/');
 		$ChampsAli     = array('center','','center','','','center','center','','center','center','center','center', 'center', 'center');
 		$ChampsFor     = array('','', '', '','' , '', '', '', '','','','','','');
 		$ChampsAff     = array(false,true,true,true,true,true,false,true,true,true,true,true,true,false);
 		$Choix         = array("importer","exporter","ajout","modifier","filtrage","supprimer","monter","descendre","stat");
 		$ChampsType    = array("Texte","Texte","Texte","Texte","Texte", "ListeS", "ListeS","Texte","ListeS","ListeS","Texte","Texte","Texte","Texte");
-		$ChampsTypeExt = array('', '', '', '' , '', array("0"=>"Non","1"=>"Oui"), array("0"=>"Non","1"=>"Oui"),'',array("0"=>"Masquer","1"=>"Afficher"), array('Inscriptions fermées'=>'Inscriptions fermées','Inscriptions ouvertes'=>'Inscriptions ouvertes'),'','','','');
+		$ChampsTypeExt = array('', '', '', '' , '', array("0"=>"Non","1"=>"Oui"), array("0"=>"Non","1"=>"Oui"),'',array("0"=>"Masquer","1"=>"Afficher"), array('Inscriptions fermï¿½es'=>'Inscriptions fermï¿½es','Inscriptions ouvertes'=>'Inscriptions ouvertes'),'','','','');
 		$ChampsFiltre  = array(true,true,true,true,true,true,true,false,true,true,true,false,false,false,false);
 		$ChampsNomFil  = array('', '', '', '', '' , '', '', '', '','','','','','');
 		$ChampsRacFiltre = array(false,false,false,false,true,true,true,false,true,true,false,false,false,false);		
@@ -3830,7 +3830,7 @@ Function VoirMenu() {
 						   array("ListeS",false ,"",array("CompetCalculAutoEqu", "Composition Auto ...",array('0'=>'Non','1'=>'Oui')    , "", "", "", "", "", "160"),true),
 						   array("Texte" ,true,"","",false),
 						   array("ListeS",true ,"",array("CompetEtat"  , "Etat..."       ,array('0'=>'Masquer','1'=>'Afficher')    , "", "", "", "", "", "65"),true),
-						   array("ListeS",true ,"",array("CompetStatut", "Statut..."     ,array('Inscriptions fermées'=>'Inscriptions fermées','Inscriptions ouvertes'=>'Inscriptions ouvertes')    , "", "", "", "", "", "120"),true),
+						   array("ListeS",true ,"",array("CompetStatut", "Statut..."     ,array('Inscriptions fermï¿½es'=>'Inscriptions fermï¿½es','Inscriptions ouvertes'=>'Inscriptions ouvertes')    , "", "", "", "", "", "120"),true),
 						   array("Texte" ,true ,"","",false),
 						   array("Texte" ,false,"","",false),
 						   array("Texte" ,false,"","",false),
@@ -3846,14 +3846,14 @@ Function VoirMenu() {
 						   array("ListeS",false ,"",array("CompetCalculAutoEqu", "Composition Auto ..."       ,array('0'=>'Non','1'=>'Oui')    , "", "", "", "", "", "160"),"",true,true,false),
 						   array("Texte" ,true,"","","",true,false,false),
 						   array("ListeS",true ,"",array("CompetEtat"  , "Etat..."       ,array('0'=>'Masquer','1'=>'Afficher')    , "", "", "", "", "", "65"),"",true,true,false),
-						   array("ListeS",true ,"",array("CompetStatut", "Statut..."     ,array('Inscriptions fermées'=>'Inscriptions fermées','Inscriptions ouvertes'=>'Inscriptions ouvertes')    , "", "", "", "", "", "120"),"",true,true,false),
+						   array("ListeS",true ,"",array("CompetStatut", "Statut..."     ,array('Inscriptions fermï¿½es'=>'Inscriptions fermï¿½es','Inscriptions ouvertes'=>'Inscriptions ouvertes')    , "", "", "", "", "", "120"),"",true,true,false),
 						   array("Texte" ,true ,"","","",true,false,false),
 						   array("Texte" ,false,"","","",false,false,false),
 						   array("Texte" ,false,"","","",false,false,false),
 						   array("Texte" ,true ,"","","0",true,true,false)
 						   );
-		$messagedel      = "Attention ! la suppression d'une compétition entraîne la suppression des participations de cette compétition.";
-		$MajChpOrdre     = array(array("Compétitions","Ordre"));
+		$messagedel      = "Attention ! la suppression d'une compï¿½tition entraï¿½ne la suppression des participations de cette compï¿½tition.";
+		$MajChpOrdre     = array(array("Compï¿½titions","Ordre"));
 		GereData($tablename, $queryStr, $MaKey, $NomsColonnes, $ChampsTri, $ChampsAli, $ChampsFor, $ChampsAff, $action, $orderby, $Choix, $ChampsEdit, $ChampsInsert, $ChampsType, $ChampsTypeExt, $ChampsFiltre, $where, $ChampsNomFil, $ChampsRacFiltre, $ChampsRacParam,$sousqueryStr,$messagedel,$MajChpOrdre);
 		} else {
 			ConstruitStat(-1, 1, $queryStr, $NomsColonnes, $ChampsAli, $ChampsFor, $ChampsAff, $ChampsType, $Choix);
@@ -3870,14 +3870,14 @@ Function VoirMenu() {
 			if ($affgrillecompet == "non") echo "<BR><BR>";
 			if (($affcompet == "oui") || ($affcompet == "nonfermees")){
 				echo "<TABLE CLASS = 'tablecompet2'>";
-				if (!($Adm)) echo "<TR CLASS = 'trcompet2'><TD><I>&nbsp; Autres compétitions disponibles (cliquez sur la compétition de votre choix) : </I></TD></TR><TR>";
+				if (!($Adm)) echo "<TR CLASS = 'trcompet2'><TD><I>&nbsp; Autres compï¿½titions disponibles (cliquez sur la compï¿½tition de votre choix) : </I></TD></TR><TR>";
 				if ($res = mysql_fetch_array($Req)) {
 					$monnum = 1;
 					do { 
 						$monnum = $monnum + 1;
 						echo "<TR CLASS = 'trcompet2'>";
 						echo "<TD>"; 
-						echo "<a href=$PHP_SELF?action=VoirMenu&tablename=$tablename&selection=0&sousmenu=individuels&Compet=".$res["CompetCode"]."&Etab=$Etab&Lic=$Lic> &nbsp; ".$monnum." - ".$res["SpoLibellé"]." - ".$res["CompetLibellé"]." - ".$res["CompetDateDébut"]." - ".$res["CompetLieu"];
+						echo "<a href=$PHP_SELF?action=VoirMenu&tablename=$tablename&selection=0&sousmenu=individuels&Compet=".$res["CompetCode"]."&Etab=$Etab&Lic=$Lic> &nbsp; ".$monnum." - ".$res["SpoLibellï¿½"]." - ".$res["CompetLibellï¿½"]." - ".$res["CompetDateDï¿½but"]." - ".$res["CompetLieu"];
 						if (!($Consult)) echo " - ".$res["CompetStatut"];
 						if (!($res["CompetObs"]) == "") echo " - ".$res["CompetObs"];
 						echo "&nbsp;&nbsp;&nbsp; </a></TD>"; 
@@ -3930,7 +3930,7 @@ Function VoirMenu() {
 							if (!($strCatEpr == "")) $strCatEpr = $strCatEpr." OR ";
 							switch($Valeurs[$j]) {
 								case "Open": $strCatEpr = $strCatEpr."EprLibelCourt LIKE '%Open%'"; Break;
-								case "Pré" : $strCatEpr = $strCatEpr."EprLibelCourt LIKE '%Pré inscrit%'"; Break;
+								case "Prï¿½" : $strCatEpr = $strCatEpr."EprLibelCourt LIKE '%Prï¿½ inscrit%'"; Break;
 								default    : $strCatEpr = $strCatEpr."CatLibelCourt = '".$Valeurs[$j] ."'";
 							}
 						}
@@ -3953,18 +3953,18 @@ Function VoirMenu() {
 		
 		$CEprU = "";
 		if ($affEpr == false) {
-			$reqU = bf_mysql_query("SELECT CatLibelCourt, COUNT(EprLibelCourt) AS Nbre FROM Catégories LEFT JOIN Epreuves ON CatCode = EprCatCode Where CatSpoCode = ".TrouveSport($Compet, "SpoCode")." GROUP BY CatLibelCourt HAVING Nbre > 1 "); 
+			$reqU = bf_mysql_query("SELECT CatLibelCourt, COUNT(EprLibelCourt) AS Nbre FROM Catï¿½gories LEFT JOIN Epreuves ON CatCode = EprCatCode Where CatSpoCode = ".TrouveSport($Compet, "SpoCode")." GROUP BY CatLibelCourt HAVING Nbre > 1 "); 
 			if (!(!$reqU)) {
 				$resU = mysql_fetch_array($reqU);
 				if (!(!$resU)) { 
-					$reqeprU = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode WHERE `Epreuves Compétitions`.EprCompetCompetCode = $Compet
-										       AND EprLibelCourt LIKE 'Pré Inscrit%' AND IF(CatSpoCode = 10, TRUE, Catégories.CatSexCode = 
-										     ( SELECT LicSexCode FROM Licenciés WHERE LicNumLicence = $ParLicCode LIMIT 1))  
+					$reqeprU = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode WHERE `Epreuves Compï¿½titions`.EprCompetCompetCode = $Compet
+										       AND EprLibelCourt LIKE 'Prï¿½ Inscrit%' AND IF(CatSpoCode = 10, TRUE, Catï¿½gories.CatSexCode = 
+										     ( SELECT LicSexCode FROM Licenciï¿½s WHERE LicNumLicence = $ParLicCode LIMIT 1))  
 										       ORDER BY Epreuves.Ordre");
 				} else {
-					$reqeprU = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode WHERE `Epreuves Compétitions`.EprCompetCompetCode = $Compet
-											   AND Catégories.CatLibelCourt =
-											 ( SELECT CatLibelCourt FROM Catégories, Licenciés WHERE ( (Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = $Sport) AND LicNumLicence = $ParLicCode ORDER BY Catégories.Ordre LIMIT 1) 
+					$reqeprU = bf_mysql_query("SELECT EprCompetCode, EprLibelCourt FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode WHERE `Epreuves Compï¿½titions`.EprCompetCompetCode = $Compet
+											   AND Catï¿½gories.CatLibelCourt =
+											 ( SELECT CatLibelCourt FROM Catï¿½gories, Licenciï¿½s WHERE ( (Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = $Sport) AND LicNumLicence = $ParLicCode ORDER BY Catï¿½gories.Ordre LIMIT 1) 
 										       ORDER BY Epreuves.Ordre");
 				}	
 				if (!(!$reqeprU)) {
@@ -4028,14 +4028,14 @@ Function VoirMenu() {
 		if ( (!($Consult)) && isset($_GET['ParLicCode']) && ($aj == True) && ($selectionner == true) && (strlen($_POST['ParLicCode'])==0) ) $_POST['ParLicCode'] = $_GET['ParLicCode'];
 		
 		$tablename  = "Participations";
-		$queryStr        ="SELECT EtabNomCourt, ParCode, ParLicCode, Licenciés.LicNom, Licenciés.LicPrénom, Licenciés.LicNaissance, Licenciés.LicSexCode, CatLibelCourt, EprLibelCourt, ParCompetCode, ParEprCode, ParQuadra, EquNum, ParPerfQualif, ParObs1, ParObs2, ParObs3, ParObs4, ParObs5 
-						   FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode "; 
-		$where = "(((Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1)";
+		$queryStr        ="SELECT EtabNomCourt, ParCode, ParLicCode, Licenciï¿½s.LicNom, Licenciï¿½s.LicPrï¿½nom, Licenciï¿½s.LicNaissance, Licenciï¿½s.LicSexCode, CatLibelCourt, EprLibelCourt, ParCompetCode, ParEprCode, ParQuadra, EquNum, ParPerfQualif, ParObs1, ParObs2, ParObs3, ParObs4, ParObs5 
+						   FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode "; 
+		$where = "(((Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1)";
 		if (!$Adm) $where .= " AND ParCompetCode = $Compet AND (EtabNum = $Etab".RetAS($Etab)."))"; else $where .= " AND ParCompetCode = $Compet)";
-		if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrénom, Epreuves.Ordre";
+		if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrï¿½nom, Epreuves.Ordre";
 		$MaKey           = "ParCode";
-		$NomsColonnes    = array('Etab','Code','Numéro','Nom','Prénom','Naissance','Sexe','Cat','Epreuve','Compet','Epr','Quad','Equ','Qualif', $NomChpSup{1},$NomChpSup{2},$NomChpSup{3}, $NomChpSup{4}, $NomChpSup{5} );
-		$ChampsTri       = array('EtabNomCourt, LicNom, LicPrénom, Epreuves.Ordre','ParCode','LicNumLicence, Epreuves.Ordre','LicNom, LicPrénom, Epreuves.Ordre','LicPrénom, LicNom, Epreuves.Ordre','LicNaissance, LicNom, LicPrénom, Epreuves.Ordre','LicSexCode, LicNom, LicPrénom, Epreuves.Ordre','LicSexCode DESC, LicNaissance DESC, LicNom, LicPrénom, Epreuves.Ordre', 'Epreuves.Ordre, LicNom, LicPrénom','','','ParQuadra, Epreuves.Ordre, LicNom, LicPrénom' ,'EquNum, LicNom, LicPrénom','ParPerfQualif, LicNumLicence, LicNom, LicPrénom', 'ParObs1, LicNumLicence, LicNom, LicPrénom','ParObs2, LicNumLicence, LicNom, LicPrénom','ParObs3, LicNumLicence, LicNom, LicPrénom','ParObs4, LicNumLicence, LicNom, LicPrénom','ParObs5, LicNumLicence, LicNom, LicPrénom');
+		$NomsColonnes    = array('Etab','Code','Numï¿½ro','Nom','Prï¿½nom','Naissance','Sexe','Cat','Epreuve','Compet','Epr','Quad','Equ','Qualif', $NomChpSup{1},$NomChpSup{2},$NomChpSup{3}, $NomChpSup{4}, $NomChpSup{5} );
+		$ChampsTri       = array('EtabNomCourt, LicNom, LicPrï¿½nom, Epreuves.Ordre','ParCode','LicNumLicence, Epreuves.Ordre','LicNom, LicPrï¿½nom, Epreuves.Ordre','LicPrï¿½nom, LicNom, Epreuves.Ordre','LicNaissance, LicNom, LicPrï¿½nom, Epreuves.Ordre','LicSexCode, LicNom, LicPrï¿½nom, Epreuves.Ordre','LicSexCode DESC, LicNaissance DESC, LicNom, LicPrï¿½nom, Epreuves.Ordre', 'Epreuves.Ordre, LicNom, LicPrï¿½nom','','','ParQuadra, Epreuves.Ordre, LicNom, LicPrï¿½nom' ,'EquNum, LicNom, LicPrï¿½nom','ParPerfQualif, LicNumLicence, LicNom, LicPrï¿½nom', 'ParObs1, LicNumLicence, LicNom, LicPrï¿½nom','ParObs2, LicNumLicence, LicNom, LicPrï¿½nom','ParObs3, LicNumLicence, LicNom, LicPrï¿½nom','ParObs4, LicNumLicence, LicNom, LicPrï¿½nom','ParObs5, LicNumLicence, LicNom, LicPrï¿½nom');
 		$ChampsAli       = array('center','','center','','','center','center','center','center','','','center','center','right','center','center','center','center','center');
 		$ChampsFor       = array('','','%010s','','','','','','','','','','','','','','','','');
 		$ChampsAff       = array(true,false,true,true,true,true,true,true,$affEpr,false,false,(($SpoGestion == -1) && ($affQuad) ),(($SpoGestion != -5) && ($CompetEqu)),$affQualif,($tabChpSup[0] != ""),($tabChpSup[1] != ""),($tabChpSup[2] != ""),($tabChpSup[3] != ""),($tabChpSup[4] != ""));
@@ -4067,13 +4067,13 @@ Function VoirMenu() {
 						   array("ListeD", $affEpr, "ParEprCode",
 								array("selepr",
 									  "Epreuve...",
-									  "SELECT EprCompetCode, EprLibelCourt, EprLibellé 
-									  FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-									  WHERE (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre", 
-									  Array("EprLibelCourt", "-", "EprLibellé"),
+									  "SELECT EprCompetCode, EprLibelCourt, EprLibellï¿½ 
+									  FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+									  WHERE (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre", 
+									  Array("EprLibelCourt", "-", "EprLibellï¿½"),
 									  Array("", "", ""),
 									  "EprCompetCode",
-									  "SELECT EprCompetCode FROM Epreuves INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE EprCompetCompetCode = $Compet AND EprLibelCourt=",
+									  "SELECT EprCompetCode FROM Epreuves INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE EprCompetCompetCode = $Compet AND EprLibelCourt=",
 									  "",
 									  "150"),
 									  true),
@@ -4083,10 +4083,10 @@ Function VoirMenu() {
 						   array("ListeD",(($SpoGestion != -5) && ($CompetEqu)) ,"ParEquCode",
 								array("selequ",
 									  "Equipe...",
-									  "SELECT EquCode, EquNum, EquComplément, EtabNum, EtabNomCourt, EtabNom, EtabVille, CatLibelCourt, IF(EquChall=1, 'Courses', IF(EquChall = 2, 'Sauts', IF(EquChall = 3, 'Lancers',''))) AS Chall 
-									  FROM Etablissements, Catégories INNER JOIN Equipes ON Catégories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode 
+									  "SELECT EquCode, EquNum, EquComplï¿½ment, EtabNum, EtabNomCourt, EtabNom, EtabVille, CatLibelCourt, IF(EquChall=1, 'Courses', IF(EquChall = 2, 'Sauts', IF(EquChall = 3, 'Lancers',''))) AS Chall 
+									  FROM Etablissements, Catï¿½gories INNER JOIN Equipes ON Catï¿½gories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode 
 									  WHERE Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $Compet $Clause2 ORDER BY EquNum",
-									  Array("EquNum", "-", $chpcat, "-", "EtabNomCourt", "EquComplément"),
+									  Array("EquNum", "-", $chpcat, "-", "EtabNomCourt", "EquComplï¿½ment"),
 									  Array("", "", "", "", "", ""),
 									  "EquCode",
 									  "SELECT EquCode FROM Equipes WHERE EquCompetCode = $Compet AND EquNum = ",
@@ -4113,10 +4113,10 @@ Function VoirMenu() {
 								array(
 										"selepr",
 										"Epreuve...",
-										"SELECT EprCompetCode, EprLibelCourt, EprLibellé 
-										FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-										WHERE (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre", 
-										Array("EprLibelCourt", "-", "EprLibellé"),
+										"SELECT EprCompetCode, EprLibelCourt, EprLibellï¿½ 
+										FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+										WHERE (Groupes.GrLibelCourt < 9 OR Groupes.GrLibelCourt IS NULL) AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre", 
+										Array("EprLibelCourt", "-", "EprLibellï¿½"),
 										Array("", "", ""),
 										"EprCompetCode",
 										"",
@@ -4130,10 +4130,10 @@ Function VoirMenu() {
 						   array("ListeD",(($SpoGestion != -5) && ($CompetEqu)) ,"ParEquCode",
 								array("selequ",
 									  "Equipe...",
- 									  "SELECT EquCode, EquNum, EquComplément, EquChall, EtabNum, EtabNomCourt, EtabNom, EtabVille, CatLibelCourt, IF(EquChall = 1, 'Courses', IF(EquChall = 2, 'Sauts', IF(EquChall = 3, 'Lancers',''))) AS Chall 
-									  FROM Etablissements, Catégories INNER JOIN Equipes ON Catégories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode 
+ 									  "SELECT EquCode, EquNum, EquComplï¿½ment, EquChall, EtabNum, EtabNomCourt, EtabNom, EtabVille, CatLibelCourt, IF(EquChall = 1, 'Courses', IF(EquChall = 2, 'Sauts', IF(EquChall = 3, 'Lancers',''))) AS Chall 
+									  FROM Etablissements, Catï¿½gories INNER JOIN Equipes ON Catï¿½gories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode 
 									  WHERE Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $Compet $Clause2 ORDER BY EquNum",
-									  Array("EquNum", "-", $chpcat, "-", "EtabNomCourt", "EquComplément"),
+									  Array("EquNum", "-", $chpcat, "-", "EtabNomCourt", "EquComplï¿½ment"),
 									  Array("", "", "", "", "", ""),
 									  "EquCode",
 									  "SELECT EquCode FROM Equipes WHERE EquCompetCode = $Compet AND EquNum = ",
@@ -4157,14 +4157,14 @@ Function VoirMenu() {
 					
 		if (($sousmenu == "individuels(2)")) {	
 		$tablename  = "Participations";
-		$queryStr        ="SELECT DISTINCT EtabNomCourt, ParLicCode, LicNom, LicPrénom, LicNaissance, LicSexCode, CatLibelCourt, ParCompetCode
-						   FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode ";
-		$where = "(((Licenciés.LicNaissance Between CatDateDéb And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) ";
+		$queryStr        ="SELECT DISTINCT EtabNomCourt, ParLicCode, LicNom, LicPrï¿½nom, LicNaissance, LicSexCode, CatLibelCourt, ParCompetCode
+						   FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode ";
+		$where = "(((Licenciï¿½s.LicNaissance Between CatDateDï¿½b And CatDateFin) And LicSexCode = CatSexCode And CatSpoCode = 1) ";
 		if (!$Adm) $where .= " And ParCompetCode = $Compet AND (EtabNum = $Etab".RetAS($Etab)."))"; else $where .= " And ParCompetCode = $Compet)";
-		if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrénom";
+		if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrï¿½nom";
 		$MaKey           = "ParCode";
-		$NomsColonnes    = array('Etab','Numéro','Nom','Prénom','Naissance','Sexe','Cat','Compet');
-		$ChampsTri       = array('EtabNomCourt, LicNom, LicPrénom','LicNumLicence','LicNom, LicPrénom','LicPrénom, LicNom','LicNaissance, LicNom, LicPrénom','LicSexCode, LicNom, LicPrénom','LicSexCode DESC, LicNaissance DESC, LicNom, LicPrénom','','ParObs1, LicNumLicence, LicNom, LicPrénom','ParObs2, LicNumLicence, LicNom, LicPrénom','ParObs3, LicNumLicence, LicNom, LicPrénom');
+		$NomsColonnes    = array('Etab','Numï¿½ro','Nom','Prï¿½nom','Naissance','Sexe','Cat','Compet');
+		$ChampsTri       = array('EtabNomCourt, LicNom, LicPrï¿½nom','LicNumLicence','LicNom, LicPrï¿½nom','LicPrï¿½nom, LicNom','LicNaissance, LicNom, LicPrï¿½nom','LicSexCode, LicNom, LicPrï¿½nom','LicSexCode DESC, LicNaissance DESC, LicNom, LicPrï¿½nom','','ParObs1, LicNumLicence, LicNom, LicPrï¿½nom','ParObs2, LicNumLicence, LicNom, LicPrï¿½nom','ParObs3, LicNumLicence, LicNom, LicPrï¿½nom');
 		$ChampsAli       = array('center','center','','','center','center','center','center');
 		$ChampsFor       = array('','%010s','','','','','','');
 		$ChampsAff       = array((($Adm) || ($Consult)),true,true,true,true,true,true,false);
@@ -4179,7 +4179,7 @@ Function VoirMenu() {
 		$ChampsEdit      = "";
 		$ChampsInsert    = "";
 		$sousqueryStr    = array("SELECT EprLibelCourt, ParQuadra, EquNum, IF(EquNum > 0,CONCAT('Eq',INSERT(EquNum, 1, LENGTH(EtabNum), '')),NULL) AS EquNumero
-						          FROM Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compétitions` ON `Epreuves Compétitions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode
+						          FROM Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode INNER JOIN `Epreuves Compï¿½titions` ON `Epreuves Compï¿½titions`.EprCompetCode = Participations.ParEprCode INNER JOIN Epreuves ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode LEFT JOIN Equipes ON Equipes.EquCode = Participations.ParEquCode
 								  WHERE ParCompetCode = $Compet And ParLicCode = ",
 								  "Epreuves", "ParLicCode", Array(Array("EprLibelCourt","","","",False),array("ParQuadra","==",1,"Qd","False"),array("EquNum",">",0,"EquNumero",True)));   
 		if (isset($filter)) { 
@@ -4200,23 +4200,23 @@ Function VoirMenu() {
 		
 		if (($sousmenu == "licences")) {	
 			
-			if ($action == "deleteData") bf_mysql_query("UPDATE Compétitions SET CompetDemLic = REPLACE(CompetDemLic,',".$_GET['Lic']."','') WHERE CompetCode = ".$Compet);
+			if ($action == "deleteData") bf_mysql_query("UPDATE Compï¿½titions SET CompetDemLic = REPLACE(CompetDemLic,',".$_GET['Lic']."','') WHERE CompetCode = ".$Compet);
 			
-			$tablename     = "Licenciés";
-			$queryStr      = "SELECT EtabNomCourt, LicCode, LicInscrit, LicNumLicence, LicNom, LicPrénom, LicNaissance, LicSexCode, CatLibelCourt, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
-							  FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode 
-							  WHERE LicNumLicence IN(0".TrouveSport($Compet, "CompetDemLic").") AND ( CatSpoCode = 1 AND LicSexCode = CatSexCode AND (Licenciés.LicNaissance >= CatDateDéb And Licenciés.LicNaissance <= CatDateFin)) ";
+			$tablename     = "Licenciï¿½s";
+			$queryStr      = "SELECT EtabNomCourt, LicCode, LicInscrit, LicNumLicence, LicNom, LicPrï¿½nom, LicNaissance, LicSexCode, CatLibelCourt, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
+							  FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode 
+							  WHERE LicNumLicence IN(0".TrouveSport($Compet, "CompetDemLic").") AND ( CatSpoCode = 1 AND LicSexCode = CatSexCode AND (Licenciï¿½s.LicNaissance >= CatDateDï¿½b And Licenciï¿½s.LicNaissance <= CatDateFin)) ";
 			if (!$Adm) $queryStr .= " AND (EtabNum = $Etab ".RetAS($Etab).") ";
 			$queryStr     .= "UNION 
-							  SELECT DISTINCT EtabNomCourt, LicCode, LicInscrit, LicNumLicence, LicNom, LicPrénom, LicNaissance, LicSexCode, CatLibelCourt, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
-							  FROM Catégories, Etablissements INNER JOIN Licenciés ON Etablissements.EtabCode = Licenciés.LicEtabCode INNER JOIN Participations ON Licenciés.LicNumLicence = Participations.ParLicCode";
-			$where = "(ParCompetCode = $Compet) AND ( CatSpoCode = 1 AND LicSexCode = CatSexCode AND (Licenciés.LicNaissance >= CatDateDéb And Licenciés.LicNaissance <= CatDateFin) ";
+							  SELECT DISTINCT EtabNomCourt, LicCode, LicInscrit, LicNumLicence, LicNom, LicPrï¿½nom, LicNaissance, LicSexCode, CatLibelCourt, LicAss, LicNomAss, LicDateAss, LicDateDem, LicDateValid
+							  FROM Catï¿½gories, Etablissements INNER JOIN Licenciï¿½s ON Etablissements.EtabCode = Licenciï¿½s.LicEtabCode INNER JOIN Participations ON Licenciï¿½s.LicNumLicence = Participations.ParLicCode";
+			$where = "(ParCompetCode = $Compet) AND ( CatSpoCode = 1 AND LicSexCode = CatSexCode AND (Licenciï¿½s.LicNaissance >= CatDateDï¿½b And Licenciï¿½s.LicNaissance <= CatDateFin) ";
 			if (!$Adm) $where .= " And (EtabNum = $Etab ".RetAS($Etab)."))"; else $where.=")";
 			$Choix = array("modifier","filtrage","licence");
-			if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrénom";
+			if ((!isset($orderby)) || ($orderby == "")) $orderby = "LicNom, LicPrï¿½nom";
 			$MaKey         = "LicCode";
-			$NomsColonnes  = array('Etab','Code','Inscrit','Numéro','Nom','Prénom','Naissance','Sexe','Cat','Ass','Ass Nom','Ass Date','Demande','Validation','Compet',);
-			$ChampsTri     = array('EtabNomCourt, LicNom, LicPrénom', '', 'LicInscrit DESC, LicNom, LicPrénom', 'LicNumLicence', 'LicNom, LicPrénom', 'LicPrénom, LicNom', 'LicNaissance, LicNom, LicPrénom', 'LicSexCode DESC, LicNom, LicPrénom', 'LicSexCode DESC, LicNaissance DESC, LicNom, LicPrénom', 'LicAss DESC, LicNom, LicPrénom', 'LicNomAss, LicNom, LicPrénom','LicDateAss DESC, LicNom, LicPrénom', 'LicDateDem DESC, LicNom, LicPrénom', 'LicDateValid DESC, LicNom, LicPrénom');
+			$NomsColonnes  = array('Etab','Code','Inscrit','Numï¿½ro','Nom','Prï¿½nom','Naissance','Sexe','Cat','Ass','Ass Nom','Ass Date','Demande','Validation','Compet',);
+			$ChampsTri     = array('EtabNomCourt, LicNom, LicPrï¿½nom', '', 'LicInscrit DESC, LicNom, LicPrï¿½nom', 'LicNumLicence', 'LicNom, LicPrï¿½nom', 'LicPrï¿½nom, LicNom', 'LicNaissance, LicNom, LicPrï¿½nom', 'LicSexCode DESC, LicNom, LicPrï¿½nom', 'LicSexCode DESC, LicNaissance DESC, LicNom, LicPrï¿½nom', 'LicAss DESC, LicNom, LicPrï¿½nom', 'LicNomAss, LicNom, LicPrï¿½nom','LicDateAss DESC, LicNom, LicPrï¿½nom', 'LicDateDem DESC, LicNom, LicPrï¿½nom', 'LicDateValid DESC, LicNom, LicPrï¿½nom');
 			$ChampsAli     = array('center','','center','center','','','center','center','center','center','','center','center','center');
 			$ChampsFor     = array('','','','%010s','','','','','','','','','','','');
 			$ChampsAff     = array((($Adm) || ($Consult)),false,true,true,true,true,true,true,true,true,false,true,(TrouveParamweb("InscriptionLic") > 0),(TrouveParamweb("InscriptionLic") > 0),false);
@@ -4315,16 +4315,16 @@ Function VoirMenu() {
 		}
 			
 		$tablename  = "Equipes";
-		$queryStr        ="SELECT EtabNomCourt, EtabNom, EtabVille, EquCode, EquNum, EquComplément, CatLibelCourt, EprLibelCourt, EquCompetCode, EquPromo, EquChall, EquRelayeurs, EquPerfRelaisQualif, EquObs1, EquObs2, EquObs3, EquObs4, EquObs5
-						   FROM Etablissements, Catégories INNER JOIN Equipes ON Catégories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compétitions` ON Equipes.EquEprCompetCode = `Epreuves Compétitions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compétitions`.EprCompetEprCode = Epreuves.EprCode"; 
+		$queryStr        ="SELECT EtabNomCourt, EtabNom, EtabVille, EquCode, EquNum, EquComplï¿½ment, CatLibelCourt, EprLibelCourt, EquCompetCode, EquPromo, EquChall, EquRelayeurs, EquPerfRelaisQualif, EquObs1, EquObs2, EquObs3, EquObs4, EquObs5
+						   FROM Etablissements, Catï¿½gories INNER JOIN Equipes ON Catï¿½gories.CatCode = Equipes.EquCatCode LEFT JOIN `Epreuves Compï¿½titions` ON Equipes.EquEprCompetCode = `Epreuves Compï¿½titions`.EprCompetCode LEFT JOIN Epreuves ON `Epreuves Compï¿½titions`.EprCompetEprCode = Epreuves.EprCode"; 
 		if (!$Adm) $where =" Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $Compet AND (EtabNum = $Etab ".RetAS($Etab).")"; else $where ="Etablissements.EtabCode = Equipes.EquEtabCode AND EquCompetCode = $Compet";
-		if ((!isset($orderby)) || ($orderby == "")) $orderby = "EtabNomCourt, EquNum, EquComplément, Epreuves.Ordre";
+		if ((!isset($orderby)) || ($orderby == "")) $orderby = "EtabNomCourt, EquNum, EquComplï¿½ment, Epreuves.Ordre";
 		$ArrayChall = array();
 		if ($SpoGestion == -4) $ArrayChall = array("1"=>'Courses', "2"=>'Sauts', "3"=>'Lancers');
 		if ($SpoGestion == -7) $ArrayChall = array("1"=>'Col F', "2"=>'Col G', "3"=>'Lyc Promo', "4"=>'Lyc Elite');
 
 		$MaKey           = "EquCode";
-		$NomsColonnes    = array('Etab','Nom','Ville','Code','Numéro','Complément','Cat','Epreuve','Compet','Crit-Chal','Chall','Relayeurs','Qualif', $NomChpSup{1},$NomChpSup{2},$NomChpSup{3}, $NomChpSup{4}, $NomChpSup{5});
+		$NomsColonnes    = array('Etab','Nom','Ville','Code','Numï¿½ro','Complï¿½ment','Cat','Epreuve','Compet','Crit-Chal','Chall','Relayeurs','Qualif', $NomChpSup{1},$NomChpSup{2},$NomChpSup{3}, $NomChpSup{4}, $NomChpSup{5});
 		$ChampsTri       = array("EtabNomCourt, EquNum","EtabNom, EquNum","EtabVille, EquNum","EquCode","EtabNomCourt, EquNum","","","","","","","","EquPerfQualif, EtabNomCourt, EquNum","","","","","");
 		$ChampsAli       = array('center','','','center','center','','center','center','center','center','center','',"right",'center','center','center','center','center');
 		$ChampsFor       = array('','','','','','','','','','','','','','','','','','');
@@ -4340,25 +4340,25 @@ Function VoirMenu() {
 		if ($Adm) {array_push($Choix, "suppressiontout");}
 		if ($Consult) $Choix = array("");
 		if ($SpoGestion != -7) {
-			$CatPrim    = "SELECT EprCatCode, CatLibelCourt, CatLibellé, CatPrim, CatType, EprCompetCompetCode FROM Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode GROUP BY Epreuves.EprCatCode, Catégories.CatLibelCourt, Catégories.CatLibellé, Catégories.Ordre, `Epreuves Compétitions`.EprCompetCompetCode, Catégories.CatPrim HAVING `Epreuves Compétitions`.EprCompetCompetCode = $Compet And Catégories.CatPrim = 1 ORDER BY Catégories.Ordre";
+			$CatPrim    = "SELECT EprCatCode, CatLibelCourt, CatLibellï¿½, CatPrim, CatType, EprCompetCompetCode FROM Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode GROUP BY Epreuves.EprCatCode, Catï¿½gories.CatLibelCourt, Catï¿½gories.CatLibellï¿½, Catï¿½gories.Ordre, `Epreuves Compï¿½titions`.EprCompetCompetCode, Catï¿½gories.CatPrim HAVING `Epreuves Compï¿½titions`.EprCompetCompetCode = $Compet And Catï¿½gories.CatPrim = 1 ORDER BY Catï¿½gories.Ordre";
 			$CatPrimTrue = " AND CatPrim = TRUE";
 			$CatChp = "EprCatCode";
-			$CatPrimBis = "SELECT CatCode FROM Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE EprCompetCompetCode = $Compet AND CatLibelCourt=";
+			$CatPrimBis = "SELECT CatCode FROM Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE EprCompetCompetCode = $Compet AND CatLibelCourt=";
 			$CatInit = "";
 			$EpreInit = "";
 			if ($SpoGestion == -4) {
-				$resCatInit = mysql_fetch_array( bf_mysql_query("SELECT * FROM Compétitions INNER JOIN Catégories ON Compétitions.CompetSpoCode = Catégories.CatSpoCode WHERE CatLibelCourt = 'JF' AND CompetCode = ".$Compet));
+				$resCatInit = mysql_fetch_array( bf_mysql_query("SELECT * FROM Compï¿½titions INNER JOIN Catï¿½gories ON Compï¿½titions.CompetSpoCode = Catï¿½gories.CatSpoCode WHERE CatLibelCourt = 'JF' AND CompetCode = ".$Compet));
 				if ($resCatInit) $CatInit = $resCatInit["CatCode"];
 			
-				$resEpreInit = mysql_fetch_array( bf_mysql_query("SELECT * FROM Groupes INNER JOIN ((Catégories INNER JOIN Epreuves ON Catégories.CatCode = Epreuves.EprCatCode) INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode) ON Groupes.GrCode = Epreuves.EprGrCode WHERE GrLibelCourt = 9 AND CatLibelCourt = 'JF' AND EprCompetCompetCode = ".$Compet));
+				$resEpreInit = mysql_fetch_array( bf_mysql_query("SELECT * FROM Groupes INNER JOIN ((Catï¿½gories INNER JOIN Epreuves ON Catï¿½gories.CatCode = Epreuves.EprCatCode) INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode) ON Groupes.GrCode = Epreuves.EprGrCode WHERE GrLibelCourt = 9 AND CatLibelCourt = 'JF' AND EprCompetCompetCode = ".$Compet));
 				$EpreInit = $resEpreInit["EprCompetCode"];
 						
 			}
 		} else { 
-			$CatPrim    = "SELECT CatCode, CatLibelCourt, CatLibellé, CatPrim, CatType FROM Catégories INNER JOIN Sports On Catégories.CatSpoCode = Sports.SpoCode WHERE Sports.SpoGestionPerf = -7 AND Catégories.CatType = 99 ORDER BY Catégories.Ordre";
+			$CatPrim    = "SELECT CatCode, CatLibelCourt, CatLibellï¿½, CatPrim, CatType FROM Catï¿½gories INNER JOIN Sports On Catï¿½gories.CatSpoCode = Sports.SpoCode WHERE Sports.SpoGestionPerf = -7 AND Catï¿½gories.CatType = 99 ORDER BY Catï¿½gories.Ordre";
 			$CatPrimTrue = "";
 			$CatChp = "CatCode";
-			$CatPrimBis = "SELECT CatCode FROM Catégories INNER JOIN Sports On Catégories.CatSpoCode = Sports.SpoCode WHERE Sports.SpoGestionPerf = -7 AND Catégories.CatType = 99 AND Catégories.CatLibelCourt=";
+			$CatPrimBis = "SELECT CatCode FROM Catï¿½gories INNER JOIN Sports On Catï¿½gories.CatSpoCode = Sports.SpoCode WHERE Sports.SpoGestionPerf = -7 AND Catï¿½gories.CatType = 99 AND Catï¿½gories.CatLibelCourt=";
 			$CatInit = ""; 
 			$EpreInit = "";
 		}
@@ -4369,17 +4369,17 @@ Function VoirMenu() {
 						   array("Texte" ,false,"","",false),
 						   array("Texte" ,false,"","",false),
 						   array("Texte" ,false,"","",false),
-						   array("ListeD",true ,"EquCatCode",array("selcatequ", "Catégorie...",$CatPrim, Array("CatLibelCourt", "-", "CatLibellé"), Array("", "", ""), $CatChp, $CatPrimBis,"","130"),true),
+						   array("ListeD",true ,"EquCatCode",array("selcatequ", "Catï¿½gorie...",$CatPrim, Array("CatLibelCourt", "-", "CatLibellï¿½"), Array("", "", ""), $CatChp, $CatPrimBis,"","130"),true),
 						   array("ListeD",(($SpoGestion == -1) || ($SpoGestion == -5) || ($SpoGestion == -7)),"EquEprCompetCode",array(
 						   "seleprequ",
 						   "Epreuve...",
-						   "SELECT EprCompetCode, EprLibelCourt, EprLibellé 
-						   FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode RIGHT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-						   WHERE Groupes.GrLibelCourt >= 9 $CatPrimTrue AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre",
-						   Array("EprLibelCourt", "-","EprLibellé"),
+						   "SELECT EprCompetCode, EprLibelCourt, EprLibellï¿½ 
+						   FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode RIGHT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+						   WHERE Groupes.GrLibelCourt >= 9 $CatPrimTrue AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre",
+						   Array("EprLibelCourt", "-","EprLibellï¿½"),
 						   Array("", "", ""),
 						   "EprCompetCode",
-						   "SELECT EprCompetCode FROM Epreuves INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode WHERE EprCompetCompetCode = ".$Compet." AND EprLibelCourt = ",
+						   "SELECT EprCompetCode FROM Epreuves INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode WHERE EprCompetCompetCode = ".$Compet." AND EprLibelCourt = ",
 						   "",
 						   "230"),
 						   (($SpoGestion == -1) || ($SpoGestion == -5) || ($SpoGestion == -7)) ),
@@ -4401,14 +4401,14 @@ Function VoirMenu() {
 						   array("Texte" ,false,""             ,"","",true, false,false),
 						   array("Texte" ,false,""             ,"","",false,false,false),
 						   array("Texte" ,false,""             ,"","",false,false,false),
-						   array("ListeD",$SpoGestion != -5,"EquCatCode",array("selcatequ", "Catégorie...",$CatPrim, Array("CatLibelCourt", "-", "CatLibellé"), Array("", "", ""), $CatChp, $CatPrimBis, "","130"), $CatInit, $SpoGestion != -4,true,false),
+						   array("ListeD",$SpoGestion != -5,"EquCatCode",array("selcatequ", "Catï¿½gorie...",$CatPrim, Array("CatLibelCourt", "-", "CatLibellï¿½"), Array("", "", ""), $CatChp, $CatPrimBis, "","130"), $CatInit, $SpoGestion != -4,true,false),
 						   array("ListeD",(($SpoGestion == -1) || ($SpoGestion == -5) || ($SpoGestion == -7) || ($SpoGestion == -4)),"EquEprCompetCode",array(
 							"seleprequ",
 							"Epreuve...",
-						   "SELECT EprCompetCode, EprLibelCourt, EprLibellé 
-						    FROM Epreuves INNER JOIN Catégories ON Catégories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode RIGHT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
-							WHERE Groupes.GrLibelCourt >= 9 $CatPrimTrue AND `Epreuves Compétitions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre",
-							Array("EprLibelCourt", "-", "EprLibellé"),
+						   "SELECT EprCompetCode, EprLibelCourt, EprLibellï¿½ 
+						    FROM Epreuves INNER JOIN Catï¿½gories ON Catï¿½gories.CatCode = Epreuves.EprCatCode INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode RIGHT JOIN Groupes ON Groupes.GrCode = Epreuves.EprGrCode
+							WHERE Groupes.GrLibelCourt >= 9 $CatPrimTrue AND `Epreuves Compï¿½titions`.EprCompetCompetCode = ".$Compet.$strCatEpr." ORDER BY Epreuves.Ordre",
+							Array("EprLibelCourt", "-", "EprLibellï¿½"),
 							Array("", "", ""),
 							"EprCompetCode",
 							"",
@@ -4427,7 +4427,7 @@ Function VoirMenu() {
 							array($Type{5},true,"",$List{5},"",true,$PasVide{5},false)
 						);
 		GereData($tablename, $queryStr, $MaKey, $NomsColonnes, $ChampsTri, $ChampsAli, $ChampsFor, $ChampsAff, $action, $orderby, $Choix, $ChampsEdit, $ChampsInsert, $ChampsType, $ChampsTypeExt, $ChampsFiltre, $where, $ChampsNomFil, $ChampsRacFiltre, $ChampsRacParam, $sousqueryStr);
-		if ($SpoGestion == -3) { bf_mysql_query("UPDATE (Catégories INNER JOIN (Groupes INNER JOIN (Sports INNER JOIN (Equipes INNER JOIN Epreuves ON Equipes.EquCatCode = Epreuves.EprCatCode) ON Sports.SpoCode = Epreuves.EprSpoCode) ON Groupes.GrCode = Epreuves.EprGrCode) ON Catégories.CatCode = Epreuves.EprCatCode) INNER JOIN `Epreuves Compétitions` ON Epreuves.EprCode = `Epreuves Compétitions`.EprCompetEprCode SET Equipes.EquEprCompetCode = EprCompetCode WHERE Groupes.GrLibelCourt = 9 AND Sports.SpoGestionPerf = -3 AND Equipes.EquCompetCode = ".$Compet); }
+		if ($SpoGestion == -3) { bf_mysql_query("UPDATE (Catï¿½gories INNER JOIN (Groupes INNER JOIN (Sports INNER JOIN (Equipes INNER JOIN Epreuves ON Equipes.EquCatCode = Epreuves.EprCatCode) ON Sports.SpoCode = Epreuves.EprSpoCode) ON Groupes.GrCode = Epreuves.EprGrCode) ON Catï¿½gories.CatCode = Epreuves.EprCatCode) INNER JOIN `Epreuves Compï¿½titions` ON Epreuves.EprCode = `Epreuves Compï¿½titions`.EprCompetEprCode SET Equipes.EquEprCompetCode = EprCompetCode WHERE Groupes.GrLibelCourt = 9 AND Sports.SpoGestionPerf = -3 AND Equipes.EquCompetCode = ".$Compet); }
 		}
 	}
 	
@@ -4438,7 +4438,7 @@ Function VoirMenu() {
 		$where = "";
 		if ((!isset($orderby)) || ($orderby == "")) $orderby = "Debut";
 		$MaKey           = "Session";
-		$NomsColonnes    = array('Début','Adresse IP','Utilisateur','Durée','Session');
+		$NomsColonnes    = array('Dï¿½but','Adresse IP','Utilisateur','Durï¿½e','Session');
 		$ChampsTri       = array('Debut','','(IF(EtabNomCourt IS NULL,"Admin",EtabNomCourt))','','');
 		$ChampsAli       = array('center','center','center','center','center');
 		$ChampsFor       = array('','','','','');
@@ -4488,7 +4488,7 @@ Function VoirMenu() {
 		echo "<TABLE CLASS = 'tableconopt'>";
 		echo "<TR>";
 		echo "<TD>";
-		echo "&nbsp;&nbsp;&nbsp;Modèle de couleurs : ";
+		echo "&nbsp;&nbsp;&nbsp;Modï¿½le de couleurs : ";
 		echo "<select size=1 name='Couleur' CLASS='listederoulante'>";
 		for( $i = 0; $i < count($Couleurs); $i++ ) {
 			echo "<option value = '$i'"; 
@@ -4590,7 +4590,7 @@ Function VoirMenu() {
 		echo "<input type='hidden' name='optionexporttype' value='expser' checked='checked'>";
 		echo "<input type='hidden' name='optionexport' value='exptout'>";
 		if (TailleRep(".") > $QUOTA) { 
-			echo "(Pour sauvegarder, supprimez les sauvegardes inutiles pour libérer de l'espace sur le serveur) <BR>";
+			echo "(Pour sauvegarder, supprimez les sauvegardes inutiles pour libï¿½rer de l'espace sur le serveur) <BR>";
 		} else {
 			echo "<input name='exporter' type='submit' id='exporter' value='Sauvegarder' class='bouton'>";
 		}
@@ -4614,8 +4614,8 @@ Function VoirMenu() {
 			echo "<TABLE CLASS = 'tablecompets' style = 'Margin-top:0px;Margin-left:40px;Margin-bottom:10px;'>";
 			for($i=0; $i < count($tabfile); $i++) {
 					if ($i == 0) {
-						echo "<CAPTION style='text-align:left; padding-bottom:4px;'>Sauvegardes trouvées sur le serveur : </CAPTION>";
-						echo "<TR><TH>N°</TH>";
+						echo "<CAPTION style='text-align:left; padding-bottom:4px;'>Sauvegardes trouvï¿½es sur le serveur : </CAPTION>";
+						echo "<TR><TH>Nï¿½</TH>";
 						echo "<TH>Type</TH>";
 						echo "<TH><a href=$PHP_SELF?action=VoirMenu&menu=outils&TriFic=Date>Date</a></TH>";
 						echo "<TH>Heure</TH>";
@@ -4639,12 +4639,12 @@ Function VoirMenu() {
 					} else {
 						echo " <a href=$PHP_SELF?action=VoirMenu&menu=outils&fichier=".stripslashes(rawurlencode($tabfile[$i]["Nom"]))."&actionfichier=supprimer&TriFic=$TriFic>&nbsp;Supprimer&nbsp;</a>";
 						echo "<a href=$PHP_SELF?action=VoirMenu&menu=outils&fichier=".stripslashes(rawurlencode($tabfile[$i]["Nom"]))."&actionfichier=modifier&TriFic=$TriFic>&nbsp;Modifier&nbsp;</a>";
-						echo "<a href=".stripslashes(rawurlencode($tabfile[$i]["Nom"])).">&nbsp;Télécharger&nbsp;</a><BR>";
+						echo "<a href=".stripslashes(rawurlencode($tabfile[$i]["Nom"])).">&nbsp;Tï¿½lï¿½charger&nbsp;</a><BR>";
 					}
 					echo "</TD>";
 					echo "</TR>";
 					$filenoms[$i] = $tabfile[$i]["Nom"];
-					$filedes[$i]  = ($i+1)." - ".$tabfile[$i]["Date"]." à ".$tabfile[$i]["Heure"]." (".$tabfile[$i]["Taille"].")";
+					$filedes[$i]  = ($i+1)." - ".$tabfile[$i]["Date"]." ï¿½ ".$tabfile[$i]["Heure"]." (".$tabfile[$i]["Taille"].")";
 			}
 			echo "</TABLE>";
 		}			
@@ -4702,12 +4702,12 @@ Function VoirMenu() {
 					}	
 				}
 				gzclose($HTheFile);
-				bf_mysql_query("UPDATE `Compétitions` SET `CompetEqu`  = '0' WHERE isnull(CompetEqu)",0,"`Compétitions`");
-				bf_mysql_query("UPDATE `Compétitions` SET `CompetEtat` = '0' WHERE isnull(CompetEtat)");
-				bf_mysql_query("UPDATE `Compétitions` SET `CompetStatut` = 'Inscriptions fermées' WHERE isnull(CompetStatut)");
+				bf_mysql_query("UPDATE `Compï¿½titions` SET `CompetEqu`  = '0' WHERE isnull(CompetEqu)",0,"`Compï¿½titions`");
+				bf_mysql_query("UPDATE `Compï¿½titions` SET `CompetEtat` = '0' WHERE isnull(CompetEtat)");
+				bf_mysql_query("UPDATE `Compï¿½titions` SET `CompetStatut` = 'Inscriptions fermï¿½es' WHERE isnull(CompetStatut)");
 				bf_mysql_query("DELETE FROM `Participations` WHERE ParTour > 1");
 				bf_mysql_query("DELETE FROM `Equipes` WHERE EquTour > 1");
-				MajOrdre(array(array("Catégories","CatSpoCode"),array("Epreuves","EprSpoCode")));
+				MajOrdre(array(array("Catï¿½gories","CatSpoCode"),array("Epreuves","EprSpoCode")));
 				bf_mysql_query("UNLOCK TABLES");
 			}
 		}
@@ -4721,10 +4721,10 @@ Function VoirMenu() {
 		echo "> SUPPRESSION &nbsp;&nbsp; Supprimer &nbsp;&nbsp;";
 		
 		if ((($action == "supprime") || (isset($supprimer)))  ) {
-			if ($optionsuppr == "supprtout"   ) $listetable = Array("Sports", "Etablissements", "Secteurs", "Licenciés", "Catégories", "Compétitions", "Epreuves", "Epreuves Compétitions", "Groupes", "Participations", "Equipes", "Tours Epreuves Compétitions", "Paramètres"); 
-			if ($optionsuppr == "suppretab"   ) $listetable = array("Etablissements", "Secteurs", "Licenciés", "Participations", "Equipes");
-			if ($optionsuppr == "supprlic"    ) $listetable = array("Licenciés", "Participations", "Equipes");
-			if ($optionsuppr == "supprcompet" ) $listetable = Array("Compétitions", "Epreuves Compétitions", "Participations", "Equipes", "Tours Epreuves Compétitions"); 
+			if ($optionsuppr == "supprtout"   ) $listetable = Array("Sports", "Etablissements", "Secteurs", "Licenciï¿½s", "Catï¿½gories", "Compï¿½titions", "Epreuves", "Epreuves Compï¿½titions", "Groupes", "Participations", "Equipes", "Tours Epreuves Compï¿½titions", "Paramï¿½tres"); 
+			if ($optionsuppr == "suppretab"   ) $listetable = array("Etablissements", "Secteurs", "Licenciï¿½s", "Participations", "Equipes");
+			if ($optionsuppr == "supprlic"    ) $listetable = array("Licenciï¿½s", "Participations", "Equipes");
+			if ($optionsuppr == "supprcompet" ) $listetable = Array("Compï¿½titions", "Epreuves Compï¿½titions", "Participations", "Equipes", "Tours Epreuves Compï¿½titions"); 
 			if ($optionsuppr == "supprpartic" ) $listetable = Array("Participations", "Equipes"); 
 			$maconnec = bf_mysql_connect();
 			$pTable = mysql_list_tables($BDD,$maconnec);
@@ -4749,15 +4749,15 @@ Function VoirMenu() {
 		}
 		
 		if ( (isset($presupprimer)) && (isset($optionsuppr)) ){ 
-			$options = array('de tout'=>'supprtout','des établissements'=>'suppretab','des licenciés'=>'supprlic','des compétitions'=>'supprcompet');
+			$options = array('de tout'=>'supprtout','des ï¿½tablissements'=>'suppretab','des licenciï¿½s'=>'supprlic','des compï¿½titions'=>'supprcompet');
 			echo "Confirmer la suppression ".array_search($optionsuppr, $options)."&nbsp;&nbsp;";
 			ConstruitZone(array(array("optionsuppr",$optionsuppr)));
 			echo "<input name='supprimer' type='submit' id='supprimer' value='Supprimer' class='bouton'>";
 		} else {
 			echo "<input type='radio' name='optionsuppr' value='supprtout'   >Tout&nbsp;&nbsp;&nbsp;";
 			echo "<input type='radio' name='optionsuppr' value='suppretab'   >Etablissements&nbsp;&nbsp;&nbsp;";
-			echo "<input type='radio' name='optionsuppr' value='supprlic'    >Licenciés&nbsp;&nbsp;&nbsp;";
-			echo "<input type='radio' name='optionsuppr' value='supprcompet' >Compétitions&nbsp;&nbsp;&nbsp;";
+			echo "<input type='radio' name='optionsuppr' value='supprlic'    >Licenciï¿½s&nbsp;&nbsp;&nbsp;";
+			echo "<input type='radio' name='optionsuppr' value='supprcompet' >Compï¿½titions&nbsp;&nbsp;&nbsp;";
 			echo "<input type='radio' name='optionsuppr' value='supprpartic' >Participations&nbsp;&nbsp;&nbsp;";
 			echo "<input name='presupprimer' type='submit' id='presupprimer' value='Supprimer' class='bouton'>";
 		}
@@ -4768,7 +4768,7 @@ Function VoirMenu() {
 		
 		echo "<HR CLASS = 'hr1'>\n";
 		
-		$tabfile = RetourneFic (".", "Compétition", "Comp", $TriFic);	
+		$tabfile = RetourneFic (".", "Compï¿½tition", "Comp", $TriFic);	
 		if (!($tabfile == 0)) {
 		
 			echo "<TABLE CLASS = 'tableconopt' ID = 'enattente'>";
@@ -4782,8 +4782,8 @@ Function VoirMenu() {
 			echo "<TABLE CLASS = 'tablecompets' style = 'Margin-top:0px;Margin-left:40px;Margin-bottom:10px;'>";
 				for($i=0; $i < count($tabfile); $i++) {
 					if ($i == 0) {
-						echo "<CAPTION style='text-align:left; padding-bottom:4px;'>Compétitions en attente trouvées sur le serveur : </CAPTION>";
-						echo "<TR><TH>N°</TH>";
+						echo "<CAPTION style='text-align:left; padding-bottom:4px;'>Compï¿½titions en attente trouvï¿½es sur le serveur : </CAPTION>";
+						echo "<TR><TH>Nï¿½</TH>";
 						echo "<TH>Type</TH>";
 						echo "<TH><a href=$PHP_SELF?action=VoirMenu&menu=outils&TriFic=Date#enattente>Date</a></TH>";
 						echo "<TH>Heure</TH>";
@@ -4814,12 +4814,12 @@ Function VoirMenu() {
 						echo "<a href=$PHP_SELF?action=VoirMenu&menu=outils&TriFic=$TriFic#enattente>&nbsp;Annuler&nbsp;</a><BR>";
 					} else {
 						echo " <a href=$PHP_SELF?action=VoirMenu&menu=outils&fichier=".stripslashes(rawurlencode($tabfile[$i]["Nom"]))."&actionfichier=supprimer&TriFic=$TriFic#enattente>&nbsp;Supprimer&nbsp;</a>";
-						echo "<a href=".stripslashes(rawurlencode($tabfile[$i]["Nom"])).">&nbsp;Télécharger&nbsp;</a><BR>";
+						echo "<a href=".stripslashes(rawurlencode($tabfile[$i]["Nom"])).">&nbsp;Tï¿½lï¿½charger&nbsp;</a><BR>";
 					}
 					echo "</TD>";
 					echo "</TR>";
 					$filenoms[$i] = $tabfile[$i]["Nom"];
-					$filedes[$i]  = $tabfile[$i]["Date"]." à ".$tabfile[$i]["Heure"]." (".$tabfile[$i]["Taille"].")";
+					$filedes[$i]  = $tabfile[$i]["Date"]." ï¿½ ".$tabfile[$i]["Heure"]." (".$tabfile[$i]["Taille"].")";
 				}
 			echo "</TABLE>";
 		
@@ -4871,7 +4871,7 @@ Function VoirMenu() {
 						if (!($Ligne=='' || $Ligne{0}=='-' || $Ligne{0}=='#')){
 							$LigneSQL .= $Ligne;
 							if (strlen($Ligne) > 0 && $Ligne{strlen($Ligne)-1} == ';'){
-								$LigneSQL = str_replace(" "," ",$LigneSQL); 
+								$LigneSQL = str_replace("ï¿½"," ",$LigneSQL); 
 								$MaPos = strpos($LigneSQL, "INSERT INTO ");
 								if ($MaPos !== false) {
 									$LigneSQL = substr_replace($LigneSQL, $trans." ", 13, 0); 
@@ -4886,21 +4886,21 @@ Function VoirMenu() {
 					
 					if (!$ErreurSQL){
 						bf_mysql_query("UPDATE `".$trans." Etablissements` INNER JOIN Etablissements ON `".$trans." Etablissements`.EtabNum = Etablissements.EtabNum SET `".$trans." Etablissements`.EtabMemo3 = Etablissements.EtabMemo3 WHERE NOT (Etablissements.EtabMemo3 IS NULL OR Etablissements.EtabMemo3 = '')");
-						$reqImport = bf_mysql_query("SELECT DISTINCT `".$trans." Secteurs`.*, `".$trans." Etablissements`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
+						$reqImport = bf_mysql_query("SELECT DISTINCT `".$trans." Secteurs`.*, `".$trans." Etablissements`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
 						if (!(!($reqImport))) {
 							while ($resImport = mysql_fetch_array($reqImport)) {
 								Maj(1,"Secteurs", $resImport);
 								Maj(1,"Etablissements", $resImport, Array("EtabSecCode" => "SELECT SecCode FROM Secteurs WHERE SecLibel = ".$resImport["SecLibel"]));
 							}
 						}
-						$resultLIC = bf_mysql_query("SELECT * FROM Licenciés");
-						$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciés`.* FROM `".$trans." Licenciés` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciés`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
+						$resultLIC = bf_mysql_query("SELECT * FROM Licenciï¿½s");
+						$reqImport = bf_mysql_query("SELECT `".$trans." Secteurs`.*, `".$trans." Etablissements`.*, `".$trans." Licenciï¿½s`.* FROM `".$trans." Licenciï¿½s` INNER JOIN `".$trans." Etablissements` On `".$trans." Licenciï¿½s`.LicEtabCode = `".$trans." Etablissements`.EtabCode INNER JOIN `".$trans." Secteurs` ON `".$trans." Etablissements`.EtabSecCode = `".$trans." Secteurs`.SecCode");
 						if (!(!($reqImport))) {
 							while ($resImport = mysql_fetch_array($reqImport)) {
-								Maj(1,"Licenciés", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]), $resultLIC);
+								Maj(1,"Licenciï¿½s", $resImport, Array("LicEtabCode" => "SELECT EtabCode FROM Etablissements WHERE EtabNum = ".$resImport["EtabNum"]), $resultLIC);
 							}
 							bf_mysql_query("INSERT INTO Sports (SELECT `".$trans." Sports`.* FROM `".$trans." Sports` WHERE `".$trans." Sports`.SpoCode = 1)");
-							bf_mysql_query("INSERT INTO Catégories (SELECT `".$trans." Catégories`.* FROM `".$trans." Catégories` WHERE `".$trans." Catégories`.CatSpoCode = 1)");
+							bf_mysql_query("INSERT INTO Catï¿½gories (SELECT `".$trans." Catï¿½gories`.* FROM `".$trans." Catï¿½gories` WHERE `".$trans." Catï¿½gories`.CatSpoCode = 1)");
 						}
 					}
 					SupprimeTables($BDD, $trans);
@@ -4918,7 +4918,7 @@ Function VoirMenu() {
 			echo "<TR>"; 
 			echo "<TD>";
 			echo "> INSCRIPTION &nbsp;&nbsp;";
-			echo "Rechercher les licenciés introuvables dans les bases externes (noms séparés par des points virgules) &nbsp;&nbsp;";
+			echo "Rechercher les licenciï¿½s introuvables dans les bases externes (noms sï¿½parï¿½s par des points virgules) &nbsp;&nbsp;";
 			echo "<input name='valideBasesExternes' type='submit' id='valideBasesExternes' value='Valider' class='bouton'>";
 			echo "<TEXTAREA name='basesexternes' rows='1'>".$data."</textarea><BR>";
 			echo "</TD>";
@@ -4938,10 +4938,10 @@ Function VoirMenu() {
 			echo "<TABLE CLASS = 'tablecompets' style = 'Margin-top:0px;Margin-left:40px;Margin-bottom:10px;'>";
 				for($i=0; $i < count($tabrep); $i++) {
 					if ($i == 0) {
-						echo "<CAPTION style='text-align:left; padding-bottom:4px;'>Ugsel affiliées trouvées sur le serveur : </CAPTION>";
-						echo "<TR><TH>N°</TH>";
+						echo "<CAPTION style='text-align:left; padding-bottom:4px;'>Ugsel affiliï¿½es trouvï¿½es sur le serveur : </CAPTION>";
+						echo "<TR><TH>Nï¿½</TH>";
 						echo "<TH>Ugsel</TH>";
-						echo "<TH>Licenciés</TH>";
+						echo "<TH>Licenciï¿½s</TH>";
 						echo "<TH>En interne</TH>";
 						echo "<TH>";
 						if (($actionfichier == "importerugsel") && ($ugselimp == 'tout') ) {
@@ -5032,11 +5032,11 @@ Function VoirMenu() {
 		
 		PurgeTables();
 		
-		$mesinfo = array("Secteurs","Etablissements","Licenciés","Sports","Catégories","Epreuves","Compétitions","Participations","Equipes");
+		$mesinfo = array("Secteurs","Etablissements","Licenciï¿½s","Sports","Catï¿½gories","Epreuves","Compï¿½titions","Participations","Equipes");
 		for ($i = 0; $i < count($mesinfo); $i++) {	
 			if (is_array($mesinfo[$i])) $manomtable = $mesinfo[$i][0]; else $manomtable = $mesinfo[$i];
 			if (is_array($mesinfo[$i])) $matable = $mesinfo[$i][1]; else $matable = $mesinfo[$i];
-			echo CompteEnr($matable)." ".$manomtable;
+			echo CompteEnr($matable) . " ugselwebv1pt.php" .$manomtable;
 			if ($i < count($mesinfo)-1) echo " / ";
 		}
 		echo "</TD></TR></TABLE>";
@@ -5048,7 +5048,7 @@ Function VoirMenu() {
 			echo "<TR><TD>";
 			echo "> ESPACE SUR LE SERVEUR &nbsp;&nbsp;";
 			if ($taillerep > $QUOTA) echo " <BLINK> Supprimez des fichiers ! </BLINK>";
-			echo ConvertTaille($taillerep)." d'espace occupé sur un total disponible de ".ConvertTaille($QUOTA);
+			echo ConvertTaille($taillerep)." d'espace occupï¿½ sur un total disponible de ".ConvertTaille($QUOTA);
 			echo " (". sprintf('%.2f ',$taillerep / $QUOTA * 100) ."%).";
 			echo "</TD></TR></TABLE>";
 		}
@@ -5061,7 +5061,7 @@ Function VoirMenu() {
 			echo "<TR>"; 
 			echo "<TD>";
 			echo "> REQUETE &nbsp;&nbsp;";
-			echo "Requête &nbsp;&nbsp;";
+			echo "Requï¿½te &nbsp;&nbsp;";
 			echo "<input name='validerequete' type='submit' id='validerequete' value='Valider' class='bouton'>";
 			echo "<TEXTAREA name='requete' rows='3'>";
 			if (!(isset($requete))) echo "UPDATE Etablissements INNER JOIN Secteurs ON Etablissements.EtabSecCode = Secteurs.SecCode SET EtabMemo3 = IF(RAND() > 0.33, IF(RAND() > 0.66, CONCAT(SecLibel, LOWER(EtabNomCourt), FLOOR(RAND()*100)), CONCAT(LOWER(EtabNomCourt), SecLibel, FLOOR(RAND()*100))), CONCAT(FLOOR(RAND()*100), LOWER(EtabNomCourt), SecLibel)) WHERE EtabMemo3 = '' OR EtabMemo3 IS NULL"; else echo $requete;
@@ -5093,7 +5093,7 @@ Function VoirMenu() {
 			echo "<TABLE CLASS = 'tableconopt'><TR><TD><B><BLINK> &nbsp; &nbsp INFORMATION </BLINK></B></TD></TR></TABLE>";
 			echo "<HR CLASS = 'hr1'>\n";
 			echo "<TABLE CLASS = 'tableconopt'>"; 
-			echo "<TR><TD ALIGN = 'Center' VALIGN = 'Top' style ='white-space:nowrap;'>1 Sept 2012</TD><TD>L'adresse du serveur a changé : <B>ugselweb.org</B> (et non plus : ugsel-bretagne.org). <BR>Pensez à modifier les liens de vos sites internet.</TD></TR>";
+			echo "<TR><TD ALIGN = 'Center' VALIGN = 'Top' style ='white-space:nowrap;'>1 Sept 2012</TD><TD>L'adresse du serveur a changï¿½ : <B>ugselweb.org</B> (et non plus : ugsel-bretagne.org). <BR>Pensez ï¿½ modifier les liens de vos sites internet.</TD></TR>";
 			echo "</TABLE>";
 			echo "<HR CLASS = 'hr1'>\n";
 		}
@@ -5220,10 +5220,10 @@ Function VoirMenu() {
 					if (($optionexporttype == "expser") || ($optionexporttype == "expsqlser") ) {
 						debut_html(($CONSULTATION == "Non"));
 						if (file_exists("../../inscriptions/$leFic[0]")) {
-							$message = "La compétition '".$leFic[1]."' a été envoyée.";
+							$message = "La compï¿½tition '".$leFic[1]."' a ï¿½tï¿½ envoyï¿½e.";
 							$exp = 0;
 						} else {
-							$message = "Erreur inatendue. La compétition n'a pas été envoyée.";
+							$message = "Erreur inatendue. La compï¿½tition n'a pas ï¿½tï¿½ envoyï¿½e.";
 						}
 						VoirMenu();
 						fin_html(($CONSULTATION == "Non"));

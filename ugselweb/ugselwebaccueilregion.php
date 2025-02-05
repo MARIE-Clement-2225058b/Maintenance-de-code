@@ -5,7 +5,7 @@
 	if ($UGSELREG[2] == 0) $UGSELREG[2] = 130; if ($UGSELREG[3] == 0) $UGSELREG[3] = 150;
 	if ($UGSELREG[4] == "") $UGSELREG[4] = "www.ugsel.org";
 ?>
-<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN  accueil région'>
 <html>
 <head>
 <title>UGSEL Web <?php echo $UGSELREG[1]; ?></title>
