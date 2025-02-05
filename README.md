@@ -31,35 +31,6 @@ Ce dépôt contient la refonte totale d'une application en **Symfony** avec une 
 
 ---
 
-## 🚀 **Workflow Git Recommandé**
-
-1. **Créer une branche à partir de `main` :**
-   ```bash
-   git checkout main
-   git pull
-   git checkout -b feature/nom-de-la-fonctionnalite
-   ```
-
-2. **Développer et committer les changements :**
-   ```bash
-   git add .
-   git commit -m "Ajout de la fonctionnalité X"
-   ```
-
-3. **Pousser la branche :**
-   ```bash
-   git push origin feature/nom-de-la-fonctionnalite
-   ```
-
-4. **Créer une Pull Request :**
-   - Vers `preprod` pour les tests
-   - Vers `main` après validation
-
-5. **Déploiement :**
-   - Fusionner `main` → `preprod` → `prod`
-
----
-
 ## 📦 **Résumé du Flux de Travail**
 
 ```
