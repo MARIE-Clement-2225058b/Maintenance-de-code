@@ -1,18 +1,76 @@
-# Maintenance-de-code
-Refonte totale d'une application en **Symfony** avec une base de données **MySQL**.
+# 📚 Gestion des Branches du Projet Symfony
 
-## 🚀 Fonctionnalités principales
+Ce dépôt contient la refonte totale d'une application en **Symfony** avec une base de données **MySQL**. L'architecture des branches est organisée de manière à garantir la stabilité du code et à faciliter le déploiement.
 
-- Authentification sécurisée
-- Gestion des utilisateurs
-- Tableau de bord interactif
-- Tests automatisés
+## 🌳 **Architecture des Branches**
+
+### 1️⃣ **`main`** (Branche principale)
+- **Statut :** Stable ✅
+- **Rôle :** Contient le code de référence prêt pour la production.
+- **Utilisation :** Toutes les nouvelles fonctionnalités validées et testées sont fusionnées ici.
+
+### 2️⃣ **`old-code`** (Ancien projet)
+- **Statut :** Archivage 📦
+- **Rôle :** Conserve l'ancien code de l'application avant la refonte totale.
+- **Utilisation :** Référence uniquement, aucun développement actif.
+
+### 3️⃣ **`preprod`** (Pré-production)
+- **Statut :** En cours de test 🧪
+- **Rôle :** Environnement de test avant déploiement en production.
+- **Utilisation :** Tester les nouvelles fonctionnalités dans un environnement similaire à la production.
+
+### 4️⃣ **`prod`** (Production)
+- **Statut :** Déployé 🚀
+- **Rôle :** Contient le code actuellement en ligne pour les utilisateurs finaux.
+- **Utilisation :** Déploiement des versions stables après validation en `preprod`.
+
+### 5️⃣ **`test`** (Environnement de tests)
+- **Statut :** Tests automatisés ⚙️
+- **Rôle :** Dédiée aux tests unitaires, fonctionnels et d'intégration.
+- **Utilisation :** Tester le code avec des outils d’intégration continue.
 
 ---
 
-## ⚙️ Installation du projet
+## 🚀 **Workflow Git Recommandé**
 
-### 1️⃣ Cloner le dépôt
-```bash
-git clone https://github.com/ton-repo/ton-projet.git
-cd ton-projet
+1. **Créer une branche à partir de `main` :**
+   ```bash
+   git checkout main
+   git pull
+   git checkout -b feature/nom-de-la-fonctionnalite
+   ```
+
+2. **Développer et committer les changements :**
+   ```bash
+   git add .
+   git commit -m "Ajout de la fonctionnalité X"
+   ```
+
+3. **Pousser la branche :**
+   ```bash
+   git push origin feature/nom-de-la-fonctionnalite
+   ```
+
+4. **Créer une Pull Request :**
+   - Vers `preprod` pour les tests
+   - Vers `main` après validation
+
+5. **Déploiement :**
+   - Fusionner `main` → `preprod` → `prod`
+
+---
+
+## 📦 **Résumé du Flux de Travail**
+
+```
+old-code (archivé)
+      ↓
+   main (code stable)
+    ↙     ↘
+ preprod   feature/* (nouvelles fonctionnalités)
+    ↓
+   prod (version en production)
+    ↓
+   test (tests automatisés)
+```
+
