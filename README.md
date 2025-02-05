@@ -36,12 +36,12 @@ Ce dépôt contient la refonte totale d'une application en **Symfony** avec une 
 ```
 old-code (archivé)
       ↓
-   main (code stable)
-    ↙     ↘
- preprod   feature/* (nouvelles fonctionnalités)
-    ↓
-   prod (version en production)
-    ↓
-   test (tests automatisés)
+main (code stable)
+      ↓     
+   preprod   
+      ↓
+prod (version en production)
+      ↓
+test (tests automatisés)
 ```
 
