@@ -45,12 +45,15 @@ prod (version en production)
 test (tests automatisés)
 ```
 
+
 ---
+
+## 🚀 **Installation du projet**
 
 1. **Cloner le dépôt de l'application :**
     ```bash
     git clone https://github.com/MARIE-Clement-2225058b/Maintenance-de-code.git
-    cd Maintenance-de-code\ugselweb2
+    cd Maintenance-de-code/ugselweb2
     ```
 
 2. **Installer les dépendances :**
@@ -63,7 +66,7 @@ test (tests automatisés)
     php bin/console cache:clear
     ```
 
-4. . **Charger les fixtures pour la base de données :**
+4. **Charger les fixtures pour la base de données :**
     ```bash
     php bin/console doctrine:database:create
     php bin/console make:migration
@@ -71,8 +74,7 @@ test (tests automatisés)
     php bin/console doctrine:fixtures:load
     ```
 
-5. 
-6. **Lancer l'application :**
+5. **Lancer l'application :**
     ```bash
     symfony server:start
     ```
