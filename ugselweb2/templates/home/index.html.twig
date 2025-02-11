@@ -3,7 +3,6 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -24,7 +23,7 @@
         <tr>
             <td width="35%" rowspan="6" align="center" valign="top" class="logo-container">
                 <a href="http://www.ugsel.org" class="img-lien">
-                    <img src="./_logos/logoun.gif" height="150" width="150" alt="">
+                    <img src="{{ asset('assets/logos/logoun.png') }}" height="150" width="150" alt="">
                 </a>
             </td>
             <td colspan="4" class="welcome-text"><b>Bienvenue dans UGSEL Web</b><br>Accédez à l'Ugsel Régionale de votre choix en cliquant sur son nom...</td>
