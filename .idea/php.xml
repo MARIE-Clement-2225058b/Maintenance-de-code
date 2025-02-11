@@ -12,6 +12,11 @@
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/composer" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/symfony/deprecation-contracts" />
@@ -139,8 +144,20 @@
       <path value="$PROJECT_DIR$/ugselweb2/vendor/doctrine/doctrine-migrations-bundle" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/cache" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/child-process" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/socket" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/stream" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/dns" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/event-loop" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/evenement/evenement" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/theseer/tokenizer" />
     </include_path>
   </component>
