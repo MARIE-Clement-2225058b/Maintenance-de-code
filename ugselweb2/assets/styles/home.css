@@ -1,67 +1,66 @@
 body {
     margin: 8%;
-    font-family: verdana, arial;
+    font-family: Verdana, Arial, sans-serif;
     font-size: 11pt;
     color: #000080;
+    background-color: #f8f9fa;
 }
 
 table {
     border-collapse: separate;
     font-size: 11pt;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #000080;
+    box-shadow: 2px 2px 10px rgba(0, 0, 128, 0.2);
 }
 
 table th {
-    padding: 5px;
+    padding: 8px;
     background-color: #C0DBEC;
-    font-weight: normal;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: 2px solid #000080;
 }
 
 table td {
-    padding: 4px;
+    padding: 6px;
+    border-bottom: 1px solid #C0DBEC;
 }
 
 .tabledeb, .tablefin {
     width: 100%;
     border-collapse: collapse;
+    background-color: #000080;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
 }
 
 .trdeb, .trfin {
-    background-color: #000080;
-    color: white;
-    font-size: 9pt;
-}
-
-.hr1, .hr2 {
-    color: #000080;
-    height: 1px;
-    border: 0px;
-    width: 100%;
+    font-size: 10pt;
+    font-weight: bold;
 }
 
 .tddetail {
     height: 30px;
     width: 30px;
-    padding: 0px;
+    padding: 5px;
+    text-align: center;
 }
 
-a:link {
+a {
     text-decoration: none;
-}
-
-a:visited {
-    text-decoration: none;
+    color: #000080;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
 }
 
 a:hover {
-    text-decoration: none;
     background-color: #000080;
     color: #f0f8ff;
-}
-
-a:active {
-    text-decoration: none;
-    background-color: #f0f8ff;
-    color: #f0f8ff;
+    padding: 2px 4px;
+    border-radius: 4px;
 }
 
 a img {
@@ -69,6 +68,5 @@ a img {
 }
 
 a.img-lien:hover {
-    background-color: #f0f8ff;
-    border: none;
+    background-color: transparent;
 }
