@@ -70,3 +70,7 @@ a img {
 a.img-lien:hover {
     background-color: transparent;
 }
+
+#departments-container ul li {
+    margin-bottom: 10px; /* Adjust the value as needed */
+}
