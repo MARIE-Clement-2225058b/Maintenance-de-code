@@ -3,16 +3,16 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UGSEL Web</title>
-    <link rel="shortcut icon" href="{{ asset('logos/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('logos/favicon.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ asset('assets/styles/home.css') }}">
-</head>
-<body>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>UGSEL Web</title>
+        <link rel="shortcut icon" href="{{ asset('logos/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('logos/favicon.png') }}" type="image/png">
+        <link rel="stylesheet" href="{{ asset('assets/styles/home.css') }}">
+    </head>
+    <body>
     <table class="tabledeb">
         <tr class="trdeb">
             <td width="90%">&nbsp; UGSEL Web &nbsp;&nbsp; Base de lancement &nbsp;&nbsp;</td>
@@ -23,48 +23,59 @@
         <tr>
             <td width="35%" rowspan="6" align="center" valign="top" class="logo-container">
                 <a href="http://www.ugsel.org" class="img-lien">
-                    <img src="{{ asset('logos/logoun.png') }}" height="150" width="150" alt="Logo">                </a>
+                    <img src="{{ asset('logos/logoun.png') }}" height="150" width="150" alt="Logo">
+                </a>
             </td>
             <td colspan="4" class="welcome-text"><b>Bienvenue dans UGSEL Web</b><br>Accédez à l'Ugsel Régionale de votre choix en cliquant sur son nom...</td>
         </tr>
         <tr>
-            <td><a href="./als">Alsace</a></td>
-            <td><a href="./lyo">Lyonnais</a></td>
-            <td><a href="./aqu">Aquitaine</a></td>
-            <td><a href="./mid">Midi-Pyrénées</a></td>
+            <td><a href="#" class="region-link" data-departments="Bas-Rhin,Haut-Rhin">Alsace</a></td>
+            <td><a href="#" class="region-link" data-departments="Rhône,Isère,Ardèche,Loire">Lyonnais</a></td>
+            <td><a href="#" class="region-link" data-departments="Gironde,Pyrénées-Atlantiques,Landes,Dordogne,Lot-et-Garonne">Aquitaine</a></td>
+            <td><a href="#" class="region-link" data-departments="Haute-Garonne,Tarn,Ariège,Hautes-Pyrénées,Lot, Gers">Midi-Pyrénées</a></td>
         </tr>
         <tr>
-            <td><a href="./auv">Auvergne Limousin</a></td>
-            <td><a href="./nvc">Nice Var Corse</a></td>
-            <td><a href="./bou">Bourgogne</a></td>
-            <td><a href="./npc">Nord Pas de Calais</a></td>
+            <td><a href="#" class="region-link" data-departments="Puy-de-Dôme,Haute-Vienne,Creuse,Cantal,Allier">Auvergne Limousin</a></td>
+            <td><a href="#" class="region-link" data-departments="Alpes-Maritimes,Var,Corse-du-Sud,Haute-Corse">Nice Var Corse</a></td>
+            <td><a href="#" class="region-link" data-departments="Côte-d'Or,Nièvre,Yonne,Saône-et-Loire">Bourgogne</a></td>
+            <td><a href="#" class="region-link" data-departments="Nord,Pas-de-Calais">Nord Pas de Calais</a></td>
         </tr>
         <tr>
-            <td><a href="./bzh">Bretagne</a></td>
-            <td><a href="./nrm">Normandie</a></td>
-            <td><a href="./cen">Centre</a></td>
-            <td><a href="./par">Paris</a></td>
+            <td><a href="#" class="region-link" data-departments="Ille-et-Vilaine,Finistère,Côtes-d'Armor, Morbihan">Bretagne</a></td>
+            <td><a href="#" class="region-link" data-departments="Seine-Maritime,Calvados,Orne,Manche, Eure">Normandie</a></td>
+            <td><a href="#" class="region-link" data-departments="Loiret,Indre-et-Loire, Cher, Loir-et-Cher, Eure-et-Loir">Centre</a></td>
+            <td><a href="#" class="region-link" data-departments="Paris,Yvelines,Seine-Saint-Denis,Val-de-Marne,Val-d'Oise">Paris</a></td>
         </tr>
         <tr>
-            <td><a href="./cha">Champagne Ardennes</a></td>
-            <td><a href="./pdl">Pays de Loire</a></td>
-            <td><a href="./dau">Dauphiné Savoie</a></td>
-            <td><a href="./pic">Picardie</a></td>
+            <td><a href="#" class="region-link" data-departments="Marne,Aube,Haute-Marne,Ardennes">Champagne Ardennes</a></td>
+            <td><a href="#" class="region-link" data-departments="Loire-Atlantique,Maine-et-Loire, Vendée, Sarthe, Mayenne">Pays de Loire</a></td>
+            <td><a href="#" class="region-link" data-departments="Isère,Savoie,Haute-Savoie">Dauphiné Savoie</a></td>
+            <td><a href="#" class="region-link" data-departments="Somme,Oise,Aisne">Picardie</a></td>
         </tr>
         <tr>
-            <td><a href="./fra">Franche Comté</a></td>
-            <td><a href="./poi">Poitou Charentes</a></td>
-            <td><a href="./lan">Languedoc Roussillon</a></td>
-            <td><a href="./pro">Provence</a></td>
+            <td><a href="#" class="region-link" data-departments="Doubs,Territoire de Belfort,Jura">Franche Comté</a></td>
+            <td><a href="#" class="region-link" data-departments="Vienne,Charente-Maritime,Charente,Deux-Sèvres">Poitou Charentes</a></td>
+            <td><a href="#" class="region-link" data-departments="Hérault,Gard, Aude, Pyrénées-Orientales, Lozère, Tarn-et-Garonne">Languedoc Roussillon</a></td>
+            <td><a href="#" class="region-link" data-departments="Bouches-du-Rhône,Var,Alpes-de-Haute-Provence,Vaucluse">Provence</a></td>
         </tr>
+
     </table>
+    <div id="departments-container"></div>
     <table class="tablefin">
         <tr class="trfin">
             <td width="80%">&nbsp; UGSEL Web &nbsp;&nbsp; Base de lancement &nbsp;&nbsp;</td>
         </tr>
     </table>
-</body>
-</html>
-
-
+    <script>
+        document.querySelectorAll('.region-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const departments = this.getAttribute('data-departments').split(',');
+                const container = document.getElementById('departments-container');
+                container.innerHTML = '<h3>Departments:</h3><ul>' + departments.map(dept => `<li><a href="/departments/${dept.toLowerCase().replace(/\s+/g, '-')}" target="_blank">${dept}</a></li>`).join('') + '</ul>';
+            });
+        });
+    </script>
+    </body>
+    </html>
 {% endblock %}
