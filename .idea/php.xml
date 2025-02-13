@@ -179,6 +179,7 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/ugselweb2/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/ugselweb2/vendor/autoload.php" use_configuration_file="true" />
       <PhpUnitSettings load_method="PHPUNIT_PHAR" configuration_file_path="$PROJECT_DIR$/ugselweb2/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/phpunit.phar" phpunit_phar_path="$PROJECT_DIR$/phpunit.phar" use_configuration_file="true" />
     </phpunit_settings>
   </component>
