@@ -31,6 +31,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Department $DepartmentID = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,5 +108,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getDepartmentID(): ?Department
+    {
+        return $this->DepartmentID;
+    }
+
+    public function setDepartmentID(?Department $DepartmentID): static
+    {
+        $this->DepartmentID = $DepartmentID;
+
+        return $this;
     }
 }
