@@ -65,6 +65,12 @@ jobs:
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/MARIE-Clement-2225058b/Maintenance-de-code.git
-          git checkout preprod
-          git merge main
-          git push origin preprod
+          git fetch origin
+          if ! git show-ref --verify --quiet refs/heads/preprod; then
+            git checkout -b preprod
+            git push origin preprod
+          else
+            git checkout preprod
+            git merge main
+            git push origin preprod
+          fi
