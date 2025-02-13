@@ -72,7 +72,7 @@
                 event.preventDefault();
                 const departments = this.getAttribute('data-departments').split(',');
                 const container = document.getElementById('departments-container');
-                container.innerHTML = '<h3>Departments:</h3><ul>' + departments.map(dept => `<li><a href="/login" target="_blank">${dept}</a></li>`).join('') + '</ul>';
+                container.innerHTML = '<h3>Departments:</h3><ul>' + departments.map(dept => `<li><a href="{{ path('app_login') }}" target="_blank">${dept}</a></li>`).join('') + '</ul>';
             });
         });
     </script>
