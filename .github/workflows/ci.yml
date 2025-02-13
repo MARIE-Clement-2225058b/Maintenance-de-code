@@ -73,6 +73,7 @@ jobs:
             git push origin preprod
           else
             git checkout preprod
+            git pull origin preprod --rebase  # Récupère les dernières modifications avec rebase
             git merge main
             git push origin preprod
-          fi 
+          fi
