@@ -5,6 +5,8 @@ on:
     branches:
       - test
       - prod
+      - preprod
+      - main
 
 jobs:
   lint:
@@ -16,15 +18,17 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Install dependencies
         run: |
+          cd ugselweb2  # Aller dans le répertoire où se trouve composer.json
           composer install --no-interaction
 
-      - name: Run PHP CS Linter
+      - name: Run PHP CS Fixer
         run: |
-          vendor/bin/php-cs-fixer fix --dry-run --diff
+          cd ugselweb2  # Exécuter dans le bon répertoire
+          vendor/bin/php-cs-fixer fix --diff .  # Automatically fix the issues
 
   tests:
     runs-on: ubuntu-latest
@@ -37,12 +41,14 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Install dependencies
         run: |
+          cd ugselweb2  # Toujours aller dans le bon répertoire
           composer install --no-interaction
 
       - name: Run tests
         run: |
+          cd ugselweb2  # Exécuter les tests dans ce répertoire
           ./vendor/bin/phpunit --configuration phpunit.xml.dist

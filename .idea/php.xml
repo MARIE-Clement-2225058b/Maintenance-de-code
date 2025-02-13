@@ -10,8 +10,18 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="63bf3d6e-283e-493c-ad53-abaf91a58912" timeout="30000" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/composer" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/symfony/deprecation-contracts" />
@@ -139,13 +149,31 @@
       <path value="$PROJECT_DIR$/ugselweb2/vendor/doctrine/doctrine-migrations-bundle" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/cache" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/child-process" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/socket" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/stream" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/dns" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/react/event-loop" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/evenement/evenement" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/squizlabs/php_codesniffer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+  <component name="PhpStan">
+    <PhpStan_settings>
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="63bf3d6e-283e-493c-ad53-abaf91a58912" timeout="60000" />
+    </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
@@ -153,7 +181,13 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/ugselweb2/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/ugselweb2/vendor/autoload.php" use_configuration_file="true" />
+      <PhpUnitSettings load_method="PHPUNIT_PHAR" configuration_file_path="$PROJECT_DIR$/ugselweb2/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/phpunit.phar" phpunit_phar_path="$PROJECT_DIR$/phpunit.phar" use_configuration_file="true" />
     </phpunit_settings>
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="63bf3d6e-283e-493c-ad53-abaf91a58912" timeout="60000" />
+    </Psalm_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />
