@@ -5,6 +5,8 @@ on:
     branches:
       - test
       - prod
+      - preprod
+      - main
 
 jobs:
   lint:
@@ -50,3 +52,19 @@ jobs:
         run: |
           cd ugselweb2  # Exécuter les tests dans ce répertoire
           ./vendor/bin/phpunit --configuration phpunit.xml.dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Push to preprod
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/MARIE-Clement-2225058b/Maintenance-de-code.git
+          git checkout preprod
+          git merge main
+          git push origin preprod
