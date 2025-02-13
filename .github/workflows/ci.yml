@@ -25,10 +25,10 @@ jobs:
           cd ugselweb2  # Aller dans le répertoire où se trouve composer.json
           composer install --no-interaction
 
-      - name: Run PHP CS Linter
+      - name: Run PHP CS Fixer
         run: |
           cd ugselweb2  # Exécuter dans le bon répertoire
-          vendor/bin/php-cs-fixer fix --dry-run --diff .  # Add the current directory to be analyzed
+          vendor/bin/php-cs-fixer fix --diff .  # Automatically fix the issues
 
   tests:
     runs-on: ubuntu-latest
