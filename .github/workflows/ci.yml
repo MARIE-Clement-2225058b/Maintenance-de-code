@@ -28,7 +28,7 @@ jobs:
       - name: Run PHP CS Linter
         run: |
           cd ugselweb2  # Exécuter dans le bon répertoire
-          vendor/bin/php-cs-fixer fix --dry-run --diff
+          vendor/bin/php-cs-fixer fix --dry-run --diff .  # Add the current directory to be analyzed
 
   tests:
     runs-on: ubuntu-latest
@@ -52,27 +52,3 @@ jobs:
         run: |
           cd ugselweb2  # Exécuter les tests dans ce répertoire
           ./vendor/bin/phpunit --configuration phpunit.xml.dist
-
-  deploy:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Push to preprod
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git config --global user.email "clement.marie24@gmail.com"
-          git config --global user.name "Clementbot"
-          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/MARIE-Clement-2225058b/Maintenance-de-code.git
-          git fetch origin
-          if ! git show-ref --verify --quiet refs/heads/preprod; then
-            git checkout -b preprod
-            git push origin preprod
-          else
-            git checkout preprod
-            git merge main
-            git push origin preprod
-          fi
