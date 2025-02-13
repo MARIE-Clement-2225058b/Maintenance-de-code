@@ -165,6 +165,8 @@
       <path value="$PROJECT_DIR$/ugselweb2/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/ugselweb2/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/ugselweb2/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2">
