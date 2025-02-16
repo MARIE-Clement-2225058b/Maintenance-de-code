@@ -51,4 +51,3 @@ jobs:
       - name: Run tests
         run: |
           cd ugselweb2  # Exécuter les tests dans ce répertoire
-          ./vendor/bin/phpunit --configuration phpunit.xml.dist

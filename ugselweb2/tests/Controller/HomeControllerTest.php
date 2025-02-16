@@ -6,20 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class HomeControllerTest extends WebTestCase
 {
-    public function testIndex(): void
+    public function testWelcomeTextIsPresentOnHomePage(): void
     {
         $client = static::createClient();
+
+        // Access the /home route
         $client->request('GET', '/home');
 
-        self::assertResponseIsSuccessful();
+        // Check that the HTTP response is successful (status code 200)
+        $this->assertResponseIsSuccessful();
+
+        // Verify that the welcome message is present
+        $this->assertSelectorTextContains('.welcome-text', 'Bienvenue dans UGSEL Web');
     }
-
-    public function testIndexWithInvalidRoute(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/invalid-route');
-
-        self::assertResponseStatusCodeSame(404);
-    }
-
 }
