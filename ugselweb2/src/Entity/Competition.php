@@ -46,6 +46,9 @@ class Competition
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $location = null;
 
+    #[ORM\ManyToOne]
+    private ?Sport $sportID = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,6 +98,18 @@ class Competition
     public function setLocation(?string $location): static
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getSportID(): ?Sport
+    {
+        return $this->sportID;
+    }
+
+    public function setSportID(?Sport $sportID): static
+    {
+        $this->sportID = $sportID;
 
         return $this;
     }
