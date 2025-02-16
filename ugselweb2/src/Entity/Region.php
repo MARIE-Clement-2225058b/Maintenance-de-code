@@ -16,10 +16,15 @@ class Region
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @var string|null
+     * The name of the region
+     */
     private ?string $name = null;
 
     /**
      * @var Collection<int, Department>
+     * The departments in the region
      */
     #[ORM\OneToMany(targetEntity: Department::class, mappedBy: 'RegionID')]
     private Collection $departments;

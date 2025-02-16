@@ -26,13 +26,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
+    /**
+     * @var Department|null The department the user belongs to
+     */
     private ?Department $DepartmentID = null;
 
     public function getId(): ?int

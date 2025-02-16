@@ -13,12 +13,20 @@ class Department
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @var int|null
+     * The UID of the department
+     */
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'departments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Region $RegionID = null;
 
+    /**
+     * @var string|null
+     * The name of the department
+     */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
