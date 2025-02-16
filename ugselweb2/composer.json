@@ -97,7 +97,8 @@
         }
     },
     "require-dev": {
-        "phpstan/phpstan": "*",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "friendsofphp/php-cs-fixer": "*",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "*",
         "symfony/browser-kit": "7.2.*",

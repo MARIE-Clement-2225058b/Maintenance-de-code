@@ -1,0 +1,12 @@
+{# templates/competition/list.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Competition List</h1>
+    <ul>
+        {% for competition in competitions %}
+            <li>{{ competition.nom }} - {{ competition.startDate|date('Y-m-d') }} to {{ competition.endDate|date('Y-m-d') }} at {{ competition.location }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('competition_new') }}">Add New Competition</a>
+{% endblock %}
