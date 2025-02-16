@@ -77,7 +77,7 @@ test (tests automatisés)
 
 5. **Lancer l'application :**
     ```bash
-    symfony serve
+    symfony server:start
     ```
 
 ---
